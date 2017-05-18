@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import usbong.android.db.UsbongDbHelper;
 import usbong.android.features.node.PaintActivity;
 import usbong.android.features.node.QRCodeReaderActivity;
 import usbong.android.multimedia.audio.AudioRecorder;
@@ -49,6 +50,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -541,6 +544,95 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		        returnIntent.putExtra("result","result");
 		        setResult(RESULT_OK,returnIntent);
 */		        
+				
+				
+				//added by Mike, 20170518
+				UsbongDbHelper myDbHelper;
+		        SQLiteDatabase myDb = null;
+
+		        myDbHelper = new UsbongDbHelper(this);
+		        /*
+		         * Database must be initialized before it can be used. This will ensure
+		         * that the database exists and is the current version.
+		         */
+		         myDbHelper.initializeDataBase();
+
+		         try {
+		            // A reference to the database can be obtained after initialization.
+		            myDb = myDbHelper.getWritableDatabase();
+		            /*
+		             * Place code to use database here.
+		             */
+		         } catch (Exception ex) {
+		            ex.printStackTrace();
+		         } finally {
+		            /*try {
+		                myDbHelper.close();
+		            } catch (Exception ex) {
+		                ex.printStackTrace();
+		            } finally {
+		                myDb.close();
+		            }*/
+		        }
+		         
+		        //added by Mike, 20170518
+		        //test whether we can query data from the db
+		        SQLiteDatabase db = myDbHelper.getReadableDatabase();
+
+			    // Define a projection that specifies which columns from the database
+			    // you will actually use after this query.
+			    String[] projection = {
+		         "product_id",
+		         "name",
+		         "price"
+		        };
+
+			     // How you want the results sorted in the resulting Cursor
+			     String sortOrder =
+			         "name" + " DESC";
+
+			     Cursor cursor = db.query(
+			         "product",                     		   // The table to query
+			         projection,                               // The columns to return
+			         null,                                	   // The columns for the WHERE clause
+			         null,                            		   // The values for the WHERE clause
+			         null,                                     // don't group the rows
+			         null,                                     // don't filter by row groups
+			         sortOrder                                 // The sort order
+			         );
+/*			     
+			     String[] a = cursor.getColumnNames();
+			     for (int i=0; i<a.length; i++) {
+			    	 Log.d(">>>"+i+": ",a[i]);
+			     }
+*/
+//			     String name = cursor.getString( cursor.getColumnIndex("name") ); // id is column name in db
+//			     Log.d(">>>Cursor: ", name);
+			     
+			     String table = "product";
+			     String query = "select * from '" + table + "'";
+			     Cursor c = db.rawQuery(query, null);
+			     if (c != null) {
+			        if (c.moveToFirst()) { // if Cursor is not empty
+			        	while (!c.isAfterLast()) {
+//					           int id = c.getInt(0);
+				           String name = c.getString(c.getColumnIndex("name"));
+//					           Toast.makeText(this, "Name: " + name, Toast.LENGTH_LONG).show();
+				        	Log.d(">>>>>", "Name: "+name);			        	
+
+			        	    c.moveToNext();
+			        	  }
+			        }
+			        else {
+			           // Cursor is empty
+			        	Log.d(">>>>>", "cursor is empty");
+			        }
+			     }
+			     else {
+			        // Cursor is null
+			        	Log.d(">>>>>", "cursor is null");
+
+			     }
     }
 
     //added by Mike, 29 Sept. 2015
