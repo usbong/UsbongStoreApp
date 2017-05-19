@@ -578,7 +578,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		        //added by Mike, 20170518
 		        //test whether we can query data from the db
 		        SQLiteDatabase db = myDbHelper.getReadableDatabase();
-
+/*
 			    // Define a projection that specifies which columns from the database
 			    // you will actually use after this query.
 			    String[] projection = {
@@ -600,6 +600,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 			         null,                                     // don't filter by row groups
 			         sortOrder                                 // The sort order
 			         );
+*/			         
 /*			     
 			     String[] a = cursor.getColumnNames();
 			     for (int i=0; i<a.length; i++) {
@@ -631,7 +632,6 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 			     else {
 			        // Cursor is null
 			        	Log.d(">>>>>", "cursor is null");
-
 			     }
     }
 
