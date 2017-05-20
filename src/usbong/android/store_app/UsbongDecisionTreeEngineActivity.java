@@ -777,14 +777,18 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 */
 		listOfTreesArrayList = new ArrayList<String>();
 		
+		int currProductTypeId = 1; //default
 		switch(currCategory) {
-			case "books":
-				//use product_type = 2
+			case UsbongConstants.ITEMS_LIST_BOOKS:
+				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BOOKS;
+				break;
+			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BEVERAGES;
 				break;
 		}
 		
 	     String table = "product";
-	     String query = "select * from '" + table + "'";
+	     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
 	     Cursor c = mySQLiteDatabase.rawQuery(query, null);
 	     if (c != null) {
 	        if (c.moveToFirst()) { // if Cursor is not empty
@@ -792,7 +796,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		        	listOfTreesArrayList.add("Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
 		        							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
 		        							 "Price: ₱"+c.getString(c.getColumnIndex("price"))+"\n"+
-		        							 "Format: "+c.getString(c.getColumnIndex("format"))+"\n"+	
+		        							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
 		        							 "Language: "+c.getString(c.getColumnIndex("language")));
 	        	    c.moveToNext();
 	        	  }

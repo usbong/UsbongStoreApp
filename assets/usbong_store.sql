@@ -65,7 +65,10 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, lang
 (24, 1, 2, 'Le Petit Prince', 400, 'French', 'Antoine de Saint-Exupéry', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL),
 (25, 1, 2, 'Founders at Work', 500, 'English', 'Jessica Livingston', NULL, 'Used - Acceptable', NULL, 'Hardcover', 0, NULL),
 (26, 1, 2, 'Standard First Aid & Personal Safety', NULL, 'English', 'American Red Cross', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL),
-(27, 1, 2, 'HSK Level 5 Sample Exam', NULL, 'Mandarin/Japanese', '孔子学院总部/国家汉办', NULL, 'Used - Acceptable', NULL, NULL, 0, '株式会社スプリックス');
+(27, 1, 2, 'HSK Level 5 Sample Exam', NULL, 'Mandarin/Japanese', '孔子学院总部/国家汉办', NULL, 'Used - Acceptable', NULL, NULL, 0, '株式会社スプリックス'),
+(28, 1, 3, 'M&S Earl Grey Tea', 420, 'English', NULL, NULL, NULL, NULL, NULL, 0, NULL),
+(29, 1, 3, 'UCC Coffee (Rich Blend)', 580, 'Japanese', NULL, NULL, NULL, NULL, NULL, 0, NULL),
+(30, 1, 3, 'sencha', 420, 'Japanese', NULL, NULL, NULL, NULL, NULL, 0, NULL);
 
 CREATE TABLE product_type (
   product_type_id INTEGER PRIMARY KEY,
@@ -74,6 +77,8 @@ CREATE TABLE product_type (
 
 INSERT INTO product_type (product_type_id, product_type_name) VALUES
 (1, 'all'),
-(2, 'books');
+(2, 'books'),
+(3, 'beverages'),
+(4, 'books/beverages');
 
 COMMIT;

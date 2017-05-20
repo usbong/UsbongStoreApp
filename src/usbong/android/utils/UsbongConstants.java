@@ -50,6 +50,12 @@ public class UsbongConstants {
 	public final static int REQUEST_ACTIVITY=2;
 	public final static int ITEM_LIST_ACTIVITY=3; //UsbongDecisionTreeEngineActivity		
 	
+	//added by Mike, 20170520
+	public final static int PRODUCT_TYPE_ALL=1;
+	public final static int PRODUCT_TYPE_BOOKS=2;
+	public final static int PRODUCT_TYPE_BEVERAGES=3;
+	public final static int PRODUCT_TYPE_BOOKS_BEVERAGES=4;
+	
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
 	public static final int MULTIPLE_RADIO_BUTTONS_SCREEN=1;	
