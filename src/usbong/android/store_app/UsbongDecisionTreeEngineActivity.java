@@ -785,6 +785,9 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 			case UsbongConstants.ITEMS_LIST_BEVERAGES:
 				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BEVERAGES;
 				break;
+			case UsbongConstants.ITEMS_LIST_COMBOS:
+				currProductTypeId = UsbongConstants.PRODUCT_TYPE_COMBOS;
+				break;
 		}
 		
 	     String table = "product";
@@ -793,7 +796,8 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 	     if (c != null) {
 	        if (c.moveToFirst()) { // if Cursor is not empty
 	        	while (!c.isAfterLast()) {
-		        	listOfTreesArrayList.add("Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
+		        	listOfTreesArrayList.add(currProductTypeId+
+		        							 "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
 		        							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
 		        							 "Price: ₱"+c.getString(c.getColumnIndex("price"))+"\n"+
 		        							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
@@ -3697,11 +3701,12 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             					.replace("\nPrice:", "\n<b>Price:</b>")
 //            					.replace("\nDetails:", "\n<b>Details:</b>")
             					.replace("\nLanguage:", "\n<b>Language:</b>")
-            					.replace("\n", "<br>");
+            					.replace("\n", "<br>")
+            					.substring(o.indexOf("T"));
 
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
-	                    final String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
+	                    final String imageFileName = o.toString().substring(/*0*/o.indexOf("T"), o.toString().indexOf("\nAuthor:"))
 	                    		.replace("Title: ","")
 	                    		.replace("’","")
 	                    		.replace("'","")

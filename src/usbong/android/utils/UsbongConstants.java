@@ -55,6 +55,7 @@ public class UsbongConstants {
 	public final static int PRODUCT_TYPE_BOOKS=2;
 	public final static int PRODUCT_TYPE_BEVERAGES=3;
 	public final static int PRODUCT_TYPE_BOOKS_BEVERAGES=4;
+	public final static int PRODUCT_TYPE_COMBOS=5;
 	
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	

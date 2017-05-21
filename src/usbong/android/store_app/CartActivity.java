@@ -944,8 +944,9 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 
 /*                    v = vi.inflate(R.layout.tree_loader, null);
  */
-                    if (o.toString().contains(";")) { //COMBO
-	                        v = vi.inflate(R.layout.tree_loader_alternative_cart, null);
+//                    if (o.toString().contains(";")) { //COMBO
+                    if (o.toString().substring(0,items.get(position).indexOf("T")).equals(""+UsbongConstants.PRODUCT_TYPE_COMBOS)) { //COMBO
+                    		v = vi.inflate(R.layout.tree_loader_alternative_cart, null);
                     }
                     else {
 	                        v = vi.inflate(R.layout.tree_loader_cart, null);
