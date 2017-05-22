@@ -801,11 +801,19 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		     if (c != null) {
 		        if (c.moveToFirst()) { // if Cursor is not empty
 		        	while (!c.isAfterLast()) {
-			        	listOfTreesArrayList.add("Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
-			        							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
-			        							 "Price: ₱"+c.getString(c.getColumnIndex("price"))+"\n"+
-			        							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
-			        							 "Language: "+c.getString(c.getColumnIndex("language")));
+		        		String price = c.getString(c.getColumnIndex("price"));
+		        		if (price==null) {
+		        			price = "out of stock";
+		        		}
+		        		else {
+		        			price = "₱" + price;
+		        		}
+		        		String productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
+					   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
+					   							 "Price: "+price+"\n"+
+					   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
+					   							 "Language: "+c.getString(c.getColumnIndex("language"));
+			        	listOfTreesArrayList.add(productDetails);
 		        	    c.moveToNext();
 		        	  }
 		        }
