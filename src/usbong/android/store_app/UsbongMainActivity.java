@@ -82,7 +82,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         
         //added by Mike, 25 Sept. 2015
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("UsbongKit");
+        getSupportActionBar().setTitle(getResources().getString(R.string.usbong));//getResources().getString(R.string.app_name)); //edited by Mike, 20170214
 //        getSupportActionBar().setDisplayUseLogoEnabled(true);        
 
 //    	if (instance==null) { //comment this out, since the app seems to retain the instance even after we do a finish to GameActivity to close the app...
@@ -101,7 +101,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         	}
         	
 	        reset();
-	        initMainMenuScreen();
+//	        initMainMenuScreen();
     }
     
     public static UsbongMainActivity getInstance() {
@@ -114,7 +114,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     public void init()
     {    	
     }
-    
+/*    
     public void initMainMenuScreen()
     {    	
     	//added by Mike, 20160126
@@ -155,7 +155,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			}
     	});
     }
-    
+*/    
     public void reset() {
     	UsbongUtils.generateDateTimeStamp(); //create a new timestamp for this "New Entry"
     }

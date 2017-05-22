@@ -1,28 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/UsbongMainMenuParentLayout"
-	android:background="@drawable/bg">
-	<LinearLayout style="@style/UsbongTextImageMainLayout">	    
+	android:background="@drawable/bg"
+	android:gravity="top"	
+	>
+	<LinearLayout style="@style/UsbongTextImageMainLayout"
+	    	android:gravity="top"
+	    >	    
 	    <ImageView android:id="@+id/cover_img"
-  	    	style="@style/UsbongTextImageDisplayImageView"	 
-	  	    android:background="@drawable/cover"	    
-	  	    android:layout_width="wrap_content"
-	  	    android:layout_height="wrap_content"	  	    
-			android:contentDescription="@string/cover_img" /> 		    
+		    style="@style/UsbongTextImageDisplayImageView"	    				
+		    android:background="@drawable/cover"	 
+		/>
+		<EditText android:id="@+id/textfield_edittext"
+			style="@style/UsbongDefaultEditText"	
+		/>
 	</LinearLayout>	
-	<LinearLayout
-		style="@style/UsbongDefaultBuySellRequestButtonLayout">	
-		<Button android:id="@+id/buy_button"
-		    style="@style/UsbongDefaultBuySellRequestButton"
-			android:text="@string/buy" 
-			android:background="@drawable/button_yellow"/>		    
-	    <Button android:id="@+id/sell_button"
-		    style="@style/UsbongDefaultBuySellRequestButton"
-			android:text="@string/sell" 
-			android:background="@drawable/button_yellow"/>	
-		<Button android:id="@+id/request_button"
-		    style="@style/UsbongDefaultBuySellRequestButton"
-			android:text="@string/request" 
-			android:background="@drawable/button_yellow"/>	
-	</LinearLayout>
 </LinearLayout>
