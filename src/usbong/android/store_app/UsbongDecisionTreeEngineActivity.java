@@ -808,11 +808,22 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		        		else {
 		        			price = "₱" + price;
 		        		}
-		        		String productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
-					   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
-					   							 "Price: "+price+"\n"+
-					   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
-					   							 "Language: "+c.getString(c.getColumnIndex("language"));
+		        		
+		        		String productDetails="";
+		        		switch(currCategory) {
+			    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+				        		productDetails =  "Name: "+c.getString(c.getColumnIndex("name"))+"\n"+
+			   							 "Price: "+price+"\n"+
+			   							 "Language: "+c.getString(c.getColumnIndex("language"));
+			    				break;
+			    			default:
+				        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
+			   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
+			   							 "Price: "+price+"\n"+
+			   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
+			   							 "Language: "+c.getString(c.getColumnIndex("language"));
+			    				break;
+		        		}
 			        	listOfTreesArrayList.add(productDetails);
 		        	    c.moveToNext();
 		        	  }
@@ -3717,8 +3728,29 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 if (o != null) {
                 	try {       
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
-                    	//added by Mike, 20170131
-                    	final String s = o.toString()
+                    	//edited by Mike, 20170522
+                    	final String s;
+	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+	                    Resources myRes = instance.getResources();
+	                    final String imageFileName;
+	                    
+                    	switch(currCategory) {
+			    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+		                    	s = o.toString()
+                    			.replace("Name:", "<b>Name:</b>")
+            					.replace("\nPrice:", "\n<b>Price:</b>")
+            					.replace("\nLanguage:", "\n<b>Language:</b>")
+            					.replace("\n", "<br>");
+//            					.substring(o.indexOf("T"));
+
+			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nPrice:"))
+			                    		.replace("Name: ","")
+			                    		.replace("’","")
+			                    		.replace("'","")
+			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+			    				break;
+			    			default:
+		                    	s = o.toString()
                     			.replace("Title:", "<b>Title:</b>")
             					.replace("\nAuthor:", "\n<b>Author:</b>")
             					.replace("\nPrice:", "\n<b>Price:</b>")
@@ -3727,13 +3759,13 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             					.replace("\n", "<br>");
 //            					.substring(o.indexOf("T"));
 
-	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
-	                    Resources myRes = instance.getResources();
-	                    final String imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nAuthor:"))
-	                    		.replace("Title: ","")
-	                    		.replace("’","")
-	                    		.replace("'","")
-	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nAuthor:"))
+			                    		.replace("Title: ","")
+			                    		.replace("’","")
+			                    		.replace("'","")
+			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+			    				break;
+                    	}
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	

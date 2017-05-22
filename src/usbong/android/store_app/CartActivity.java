@@ -252,11 +252,17 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     public void processOrderTotal() {
 		orderSubtotalCost = 0;
 		for (int i=0; i<tempList.size(); i++) { 
-			String s = tempList.get(i); 			
-			String sPart1 = s.substring(s.indexOf("₱"));	            				
-			String item_price = sPart1.substring(0,sPart1.indexOf("F"));//("("));//(used), (new)
-			
-			orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));
+			String s = tempList.get(i); 	
+			if (s.contains("Format")) { //BOOK/COMBO
+				String sPart1 = s.substring(s.indexOf("₱"));	            				
+				String item_price = sPart1.substring(0,sPart1.indexOf("F"));//("("));//(used), (new)				
+				orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));				
+			}
+			else {
+				String sPart1 = s.substring(s.indexOf("₱"));	            				
+				String item_price = sPart1.substring(0,sPart1.indexOf("L"));//("("));//(used), (new)				
+				orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));				
+			}
 		}
 		
 		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
@@ -957,22 +963,44 @@ public class CartActivity extends AppCompatActivity/*Activity*/
                 if (o != null) {
                 	try {       
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
-                    	//added by Mike, 20170131
-                    	final String s = o.toString()
-                    			.replace("Title:", "<b>Title:</b>")
-            					.replace("\nAuthor:", "\n<b>Author:</b>")
-            					.replace("\nPrice:", "\n<b>Price:</b>")
-//            					.replace("\nDetails:", "\n<b>Details:</b>")
-            					.replace("\nLanguage:", "\n<b>Language:</b>")
-            					.replace("\n", "<br>");
-
+                    	final String tempS = o.toString();
+                    	final String s; 
+	                    final String imageFileName;
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
-	                    final String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
-	                    		.replace("Title: ","")
-	                    		.replace("’","")
-	                    		.replace("'","")
-	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+
+                    	if (tempS.contains("Format")) { //BOOK/COMBO
+                        	//added by Mike, 20170131
+                        	s = o.toString()
+                        			.replace("Title:", "<b>Title:</b>")
+                					.replace("\nAuthor:", "\n<b>Author:</b>")
+                					.replace("\nPrice:", "\n<b>Price:</b>")
+                					.replace("\nFormat:", "\n<b>Format:</b>")
+//                					.replace("\nDetails:", "\n<b>Details:</b>")
+                					.replace("\nLanguage:", "\n<b>Language:</b>")
+                					.replace("\n", "<br>");
+
+    	                    imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
+    	                    		.replace("Title: ","")
+    	                    		.replace("’","")
+    	                    		.replace("'","")
+    	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+            			}
+            			else {
+                        	//added by Mike, 20170131
+                        	s = o.toString()
+                        			.replace("Name:", "<b>Name:</b>")
+                					.replace("\nPrice:", "\n<b>Price:</b>")
+                					.replace("\nLanguage:", "\n<b>Language:</b>")
+                					.replace("\n", "<br>")
+                        			+("<br><br>");
+
+    	                    imageFileName = o.toString().substring(0, o.toString().indexOf("\nPrice:"))
+    	                    		.replace("Name: ","")
+    	                    		.replace("’","")
+    	                    		.replace("'","")
+    	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+            			}
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	
