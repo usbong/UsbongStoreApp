@@ -552,36 +552,35 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				
 				//added by Mike, 20170518
 //		        SQLiteDatabase myDb = null;
-
-		        myDbHelper = new UsbongDbHelper(this);
-		        /*
-		         * Database must be initialized before it can be used. This will ensure
-		         * that the database exists and is the current version.
-		         */
-		         myDbHelper.initializeDataBase();
 /*
+		        myDbHelper = new UsbongDbHelper(this);
+		         myDbHelper.initializeDataBase();
+
 		         try {
 		            // A reference to the database can be obtained after initialization.
-		            myDb = myDbHelper.getWritableDatabase();
+//		            myDb = myDbHelper.getWritableDatabase();
+			        mySQLiteDatabase = myDbHelper.getReadableDatabase();
 //		            
 //		            Place code to use database here.
 //		            
 		         } catch (Exception ex) {
 		            ex.printStackTrace();
 		         } finally {
-//		            try {
-//		                myDbHelper.close();
-//		            } catch (Exception ex) {
-//		                ex.printStackTrace();
-//		            } finally {
-//		                myDb.close();
-//		            }
+		            try {
+		                myDbHelper.close();
+		            } catch (Exception ex) {
+		                ex.printStackTrace();
+		            } finally {
+		                myDbHelper.close();
+		            }
 		        }
 */		         
 		        //added by Mike, 20170518
 		        //test whether we can query data from the db
 //		        SQLiteDatabase db = myDbHelper.getReadableDatabase();
-		        mySQLiteDatabase = myDbHelper.getReadableDatabase();
+//		        mySQLiteDatabase = myDbHelper.getReadableDatabase();
+//                myDbHelper.close();
+
 /*
 			    // Define a projection that specifies which columns from the database
 			    // you will actually use after this query.
@@ -789,32 +788,48 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				currProductTypeId = UsbongConstants.PRODUCT_TYPE_COMBOS;
 				break;
 		}
-		
-	     String table = "product";
-	     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
-	     Cursor c = mySQLiteDatabase.rawQuery(query, null);
-	     if (c != null) {
-	        if (c.moveToFirst()) { // if Cursor is not empty
-	        	while (!c.isAfterLast()) {
-		        	listOfTreesArrayList.add(currProductTypeId+
-		        							 "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
-		        							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
-		        							 "Price: ₱"+c.getString(c.getColumnIndex("price"))+"\n"+
-		        							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
-		        							 "Language: "+c.getString(c.getColumnIndex("language")));
-	        	    c.moveToNext();
-	        	  }
-	        }
-	        else {
-	           // Cursor is empty
-	        	Log.d(">>>>>", "cursor is empty");
-	        }
-	     }
-	     else {
-	        // Cursor is null
-	        	Log.d(">>>>>", "cursor is null");
-	     }
 
+		 myDbHelper = new UsbongDbHelper(this);
+         myDbHelper.initializeDataBase();
+
+         try {
+	         mySQLiteDatabase = myDbHelper.getReadableDatabase();
+
+		     String table = "product";
+		     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
+		     Cursor c = mySQLiteDatabase.rawQuery(query, null);
+		     if (c != null) {
+		        if (c.moveToFirst()) { // if Cursor is not empty
+		        	while (!c.isAfterLast()) {
+			        	listOfTreesArrayList.add("Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
+			        							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
+			        							 "Price: ₱"+c.getString(c.getColumnIndex("price"))+"\n"+
+			        							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
+			        							 "Language: "+c.getString(c.getColumnIndex("language")));
+		        	    c.moveToNext();
+		        	  }
+		        }
+		        else {
+		           // Cursor is empty
+		        	Log.d(">>>>>", "cursor is empty");
+		        }
+		     }
+		     else {
+		        // Cursor is null
+		        	Log.d(">>>>>", "cursor is null");
+		     }
+         } catch (Exception ex) {
+            ex.printStackTrace();
+         } finally {
+             try {
+                 myDbHelper.close();
+             } catch (Exception ex) {
+                 ex.printStackTrace();
+             } finally {
+                 myDbHelper.close();
+             }        	 
+         }
+  
         switch (currCategory) {
         	case UsbongConstants.ITEMS_LIST_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
@@ -3701,12 +3716,12 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             					.replace("\nPrice:", "\n<b>Price:</b>")
 //            					.replace("\nDetails:", "\n<b>Details:</b>")
             					.replace("\nLanguage:", "\n<b>Language:</b>")
-            					.replace("\n", "<br>")
-            					.substring(o.indexOf("T"));
+            					.replace("\n", "<br>");
+//            					.substring(o.indexOf("T"));
 
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
-	                    final String imageFileName = o.toString().substring(/*0*/o.indexOf("T"), o.toString().indexOf("\nAuthor:"))
+	                    final String imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nAuthor:"))
 	                    		.replace("Title: ","")
 	                    		.replace("’","")
 	                    		.replace("'","")
