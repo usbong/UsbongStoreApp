@@ -14,6 +14,8 @@
  */
 package usbong.android.store_app;
 
+import java.util.ArrayList;
+
 import usbong.android.db.UsbongDbHelper;
 import usbong.android.utils.AppRater;
 import usbong.android.utils.UsbongConstants;
@@ -29,17 +31,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /*
@@ -116,6 +124,102 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
      */
     public void init()
     {    	
+    	//added by Mike, 20170523
+		final Spinner categorySpinner = (Spinner) findViewById(R.id.category);
+		
+		//TODO: retrive items from DB
+		final ArrayList<String> categoryItems = new ArrayList<String>();
+		categoryItems.add("All");// ▽");
+		categoryItems.add("Books");
+		categoryItems.add("Combos");
+		categoryItems.add("Beverages");
+		 
+//		final int categoryItemsLength = categoryItems.size();
+		
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, categoryItems);
+		categorySpinner.setAdapter(adapter);	            	
+/*
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		float dp = 20f;
+		float fpixels = metrics.density * dp;
+		final int pixels = (int) (fpixels + 0.5f);
+*/		
+		//added by Mike, 20170509	            		
+		categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+//			private int prevQuantityIndex;
+			@Override
+			public void onItemSelected(AdapterView<?> arg0,
+					View arg1, final int arg2, long arg3) {
+/*				
+				categoryItems.clear();
+				categoryItems.add("All");
+				categoryItems.add("Books");
+				categoryItems.add("Combos");
+				categoryItems.add("Beverages");
+				
+				if (categoryItems.get(arg2).equals(
+						categorySpinner.getItemAtPosition(arg2).toString())) {
+					categoryItems.remove(arg2);
+					String q = categorySpinner.getItemAtPosition(arg2).toString().trim() + " ▽";
+					categoryItems.add(arg2, q);	
+				}
+*/				
+/*				
+				categorySpinner.getLayoutParams().width = categorySpinner.getItemAtPosition(arg2).toString().length()*pixels;
+				categorySpinner.invalidate();
+*/
+/*
+				if (quantitySpinner.getItemAtPosition(arg2).toString().equals("Remove")){
+		        	new AlertDialog.Builder(CartActivity.this).setTitle("Hey!")
+					.setMessage("Are you sure you want to remove this item from your cart?")
+					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {					
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							items.remove(position);
+							quantityList.remove(position);																								
+
+							updateItemsInCart(items);
+							
+							//added by Mike, 20170509
+							if (UsbongUtils.itemsInCart.isEmpty()) {
+								UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon;
+								myActivityInstance.invalidateOptionsMenu();
+							}
+							
+							prevQuantityIndex=0;
+							instance.initCart();
+						}
+					})
+					.setNegativeButton("No", new DialogInterface.OnClickListener() {					
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							quantitySpinner.setSelection(prevQuantityIndex);
+						}
+					}).show();	 
+				}								
+				else {
+//					if (prevQuantityIndex!=arg2) {
+						prevQuantityIndex=arg2;
+						quantityList.remove(position);
+						String q = quantitySpinner.getSelectedItem().toString().trim();
+						quantityList.add(position, q);
+
+						//added by Mike, 20170511
+						updateItemsInCart(items);
+						
+	            		processSubtotal(v, Integer.parseInt(q), s);
+						processOrderTotal();
+//					}
+				}
+*/				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub				
+			}	            			
+		});
+    	
         final EditText searchEditText = (EditText)findViewById(R.id.search_edittext);
     	//Reference: https://stackoverflow.com/questions/3205339/android-how-to-make-keyboard-enter-button-say-search-and-handle-its-click;
     	//last accessed: 20170523
