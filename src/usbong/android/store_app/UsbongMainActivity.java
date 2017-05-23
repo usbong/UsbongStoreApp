@@ -14,12 +14,7 @@
  */
 package usbong.android.store_app;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-
+import usbong.android.db.UsbongDbHelper;
 import usbong.android.utils.AppRater;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
@@ -29,21 +24,23 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.TextView;
 
 /*
  * This is Usbong's Main Menu activity. 
@@ -67,7 +64,12 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	private ProgressDialog myProgressDialog;
 	
     private AlertDialog inAppSettingsDialog; //added by Mike, 20160417
-
+    private EditText searchEditText;
+    
+	//added by Mike, 20170523
+	private UsbongDbHelper myDbHelper;
+	private SQLiteDatabase mySQLiteDatabase;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -102,6 +104,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         	
 	        reset();
 //	        initMainMenuScreen();
+	        init();
     }
     
     public static UsbongMainActivity getInstance() {
@@ -113,7 +116,62 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
      */
     public void init()
     {    	
+        final EditText searchEditText = (EditText)findViewById(R.id.search_edittext);
+    	//Reference: https://stackoverflow.com/questions/3205339/android-how-to-make-keyboard-enter-button-say-search-and-handle-its-click;
+    	//last accessed: 20170523
+    	//answer by: Robby Pond; edited by: sergej shafarenka
+    	searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+    	    @Override
+    	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+    	        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+    	            performSearch(searchEditText.getText().toString());
+    	            return true;
+    	        }
+    	        return false;
+    	    }
+    	});
     }
+    
+    public void performSearch(String s) {
+    	myDbHelper = new UsbongDbHelper(this);
+        myDbHelper.initializeDataBase();
+
+        try {
+	         mySQLiteDatabase = myDbHelper.getReadableDatabase();
+
+		     String table = "product";
+		     String query = "SELECT `name` FROM "+table+" WHERE NAME LIKE '%"+s+"%' OR author like '%"+s+"%'";		     
+//		     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
+		     Cursor c = mySQLiteDatabase.rawQuery(query, null);
+		     if (c != null) {
+		        if (c.moveToFirst()) { // if Cursor is not empty
+		        	while (!c.isAfterLast()) {
+		        		Log.d(">>>>>", c.getString(c.getColumnIndex("name")));
+		        	    c.moveToNext();
+		        	  }
+		        }
+		        else {
+		           // Cursor is empty
+		        	Log.d(">>>>>", "cursor is empty");
+		        }
+		     }
+		     else {
+		        // Cursor is null
+		        	Log.d(">>>>>", "cursor is null");
+		     }
+        } catch (Exception ex) {
+           ex.printStackTrace();
+        } finally {
+            try {
+                myDbHelper.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                myDbHelper.close();
+            }        	 
+        }
+    }
+    
 /*    
     public void initMainMenuScreen()
     {    	

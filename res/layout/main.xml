@@ -11,8 +11,10 @@
 		    style="@style/UsbongTextImageDisplayImageView"	    				
 		    android:background="@drawable/cover"	 
 		/>
-		<EditText android:id="@+id/textfield_edittext"
+		<EditText android:id="@+id/search_edittext"
 			style="@style/UsbongDefaultEditText"	
+			android:imeOptions="actionSearch"
+			android:inputType="text"
 		/>
 	</LinearLayout>	
 </LinearLayout>
