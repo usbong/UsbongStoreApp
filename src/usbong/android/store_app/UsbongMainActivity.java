@@ -55,10 +55,6 @@ import android.widget.TextView;
  */
 public class UsbongMainActivity extends AppCompatActivity/*Activity*/ 
 {	
-	private Button buyButton;
-	private Button sellButton;
-	private Button requestButton;
-	
 	private static UsbongMainActivity instance;
 				
 	public static String timeStamp;
@@ -124,6 +120,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
      */
     public void init()
     {    	
+/*    	
     	//added by Mike, 20170523
 		final Spinner categorySpinner = (Spinner) findViewById(R.id.category);
 		
@@ -138,18 +135,21 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		
 		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, categoryItems);
 		categorySpinner.setAdapter(adapter);	            	
+*/		
 /*
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
 		float dp = 20f;
 		float fpixels = metrics.density * dp;
 		final int pixels = (int) (fpixels + 0.5f);
-*/		
+*/	
+/*    	
 		//added by Mike, 20170509	            		
 		categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 //			private int prevQuantityIndex;
 			@Override
 			public void onItemSelected(AdapterView<?> arg0,
 					View arg1, final int arg2, long arg3) {
+*/					
 /*				
 				categoryItems.clear();
 				categoryItems.add("All");
@@ -212,6 +212,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 //					}
 				}
 */				
+/*    	
 			}
 
 			@Override
@@ -219,7 +220,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				// TODO Auto-generated method stub				
 			}	            			
 		});
-    	
+*/    	
         final EditText searchEditText = (EditText)findViewById(R.id.search_edittext);
     	//Reference: https://stackoverflow.com/questions/3205339/android-how-to-make-keyboard-enter-button-say-search-and-handle-its-click;
     	//last accessed: 20170523

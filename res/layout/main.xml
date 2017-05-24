@@ -4,34 +4,16 @@
 	android:background="@drawable/bg"
 	android:gravity="top"	
 	>
-	<LinearLayout style="@style/UsbongTextImageMainLayout"
-	    	android:gravity="top"
-	    >	    
-	    <ImageView android:id="@+id/cover_img"
-		    style="@style/UsbongTextImageDisplayImageView"	    				
-		    android:background="@drawable/cover"	 
+		<EditText android:id="@+id/search_edittext"
+			style="@style/UsbongDefaultEditText"	
+			android:imeOptions="actionSearch"
+			android:inputType="text"
+			android:singleLine="true"
+            android:ellipsize="end"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:hint="I'm looking for..."
+            android:textColorHint="#b7b7b7"
+            android:textSize="24dp"
 		/>
-	    <LinearLayout 
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-	        android:gravity="top"
-	    	android:orientation="horizontal"
-	    >	    	    
-	    	<Spinner
-			    android:id="@+id/category"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:spinnerMode="dropdown"
-			    android:background="#706f5630"
-				android:textSize="20dp"
-				android:textColor="#4a452a"
-	        	android:gravity="center"
-			    />   	    
-			<EditText android:id="@+id/search_edittext"
-				style="@style/UsbongDefaultEditText"	
-				android:imeOptions="actionSearch"
-				android:inputType="text"
-			/>
-		</LinearLayout>
-	</LinearLayout>	
 </LinearLayout>
