@@ -15,5 +15,6 @@
             android:hint="I'm looking for..."
             android:textColorHint="#b7b7b7"
             android:textSize="24dp"
+            android:drawableRight="@drawable/magnifying_glass"
 		/>
 </LinearLayout>
