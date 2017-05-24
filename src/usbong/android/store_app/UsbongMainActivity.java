@@ -30,9 +30,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,6 +49,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -66,9 +70,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	
 	private static Activity myActivityInstance;
 	private ProgressDialog myProgressDialog;
-	
-    private AlertDialog inAppSettingsDialog; //added by Mike, 20160417
-    private EditText searchEditText;
+
+	//edited by Mike, 20170525
+	private static int currModeOfPayment=UsbongConstants.defaultModeOfPayment; 
     
 	//added by Mike, 20170523
 	private UsbongDbHelper myDbHelper;
@@ -356,7 +360,11 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.title_menu, menu);
+		inflater.inflate(R.menu.standard_menu, menu);
+		
+		//added by Mike, 20170525
+		UsbongUtils.cartIcon = menu.findItem(R.id.cart).setIcon(UsbongUtils.cartIconDrawableResourceId);		
+
 		return super.onCreateOptionsMenu(menu); 
 	}
 	
@@ -514,6 +522,45 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				inAppSettingsDialog.show();
 					return true;
 */					
+			case(R.id.cart): //added by Mike, 20170427
+				if ((UsbongUtils.itemsInCart==null) || (UsbongUtils.itemsInCart.isEmpty())) {
+			    	AlertDialog.Builder emptyCartAlertDialog = new AlertDialog.Builder(UsbongMainActivity.this).setTitle("Your Shopping Cart");
+					TextView tv = new TextView(this);
+					tv.setText("\nIt is currently empty.");
+					tv.setGravity(Gravity.CENTER_HORIZONTAL);
+					tv.setTextSize(16);
+					emptyCartAlertDialog.setView(tv);
+					emptyCartAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					}).show();
+				}
+				else {
+					finish();
+					//added by Mike, 20170216
+					Intent toCartActivityIntent = new Intent().setClass(getInstance(), CartActivity.class);
+	//				toCartActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+					toCartActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(toCartActivityIntent);
+				}
+				return true;
+			case(R.id.sell): //added by Mike, 20170308
+				finish();
+				//added by Mike, 20170216
+				Intent toSellActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
+				toSellActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+				toSellActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(toSellActivityIntent);
+				return true;
+			case(R.id.request):
+				finish();
+				//added by Mike, 20170216
+				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
+				toRequestActivityIntent.putExtra("newRequestActivity", true); //added by Mike, 20170330
+				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(toRequestActivityIntent);
+				return true;
 			case(R.id.about):
 		    	new AlertDialog.Builder(UsbongMainActivity.this).setTitle("About")
 				.setMessage(UsbongUtils.readTextFileInAssetsFolder(UsbongMainActivity.this,"credits.txt")) //don't add a '/', otherwise the file would not be found
@@ -530,11 +577,43 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				surName.setHint("Surname");
 				final EditText contactNumber = new EditText(this);
 				contactNumber.setHint("Contact Number");
+				contactNumber.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+	/*				
+				//added by Mike, 20170223
+				final RadioGroup preference = new RadioGroup(this);
+				preference.setOrientation(RadioGroup.HORIZONTAL);
+				
+				RadioButton meetup = new AppCompatRadioButton(this);
+				meetup.setText("Meet-up");
+				preference.addView(meetup);
+								
+				RadioButton shipping = new AppCompatRadioButton(this);
+				shipping.setText("Shipping");
+				preference.addView(shipping);				
+	*/				
 				final EditText shippingAddress = new EditText(this);
 				shippingAddress.setHint("Shipping Address");
 				shippingAddress.setMinLines(5);
-				
-				contactNumber.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+	
+				//added by Mike, 20170223
+				final RadioGroup modeOfPayment = new RadioGroup(this);
+				modeOfPayment.setOrientation(RadioGroup.VERTICAL);
+	/*				
+				RadioButton cashUponMeetup = new AppCompatRadioButton(this);
+				cashUponMeetup.setText("Cash upon meet-up");
+				modeOfPayment.addView(cashUponMeetup);
+	*/									
+				RadioButton bankDeposit = new AppCompatRadioButton(this);
+				bankDeposit.setText("Bank Deposit");
+				modeOfPayment.addView(bankDeposit);
+	/*
+				RadioButton peraPadala = new AppCompatRadioButton(this);
+				peraPadala.setText("Pera Padala");
+				modeOfPayment.addView(peraPadala);
+	*/
+				RadioButton paypal = new AppCompatRadioButton(this);
+				paypal.setText("PayPal");
+				modeOfPayment.addView(paypal);
 				
 			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 		        //; last accessed: 20150609
@@ -545,7 +624,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		          firstName.setText(prefs.getString("firstName", ""));//"" is the default value.
 		          surName.setText(prefs.getString("surname", "")); //"" is the default value.
 		          contactNumber.setText(prefs.getString("contactNumber", "")); //"" is the default value.
+	/*
+		          //added by Mike, 20170223
+		          ((RadioButton)preference.getChildAt(prefs.getInt("preference", UsbongConstants.defaultPreference))).setChecked(true);
+	*/				  		          
 		          shippingAddress.setText(prefs.getString("shippingAddress", "")); //"" is the default value.
+		          
+			      //added by Mike, 20170223				  
+		          ((RadioButton)modeOfPayment.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
 		        }
 				
 				LinearLayout ll=new LinearLayout(this);
@@ -553,8 +639,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				ll.addView(firstName);
 				ll.addView(surName);
 				ll.addView(contactNumber);
+	/*				ll.addView(preference);*/
 				ll.addView(shippingAddress);				
-
+				ll.addView(modeOfPayment);
+	
 				new AlertDialog.Builder(this).setTitle("My Account")
 				.setView(ll)
 				.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
@@ -573,11 +661,43 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				        editor.putString("firstName", firstName.getText().toString());
 				        editor.putString("surname", surName.getText().toString());
 				        editor.putString("contactNumber", contactNumber.getText().toString());
+	/*
+				        for (int i=0; i< preference.getChildCount(); i++) {
+				        	if (((RadioButton)preference.getChildAt(i)).isChecked()) {
+				        		currPreference=i;
+				        	}
+				        }
+				        editor.putInt("preference", currPreference); //added by Mike, 20170223				        
+	*/				        
 				        editor.putString("shippingAddress", shippingAddress.getText().toString());
-				        editor.commit();				    	
+	
+				        for (int i=0; i< modeOfPayment.getChildCount(); i++) {
+				        	if (((RadioButton)modeOfPayment.getChildAt(i)).isChecked()) {
+				        		currModeOfPayment=i;
+				        	}
+				        }
+				        editor.putInt("modeOfPayment", currModeOfPayment); //added by Mike, 20170223
+				        editor.commit();		
+/*				        
+				        if (currScreen!=BUY_SCREEN) {
+					        //added by Mike, 20170222
+					        setContentView(R.layout.account);	
+					        init();				        	
+				        }
+*/				        
 				    }
 				}).show();
 				return true;
+			case android.R.id.home: //added by Mike, 22 Sept. 2015
+	/*//commented out by Mike, 201702014; UsbongDecisionTreeEngineActivity is already the main menu				
+				processReturnToMainMenuActivity();
+	*/				    	//added by Mike, 20170216
+				//return to UsbongDecisionTreeEngineActivity
+				finish();
+				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(getInstance(), UsbongDecisionTreeEngineActivity.class);
+				toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+				startActivity(toUsbongDecisionTreeEngineActivityIntent);
+		        return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
