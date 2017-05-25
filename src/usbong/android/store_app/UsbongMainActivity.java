@@ -49,8 +49,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -287,6 +289,30 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     	        return false;
     	    }
     	});
+    	
+    	//Reference: https://stackoverflow.com/questions/13135447/setting-onclicklistner-for-the-drawable-right-of-an-edittext;
+    	//last accessed: 20170525
+    	//answer by: AZ_
+    	searchEditText.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+//                final int DRAWABLE_LEFT = 0;
+//                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+//                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (searchEditText.getRight() - searchEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+        	            performSearch(searchEditText.getText().toString());
+        	            showSearchResults();
+        	            searchEditText.clearFocus();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
     
     public void performSearch(String s) {
