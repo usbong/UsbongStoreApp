@@ -17,6 +17,7 @@ public class UsbongConstants {
 	public static final String ITEM_IMAGE_NAME = "item_image";
 			
 	//added by Mike, 20170330
+	public static final String ITEMS_LIST_DEFAULT = "items_list_books";
 	public static final String ITEMS_LIST_BOOKS = "items_list_books";
 	public static final String ITEMS_LIST_COMBOS = "items_list_combos";
 	public static final String ITEMS_LIST_BEVERAGES = "items_list_beverages";

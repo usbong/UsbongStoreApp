@@ -71,7 +71,7 @@ import android.widget.TextView;
 public class UsbongMainActivity extends AppCompatActivity/*Activity*/ 
 {	
 	//added by Mike, 20170525
-	private String currCategory = UsbongConstants.ITEMS_LIST_BOOKS;
+	private String currCategory = UsbongConstants.ITEMS_LIST_DEFAULT;
 
 	private static UsbongMainActivity instance;
 				
@@ -97,6 +97,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	//added by Mike, 20170523
 	private UsbongDbHelper myDbHelper;
 	private SQLiteDatabase mySQLiteDatabase;
+	
+	private int currProductTypeId = 1; //default
     
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -279,6 +281,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
     	        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
     	            performSearch(searchEditText.getText().toString());
+    	            showSearchResults();
     	            return true;
     	        }
     	        return false;
@@ -290,29 +293,83 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     	myDbHelper = new UsbongDbHelper(this);
         myDbHelper.initializeDataBase();
 
+        listOfTreesArrayList.clear(); //added by Mike, 20170525
+        
         try {
 	         mySQLiteDatabase = myDbHelper.getReadableDatabase();
 
 		     String table = "product";
-		     String query = "SELECT `name` FROM "+table+" WHERE NAME LIKE '%"+s+"%' OR author like '%"+s+"%'";		     
+		     String query = "";
+		     
+		     if (s==null) {
+			     query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
+		     }
+		     else {
+			     query = "select * from '"+table+"' where NAME like '%"+s+"%' OR author LIKE '%"+s+"%'";		     		    	 
+			     currCategory = UsbongConstants.ITEMS_LIST_DEFAULT;
+		     }		     
+		     
 //		     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
 		     Cursor c = mySQLiteDatabase.rawQuery(query, null);
 		     if (c != null) {
-		        if (c.moveToFirst()) { // if Cursor is not empty
-		        	while (!c.isAfterLast()) {
-		        		Log.d(">>>>>", c.getString(c.getColumnIndex("name")));
-		        	    c.moveToNext();
-		        	  }
-		        }
-		        else {
-		           // Cursor is empty
-		        	Log.d(">>>>>", "cursor is empty");
-		        }
-		     }
-		     else {
-		        // Cursor is null
-		        	Log.d(">>>>>", "cursor is null");
-		     }
+			        if (c.moveToFirst()) { // if Cursor is not empty
+			        	while (!c.isAfterLast()) {
+			        		String price = c.getString(c.getColumnIndex("price"));
+			        		if (price==null) {
+			        			price = "out of stock";
+			        		}
+			        		else {
+			        			price = "₱" + price;
+			        		}
+			        		
+			        		String productDetails="";
+			        		if (s==null) {
+				        		switch(currCategory) {
+					    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+						        		productDetails =  "Name: "+c.getString(c.getColumnIndex("name"))+"\n"+
+					   							 "Price: "+price+"\n"+
+					   							 "Language: "+c.getString(c.getColumnIndex("language"));
+					    				break;
+					    			default:
+						        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
+					   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
+					   							 "Price: "+price+"\n"+
+					   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
+					   							 "Language: "+c.getString(c.getColumnIndex("language"));
+					    				break;
+				        		}
+			        		}
+			        		else {
+				        		/*if (Integer.parseInt(c.getString(c.getColumnIndex("product_type_id")))
+				        				==UsbongConstants.PRODUCT_TYPE_BEVERAGES) {
+				        			//TODO: remove field labels
+				        			productDetails =  "Name: "+c.getString(c.getColumnIndex("name"))+"\n"+
+				   							 "Price: "+price+"\n"+
+				   							 "Language: "+c.getString(c.getColumnIndex("language"));			        			
+				        		}
+				        		else {*/
+					        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
+				   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
+				   							 "Price: "+price+"\n"+
+				   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
+				   							 "Language: "+c.getString(c.getColumnIndex("language"));			        			
+/*				        		}			        		
+*/	
+			        		}
+
+				        	listOfTreesArrayList.add(productDetails);
+			        	    c.moveToNext();
+			        	  }
+			        }
+			        else {
+			           // Cursor is empty
+			        	Log.d(">>>>>", "cursor is empty");
+			        }
+			     }
+			     else {
+			        // Cursor is null
+			        	Log.d(">>>>>", "cursor is null");
+			     }
         } catch (Exception ex) {
            ex.printStackTrace();
         } finally {
@@ -324,6 +381,56 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 myDbHelper.close();
             }        	 
         }
+    }
+
+    public void showSearchResults() {
+    	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+		mCustomAdapter.sort(); //edited by Mike, 20170203
+	
+		/*
+		//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
+		//last accessed: 2 Jan. 2014; answer by Alex Lockwood
+		mCustomAdapter.sort(new Comparator<String>() {
+		    public int compare(String arg0, String arg1) {
+		        return arg0.compareTo(arg1);
+		    }
+		});
+		*/		
+		treesListView = (ListView)findViewById(R.id.tree_list_view);
+		treesListView.setLongClickable(true);
+		treesListView.setAdapter(mCustomAdapter);
+		
+//		String pleaseMakeSureThatXMLTreeExistsString = (String) getResources().getText(R.string.pleaseMakeSureThatXMLTreeExistsString);
+//		String alertString = (String) getResources().getText(R.string.alertStringValueEnglish);
+		
+		if (listOfTreesArrayList.isEmpty()){
+			String alertTitle;
+		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+	        //; last accessed: 20150609
+	        //answer by Elenasys
+	        //added by Mike, 20150207
+			SharedPreferences prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
+	        if (prefs!=null) {
+	        	if (!prefs.getString("firstName", "").trim().equals("")) {
+		        	alertTitle = "Hey, "+prefs.getString("firstName", "")+"!";	        		
+	        	}
+	        	else {
+		        	alertTitle = "Hey!";	        		        		
+	        	}
+	        }
+	        else {
+	        	alertTitle = "Hey!";	        	
+	        }
+	        
+			new AlertDialog.Builder(UsbongMainActivity.this).setTitle(alertTitle)
+			.setMessage("Sorry, we didn't find what you are looking for at our store.")
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					instance.initTreeLoader();
+				}
+			}).show();	        		        	
+		  }	
     }
     
     //added by Mike, 20170525
@@ -410,7 +517,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 */
 		listOfTreesArrayList = new ArrayList<String>();
 		
-		int currProductTypeId = 1; //default
+		currProductTypeId = UsbongConstants.PRODUCT_TYPE_ALL; //default
 		switch(currCategory) {
 			case UsbongConstants.ITEMS_LIST_BOOKS:
 				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BOOKS;
@@ -423,66 +530,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				break;
 		}
 
-		 myDbHelper = new UsbongDbHelper(this);
-         myDbHelper.initializeDataBase();
-
-         try {
-	         mySQLiteDatabase = myDbHelper.getReadableDatabase();
-
-		     String table = "product";
-		     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
-		     Cursor c = mySQLiteDatabase.rawQuery(query, null);
-		     if (c != null) {
-		        if (c.moveToFirst()) { // if Cursor is not empty
-		        	while (!c.isAfterLast()) {
-		        		String price = c.getString(c.getColumnIndex("price"));
-		        		if (price==null) {
-		        			price = "out of stock";
-		        		}
-		        		else {
-		        			price = "₱" + price;
-		        		}
-		        		
-		        		String productDetails="";
-		        		switch(currCategory) {
-			    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
-				        		productDetails =  "Name: "+c.getString(c.getColumnIndex("name"))+"\n"+
-			   							 "Price: "+price+"\n"+
-			   							 "Language: "+c.getString(c.getColumnIndex("language"));
-			    				break;
-			    			default:
-				        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
-			   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
-			   							 "Price: "+price+"\n"+
-			   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
-			   							 "Language: "+c.getString(c.getColumnIndex("language"));
-			    				break;
-		        		}
-			        	listOfTreesArrayList.add(productDetails);
-		        	    c.moveToNext();
-		        	  }
-		        }
-		        else {
-		           // Cursor is empty
-		        	Log.d(">>>>>", "cursor is empty");
-		        }
-		     }
-		     else {
-		        // Cursor is null
-		        	Log.d(">>>>>", "cursor is null");
-		     }
-         } catch (Exception ex) {
-            ex.printStackTrace();
-         } finally {
-             try {
-                 myDbHelper.close();
-             } catch (Exception ex) {
-                 ex.printStackTrace();
-             } finally {
-                 myDbHelper.close();
-             }        	 
-         }
-  
+		performSearch(null);
+		
         switch (currCategory) {
         	case UsbongConstants.ITEMS_LIST_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
