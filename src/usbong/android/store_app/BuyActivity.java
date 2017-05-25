@@ -249,7 +249,8 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 
 					//added by Mike, 20170525
 					final Activity a;
-					if (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY) {
+					if ((getIntent().getExtras().getInt("activity caller")==0) 
+							|| (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY)) {
 						a = UsbongMainActivity.getInstance();
 					}
 					else {
@@ -498,7 +499,8 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 */
 		//added by Mike, 20170525
 		final Activity a;
-		if (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY) {
+		if ((getIntent().getExtras().getInt("activity caller")==0) 
+				|| (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY)) {
 			a = UsbongMainActivity.getInstance();
 		}
 		else {
@@ -706,6 +708,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 					//added by Mike, 20170216
 					Intent toCartActivityIntent = new Intent().setClass(getInstance(), CartActivity.class);
 	//				toCartActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+					toCartActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 					toCartActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(toCartActivityIntent);
 				}
@@ -715,6 +718,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				//added by Mike, 20170216
 				Intent toSellActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
 				toSellActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+				toSellActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 				toSellActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toSellActivityIntent);
 				return true;
@@ -723,6 +727,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				//added by Mike, 20170216
 				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
 				toRequestActivityIntent.putExtra("newRequestActivity", true); //added by Mike, 20170330
+				toRequestActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toRequestActivityIntent);
 				return true;
@@ -859,7 +864,8 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				//return to UsbongDecisionTreeEngineActivity
 				//added by Mike, 20170525
 				final Activity a;
-				if (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY) {
+				if ((getIntent().getExtras().getInt("activity caller")==0) 
+						|| (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY)) {
 					a = UsbongMainActivity.getInstance();
 				}
 				else {

@@ -777,13 +777,21 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 			myMediaPlayer.stop();
 		}
 */
-    	//added by Mike, 20170216
-		//return to UsbongDecisionTreeEngineActivity
+    	//added by Mike, 20170525
+		final Activity a;
+		if ((getIntent().getExtras().getInt("activity caller")==0) 
+				|| (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY)) {
+			a = UsbongMainActivity.getInstance();
+		}
+		else {
+			a = UsbongDecisionTreeEngineActivity.getInstance();						
+		}
+
+		//edited by Mike, 20170525
 		finish();
-		Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(getInstance(), UsbongDecisionTreeEngineActivity.class);
-		toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-		startActivity(toUsbongDecisionTreeEngineActivityIntent);
-    	
+		Intent toCallingActivityIntent = new Intent(getInstance(), a.getClass());
+		toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+		startActivity(toCallingActivityIntent);	   	
 /*
     	//Reference: http://stackoverflow.com/questions/11495188/how-to-put-application-to-background
     	//; last accessed: 14 April 2015, answer by: JavaCoderEx
@@ -979,6 +987,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 					//added by Mike, 20170216
 					Intent toCartActivityIntent = new Intent().setClass(getInstance(), CartActivity.class);
 	//				toCartActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+					toCartActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 					toCartActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(toCartActivityIntent);
 				}
@@ -988,6 +997,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				//added by Mike, 20170216
 				Intent toSellActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
 				toSellActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+				toSellActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 				toSellActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toSellActivityIntent);
 				return true;
@@ -996,6 +1006,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				//added by Mike, 20170216
 				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
 				toRequestActivityIntent.putExtra("newRequestActivity", true); //added by Mike, 20170330
+				toRequestActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toRequestActivityIntent);
 				return true;
@@ -1126,10 +1137,20 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				processReturnToMainMenuActivity();
 */				    	//added by Mike, 20170216
 				//return to UsbongDecisionTreeEngineActivity
+				final Activity a;
+				if ((getIntent().getExtras().getInt("activity caller")==0) 
+						|| (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY)) {
+					a = UsbongMainActivity.getInstance();
+				}
+				else {
+					a = UsbongDecisionTreeEngineActivity.getInstance();						
+				}
+
+				//edited by Mike, 20170525
 				finish();
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-				startActivity(toUsbongDecisionTreeEngineActivityIntent);
+				Intent toCallingActivityIntent = new Intent(getInstance(), a.getClass());
+				toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+				startActivity(toCallingActivityIntent);		
 		        return true;
 			default:
 				return super.onOptionsItemSelected(item);

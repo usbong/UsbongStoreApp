@@ -874,6 +874,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 					//added by Mike, 20170216
 					Intent toCartActivityIntent = new Intent().setClass(getInstance(), CartActivity.class);
 	//				toCartActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+					toCartActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 					toCartActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(toCartActivityIntent);
 				}
@@ -883,6 +884,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				//added by Mike, 20170216
 				Intent toSellActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
 				toSellActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+				toSellActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 				toSellActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toSellActivityIntent);
 				return true;
@@ -891,6 +893,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				//added by Mike, 20170216
 				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
 				toRequestActivityIntent.putExtra("newRequestActivity", true); //added by Mike, 20170330
+				toRequestActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toRequestActivityIntent);
 				return true;
@@ -1026,10 +1029,11 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				processReturnToMainMenuActivity();
 	*/				    	//added by Mike, 20170216
 				//return to UsbongDecisionTreeEngineActivity
+				//edited by Mike, 20170525
 				finish();
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-				startActivity(toUsbongDecisionTreeEngineActivityIntent);
+				Intent toMainActivityIntent = new Intent(getInstance(), UsbongMainActivity.class);
+				toMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+				startActivity(toMainActivityIntent);
 		        return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -1144,6 +1148,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				toBuyActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 	            				startActivityForResult(toBuyActivityIntent,1);
 	            			}
 	                	});
