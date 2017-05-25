@@ -58,6 +58,11 @@ public class UsbongConstants {
 	public final static int PRODUCT_TYPE_BOOKS_BEVERAGES=4;
 	public final static int PRODUCT_TYPE_COMBOS=5;
 	
+	//added by Mike, 20170525
+	public final static int USBONG_MAIN_ACTIVITY=0;
+	public final static int NOT_USBONG_MAIN_ACTIVITY=1;
+
+	
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
 	public static final int MULTIPLE_RADIO_BUTTONS_SCREEN=1;	

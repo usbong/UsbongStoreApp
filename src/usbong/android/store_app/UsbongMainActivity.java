@@ -275,7 +275,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		});
 */    	
         final EditText searchEditText = (EditText)findViewById(R.id.search_edittext);
-    	//Reference: https://stackoverflow.com/questions/3205339/android-how-to-make-keyboard-enter-button-say-search-and-handle-its-click;
+        //Reference: https://stackoverflow.com/questions/3205339/android-how-to-make-keyboard-enter-button-say-search-and-handle-its-click;
     	//last accessed: 20170523
     	//answer by: Robby Pond; edited by: sergej shafarenka
     	searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -1169,6 +1169,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				toBuyActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
                 		});

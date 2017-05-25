@@ -246,11 +246,21 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 					setContentView(R.layout.account);	
 					init();
 */					
+
+					//added by Mike, 20170525
+					final Activity a;
+					if (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY) {
+						a = UsbongMainActivity.getInstance();
+					}
+					else {
+						a = UsbongDecisionTreeEngineActivity.getInstance();						
+					}
+					
 					//return to UsbongDecisionTreeEngineActivity
 					finish();
-					Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(getInstance(), UsbongDecisionTreeEngineActivity.class);
-					toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-					startActivity(toUsbongDecisionTreeEngineActivityIntent);
+					Intent toCallingActivityIntent = new Intent(getInstance(), a.getClass());
+					toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+					startActivity(toCallingActivityIntent);
 				}
 				else {
 					if (verifyFields()) {			
@@ -486,12 +496,20 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 			myMediaPlayer.stop();
 		}
 */
-    	//added by Mike, 20170216
-		//return to UsbongDecisionTreeEngineActivity
+		//added by Mike, 20170525
+		final Activity a;
+		if (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY) {
+			a = UsbongMainActivity.getInstance();
+		}
+		else {
+			a = UsbongDecisionTreeEngineActivity.getInstance();						
+		}
+
+		//edited by Mike, 20170525
 		finish();
-		Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(getInstance(), UsbongDecisionTreeEngineActivity.class);
-		toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-		startActivity(toUsbongDecisionTreeEngineActivityIntent);
+		Intent toCallingActivityIntent = new Intent(getInstance(), a.getClass());
+		toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+		startActivity(toCallingActivityIntent);		
     	
 /*
     	//Reference: http://stackoverflow.com/questions/11495188/how-to-put-application-to-background
@@ -839,11 +857,21 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				processReturnToMainMenuActivity();
 */				    	//added by Mike, 20170216
 				//return to UsbongDecisionTreeEngineActivity
+				//added by Mike, 20170525
+				final Activity a;
+				if (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY) {
+					a = UsbongMainActivity.getInstance();
+				}
+				else {
+					a = UsbongDecisionTreeEngineActivity.getInstance();						
+				}
+
+				//edited by Mike, 20170525
 				finish();
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-				startActivity(toUsbongDecisionTreeEngineActivityIntent);
-		        return true;
+				Intent toCallingActivityIntent = new Intent(getInstance(), a.getClass());
+				toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+				startActivity(toCallingActivityIntent);		
+		    	return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
