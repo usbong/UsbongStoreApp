@@ -352,16 +352,25 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        		if (s==null) {
 				        		switch(currCategory) {
 					    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+/*					    				
 						        		productDetails =  "Name: "+c.getString(c.getColumnIndex("name"))+"\n"+
 					   							 "Price: "+price+"\n"+
 					   							 "Language: "+c.getString(c.getColumnIndex("language"));
-					    				break;
+*/
+						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
+					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>";
+						        		break;
 					    			default:
+/*					    				
 						        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
 					   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
 					   							 "Price: "+price+"\n"+
 					   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
 					   							 "Language: "+c.getString(c.getColumnIndex("language"));
+*/
+						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
+					   							 ""+c.getString(c.getColumnIndex("author"))+"\n"+
+					   							 "<font color='#644d17'><b>"+price+"</b> \n[Free Delivery]</font>";					    				
 					    				break;
 				        		}
 			        		}
@@ -374,11 +383,16 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				   							 "Language: "+c.getString(c.getColumnIndex("language"));			        			
 				        		}
 				        		else {*/
+/*			        			
 					        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
 				   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
 				   							 "Price: "+price+"\n"+
 				   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
 				   							 "Language: "+c.getString(c.getColumnIndex("language"));			        			
+*/
+				        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n\n"+
+			   							 ""+c.getString(c.getColumnIndex("author"))+"\n\n"+
+			   							 "<b><font color='#7c693d'>"+price+"</font></b>";					    				
 /*				        		}			        		
 */	
 			        		}
@@ -1099,6 +1113,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	                    
                     	switch(currCategory) {
 			    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+/*			    				
 		                    	s = o.toString()
                     			.replace("Name:", "<b>Name:</b>")
             					.replace("\nPrice:", "\n<b>Price:</b>")
@@ -1106,14 +1121,23 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             					.replace("\n", "<br>");
 //            					.substring(o.indexOf("T"));
 
-			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nPrice:"))
+			                    imageFileName = o.toString().substring(0, o.toString().indexOf("\nPrice:"))
 			                    		.replace("Name: ","")
 			                    		.replace("’","")
 			                    		.replace("'","")
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+*/			                    		
+			    				s = o.toString()
+	            					.replace("\n", "<br>");
+			    				imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
+		                    		.replace("<b>","")
+		                    		.replace("’","")
+		                    		.replace("'","")
+		                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 			    				break;
 			    			default:
-		                    	s = o.toString()
+/*
+			    				s = o.toString()
                     			.replace("Title:", "<b>Title:</b>")
             					.replace("\nAuthor:", "\n<b>Author:</b>")
             					.replace("\nPrice:", "\n<b>Price:</b>")
@@ -1122,8 +1146,16 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             					.replace("\n", "<br>");
 //            					.substring(o.indexOf("T"));
 
-			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nAuthor:"))
+			                    imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
 			                    		.replace("Title: ","")
+			                    		.replace("’","")
+			                    		.replace("'","")
+			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+*/			                    		
+			    				s = o.toString()
+		            				.replace("\n", "<br>");
+			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("</b>"))
+			                    		.replace("<b>","")
 			                    		.replace("’","")
 			                    		.replace("'","")
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
