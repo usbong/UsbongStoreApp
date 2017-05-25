@@ -14,44 +14,55 @@
  */
 package usbong.android.store_app;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import usbong.android.db.UsbongDbHelper;
 import usbong.android.utils.AppRater;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
+import android.text.Html;
 import android.text.InputType;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 /*
@@ -59,6 +70,9 @@ import android.widget.TextView;
  */
 public class UsbongMainActivity extends AppCompatActivity/*Activity*/ 
 {	
+	//added by Mike, 20170525
+	private String currCategory = UsbongConstants.ITEMS_LIST_BOOKS;
+
 	private static UsbongMainActivity instance;
 				
 	public static String timeStamp;
@@ -68,12 +82,18 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	protected UsbongDecisionTreeEngineActivity myUsbongDecisionTreeEngineActivity;
 	protected SettingsActivity mySettingsActivity;
 	
-	private static Activity myActivityInstance;
 	private ProgressDialog myProgressDialog;
 
 	//edited by Mike, 20170525
 	private static int currModeOfPayment=UsbongConstants.defaultModeOfPayment; 
     
+	public ListView treesListView;
+	
+	private CustomDataAdapter mCustomAdapter;
+	private ArrayList<String> listOfTreesArrayList;
+	
+	private boolean isInTreeLoader;
+	
 	//added by Mike, 20170523
 	private UsbongDbHelper myDbHelper;
 	private SQLiteDatabase mySQLiteDatabase;
@@ -88,7 +108,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         //added by Mike, 27 Sept. 2015
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
-        myActivityInstance = this;
+        instance=this;
         
         //added by Mike, 25 Sept. 2015
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -97,7 +117,6 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 
 //    	if (instance==null) { //comment this out, since the app seems to retain the instance even after we do a finish to GameActivity to close the app...
 	        setContentView(R.layout.main);	        
-	        instance = this;
 //	    	startTime = new Date();	        
 
             //added by Mike, 20161117
@@ -109,10 +128,16 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        AppRater.showRateDialog(this); 
 	        	}	        		
         	}
-        	
+
 	        reset();
+
+        	//added by Mike, 20170525
+    		myProgressDialog = ProgressDialog.show(instance, "Loading...",
+    				  "This takes only a short while.", true, false);				  
+    		new MyBackgroundTask().execute();    
+        	
 //	        initMainMenuScreen();
-	        init();
+//	        init();
     }
     
     public static UsbongMainActivity getInstance() {
@@ -123,7 +148,27 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
      * Initialize this activity
      */
     public void init()
-    {    	
+    {    	    	
+		//added by Mike, 20170310
+    	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
+
+    	
+    	try{    		
+    		//commented out by Mike, 4 Oct. 2015
+  			UsbongUtils.createUsbongFileStructure();
+  			
+  			//added by Mike, 20160417
+  			UsbongUtils.initUsbongConfigFile();
+    	}
+    	catch(IOException ioe) {
+    		ioe.printStackTrace();
+    	}
+		
+		//added by Mike, 30 April 2015
+		isInTreeLoader=false;		
+
+		UsbongUtils.clearTempFolder();
+		
 /*    	
     	//added by Mike, 20170523
 		final Spinner categorySpinner = (Spinner) findViewById(R.id.category);
@@ -280,6 +325,219 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }        	 
         }
     }
+    
+    //added by Mike, 20170525
+    //Reference: http://stackoverflow.com/questions/13017122/how-to-show-progressdialog-across-launching-a-new-activity;
+    //last accessed: 29 Sept. 2015; answer by: Slartibartfast, 23 Oct. 2012
+    class MyBackgroundTask extends AsyncTask<String, Integer, Boolean> {
+		@Override
+		protected void onPreExecute() {
+			Log.d(">>>>","onPreExectue()");
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			Log.d(">>>>","onPostExecute()");
+	    	new Thread(new Runnable() {
+			    public void run() {
+		            Handler mainHandler = new Handler(getInstance().getBaseContext().getMainLooper());
+		            Runnable myRunnable = new Runnable() {
+		            	@Override
+		            	public void run() {		            		
+		    				//added by Mike, 20170525
+		    				initTreeLoader();
+		    				
+						    if (instance.myProgressDialog != null) {
+						        instance.myProgressDialog.dismiss();
+						    }				            		
+		            	}
+		            };
+		            mainHandler.post(myRunnable);
+		    		return; //end this background thread
+			    }
+			}).start();
+		}
+		
+		@Override
+		protected Boolean doInBackground(String... params) {		
+			Log.d(">>>>","doInBackground()");
+			init();
+		    //Do all your slow tasks here but don't set anything on UI
+		    //ALL UI activities on the main thread 		
+		    return true;
+		
+		}		
+	}
+    
+  //added by Mike, 20170330
+    public void initTreeLoader(String currCategory) {
+        this.currCategory = currCategory;
+        initTreeLoader();
+    }
+    
+	public void initTreeLoader()
+	{
+//		setContentView(R.layout.tree_list_interface);				
+
+		isInTreeLoader=true;
+		
+        Button booksButton = (Button)findViewById(R.id.books_button);
+        booksButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_BOOKS);
+            }
+        });    
+
+        Button combosButton = (Button)findViewById(R.id.combos_button);
+        combosButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_COMBOS);
+            }
+        });    
+
+        Button beveragesButton = (Button)findViewById(R.id.beverages_button);
+        beveragesButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_BEVERAGES);
+            }
+        });    
+
+/*      //edited by Mike, 20170520  
+ * 		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
+*/
+		listOfTreesArrayList = new ArrayList<String>();
+		
+		int currProductTypeId = 1; //default
+		switch(currCategory) {
+			case UsbongConstants.ITEMS_LIST_BOOKS:
+				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BOOKS;
+				break;
+			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BEVERAGES;
+				break;
+			case UsbongConstants.ITEMS_LIST_COMBOS:
+				currProductTypeId = UsbongConstants.PRODUCT_TYPE_COMBOS;
+				break;
+		}
+
+		 myDbHelper = new UsbongDbHelper(this);
+         myDbHelper.initializeDataBase();
+
+         try {
+	         mySQLiteDatabase = myDbHelper.getReadableDatabase();
+
+		     String table = "product";
+		     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
+		     Cursor c = mySQLiteDatabase.rawQuery(query, null);
+		     if (c != null) {
+		        if (c.moveToFirst()) { // if Cursor is not empty
+		        	while (!c.isAfterLast()) {
+		        		String price = c.getString(c.getColumnIndex("price"));
+		        		if (price==null) {
+		        			price = "out of stock";
+		        		}
+		        		else {
+		        			price = "₱" + price;
+		        		}
+		        		
+		        		String productDetails="";
+		        		switch(currCategory) {
+			    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+				        		productDetails =  "Name: "+c.getString(c.getColumnIndex("name"))+"\n"+
+			   							 "Price: "+price+"\n"+
+			   							 "Language: "+c.getString(c.getColumnIndex("language"));
+			    				break;
+			    			default:
+				        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
+			   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
+			   							 "Price: "+price+"\n"+
+			   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
+			   							 "Language: "+c.getString(c.getColumnIndex("language"));
+			    				break;
+		        		}
+			        	listOfTreesArrayList.add(productDetails);
+		        	    c.moveToNext();
+		        	  }
+		        }
+		        else {
+		           // Cursor is empty
+		        	Log.d(">>>>>", "cursor is empty");
+		        }
+		     }
+		     else {
+		        // Cursor is null
+		        	Log.d(">>>>>", "cursor is null");
+		     }
+         } catch (Exception ex) {
+            ex.printStackTrace();
+         } finally {
+             try {
+                 myDbHelper.close();
+             } catch (Exception ex) {
+                 ex.printStackTrace();
+             } finally {
+                 myDbHelper.close();
+             }        	 
+         }
+  
+        switch (currCategory) {
+        	case UsbongConstants.ITEMS_LIST_BOOKS:
+                booksButton.setTypeface(Typeface.DEFAULT_BOLD);
+                combosButton.setTypeface(Typeface.DEFAULT);
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.ITEMS_LIST_COMBOS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
+                break;
+        	case UsbongConstants.ITEMS_LIST_BEVERAGES:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT);            
+                beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
+        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        }
+		mCustomAdapter.sort(); //edited by Mike, 20170203
+		
+/*
+		//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
+		//last accessed: 2 Jan. 2014; answer by Alex Lockwood
+		mCustomAdapter.sort(new Comparator<String>() {
+		    public int compare(String arg0, String arg1) {
+		        return arg0.compareTo(arg1);
+		    }
+		});
+*/		
+		treesListView = (ListView)findViewById(R.id.tree_list_view);
+		treesListView.setLongClickable(true);
+		treesListView.setAdapter(mCustomAdapter);
+
+    	String pleaseMakeSureThatXMLTreeExistsString = (String) getResources().getText(R.string.pleaseMakeSureThatXMLTreeExistsString);
+    	String alertString = (String) getResources().getText(R.string.alertStringValueEnglish);
+
+		if (listOfTreesArrayList.isEmpty()){
+        	new AlertDialog.Builder(UsbongMainActivity.this).setTitle(alertString)
+			.setMessage(pleaseMakeSureThatXMLTreeExistsString)
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//UsbongDecisionTreeEngineActivity is already the Main Menu
+/*
+					finish();    
+					Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
+					toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+					startActivity(toUsbongMainActivityIntent);
+*/					
+				}
+			}).show();	        		        	
+		  }				  
+	}
     
 /*    
     public void initMainMenuScreen()
@@ -703,4 +961,148 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		}
 	}
 
+	private class CustomDataAdapter extends ArrayAdapter<String>
+	{
+		private ArrayList<String> items;
+		
+		public CustomDataAdapter(Context context, int textViewResourceId, ArrayList<String> items) {
+            super(context, textViewResourceId, items);
+            this.items = items;            
+		}
+		
+		//added by Mike, 20170203
+		public void sort() {
+//			Collections.sort(items);
+			
+			//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
+			//last accessed: 2 Jan. 2014; answer by Alex Lockwood
+			Collections.sort(items, new Comparator<String>() {
+			    public int compare(String arg0, String arg1) {
+			        return arg0.compareTo(arg1);
+			    }
+			});			
+		}
+		
+		@Override
+		public View getView(final int position, View convertView, ViewGroup parent) {
+                View v = convertView;
+                if (v == null) {
+                    LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                    switch (currCategory) {
+                    	case UsbongConstants.ITEMS_LIST_COMBOS:
+                            v = vi.inflate(R.layout.tree_loader_alternative, null);
+                            break;
+                        default:
+/*                    	case UsbongConstants.ITEMS_LIST_BOOKS:
+                    	case UsbongConstants.ITEMS_LIST_TEAS:*/
+                            v = vi.inflate(R.layout.tree_loader, null);
+                        	break;                            
+                    }
+/*                    
+                    if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
+                        v = vi.inflate(R.layout.tree_loader, null);
+                    }
+                    else { //combo
+                        v = vi.inflate(R.layout.tree_loader_alternative, null);
+                    }
+*/                    
+                }
+                final String o = items.get(position);
+                if (o != null) {
+                	try {       
+                    	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
+                    	//edited by Mike, 20170522
+                    	final String s;
+	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+	                    Resources myRes = instance.getResources();
+	                    final String imageFileName;
+	                    
+                    	switch(currCategory) {
+			    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+		                    	s = o.toString()
+                    			.replace("Name:", "<b>Name:</b>")
+            					.replace("\nPrice:", "\n<b>Price:</b>")
+            					.replace("\nLanguage:", "\n<b>Language:</b>")
+            					.replace("\n", "<br>");
+//            					.substring(o.indexOf("T"));
+
+			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nPrice:"))
+			                    		.replace("Name: ","")
+			                    		.replace("’","")
+			                    		.replace("'","")
+			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+			    				break;
+			    			default:
+		                    	s = o.toString()
+                    			.replace("Title:", "<b>Title:</b>")
+            					.replace("\nAuthor:", "\n<b>Author:</b>")
+            					.replace("\nPrice:", "\n<b>Price:</b>")
+//            					.replace("\nDetails:", "\n<b>Details:</b>")
+            					.replace("\nLanguage:", "\n<b>Language:</b>")
+            					.replace("\n", "<br>");
+//            					.substring(o.indexOf("T"));
+
+			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nAuthor:"))
+			                    		.replace("Title: ","")
+			                    		.replace("’","")
+			                    		.replace("'","")
+			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+			    				break;
+                    	}
+	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
+	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
+		            	
+	                	dataCurrentTextView.setText(Html.fromHtml(s));
+//	                	dataCurrentTextView.setText(o.toString());
+	                	dataCurrentTextView.setOnClickListener(new OnClickListener() {
+	            			@Override
+	            			public void onClick(View v) {
+/*	            				
+	            				//added by Mike, 20170203
+	                        	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
+	            				setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160203
+	                    		image.setImageDrawable(myDrawableImage);		                    		
+	                        	initParser(UsbongConstants.TREE_TYPE_BUY);           				
+*/
+                				//added by Mike, 20170216
+	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				startActivityForResult(toBuyActivityIntent,1);
+	            			}
+	                	});
+                		image.setImageDrawable(myDrawableImage);                		
+/*
+                		//added by Mike, 20170203
+                		//make the image icon in the list smaller
+                		image.setAdjustViewBounds(true);
+                		image.setMaxHeight(100);
+                		image.setMaxWidth(100);                		
+*/                		
+                		image.setOnClickListener(new OnClickListener() {
+                			@Override
+                			public void onClick(View v) {
+/*
+                				//added by Mike, 20170203
+                            	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
+                				setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160203
+                        		image.setImageDrawable(myDrawableImage);	
+                				initParser(UsbongConstants.TREE_TYPE_BUY); //added by Mike, 20160202          				                	
+*/
+                				//added by Mike, 20170216
+	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				startActivityForResult(toBuyActivityIntent,1);
+                			}
+                		});
+                	}
+	            	catch(Exception e) {
+	            		e.printStackTrace();
+	            	}
+                }
+                return v;
+        }
+	}
 }
