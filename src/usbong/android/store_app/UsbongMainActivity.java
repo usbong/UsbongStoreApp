@@ -370,7 +370,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 */
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
 					   							 ""+c.getString(c.getColumnIndex("author"))+"\n"+
-					   							 "<font color='#644d17'><b>"+price+"</b> \n[Free Delivery]</font>";					    				
+					   							 "<font color='#644d17'><b>"+price+"</b> \n[Free Delivery]</font>";
 					    				break;
 				        		}
 			        		}

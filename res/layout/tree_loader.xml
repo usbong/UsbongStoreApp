@@ -26,5 +26,22 @@
 		android:layout_toRightOf="@+id/tree_item_image_view"
         android:layout_marginBottom="6dp"		
         android:layout_marginLeft="6dp"		
+        android:layout_alignTop="@+id/tree_item_image_view"
+	/>
+	<Button
+	    android:id="@+id/merchant_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:textSize="18dp"
+		android:textColor="#4a452a"
+		android:layout_below="@+id/tree_item_image_view"
+        android:layout_marginTop="3dp"		
+        android:layout_marginBottom="3dp"		
+        android:layout_marginLeft="3dp"				
+        android:layout_marginRight="3dp"				
+		android:padding="3dp"
+        android:text="☗ Usbong Specialty Bookstore"
+        android:background="#706f5630"        
 	/>
 </RelativeLayout>
