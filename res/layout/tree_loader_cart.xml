@@ -33,7 +33,7 @@
 	        android:orientation="horizontal"
 	        android:focusable="true" 
     		android:focusableInTouchMode="true"
-    		android:layout_below="@+id/tree_item"
+    		android:layout_below="@+id/tree_item_image_view"
 		    android:padding="5dp"
 		    android:gravity="center"
     		><TextView

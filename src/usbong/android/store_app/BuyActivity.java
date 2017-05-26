@@ -141,7 +141,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
     		TextView myTextImageDisplayTextView = (TextView)findViewById(R.id.text_image_display_textview);
         	myTextImageDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextImageDisplayTextView, UsbongUtils.IS_TEXTVIEW, getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME));        	
 
-        	productDetails = myTextImageDisplayTextView.getText().toString();//added by Mike, 20170221
+        	productDetails = getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME);//myTextImageDisplayTextView.getText().toString();//added by Mike, 20170221
         	
     		ImageView myTextImageDisplayImageView = (ImageView)findViewById(R.id.image_display_imageview);
 
