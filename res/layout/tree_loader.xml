@@ -41,7 +41,7 @@
         android:layout_marginLeft="3dp"				
         android:layout_marginRight="3dp"				
 		android:padding="3dp"
-        android:text="☗ Usbong Specialty Bookstore"
+        android:text="☗ "
         android:background="#706f5630"        
 	/>
 </RelativeLayout>

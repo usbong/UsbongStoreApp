@@ -315,7 +315,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         });
     }
     
-    public void performSearch(String s) {
+    public void loadMerchantStore(String merchantName) {
     	myDbHelper = new UsbongDbHelper(this);
         myDbHelper.initializeDataBase();
 
@@ -324,6 +324,81 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         try {
 	         mySQLiteDatabase = myDbHelper.getReadableDatabase();
 
+		     String getMerchantId = "select * from '" + "merchant" + "'" + " where merchant_name +LIKE '%"+merchantName+"%'";
+		     Cursor cMerchantId = mySQLiteDatabase.rawQuery(getMerchantId, null);
+     		 int merchantId = Integer.parseInt(cMerchantId.getString(cMerchantId.getColumnIndex("merchant_id")));
+		        		     		     
+		     String getMerchantProducts = "select * from '" + "product" + "'" + " where merchant_id="+merchantId;
+		     Cursor c = mySQLiteDatabase.rawQuery(getMerchantProducts, null);
+		     
+		     if (c != null) {
+			        if (c.moveToFirst()) { // if Cursor is not empty
+			        	while (!c.isAfterLast()) {
+			        		String price = c.getString(c.getColumnIndex("price"));
+			        		if (price==null) {
+			        			price = "out of stock";
+			        		}
+			        		else {
+			        			price = "₱" + price;
+			        		}
+			        		
+			        		String productDetails="";
+			        		switch(currCategory) {
+				    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+/*					    				
+						        		productDetails =  "Name: "+c.getString(c.getColumnIndex("name"))+"\n"+
+					   							 "Price: "+price+"\n"+
+					   							 "Language: "+c.getString(c.getColumnIndex("language"));
+*/
+					        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
+				   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>";
+					        		break;
+				    			default:
+/*					    				
+						        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
+					   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
+					   							 "Price: "+price+"\n"+
+					   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
+					   							 "Language: "+c.getString(c.getColumnIndex("language"));
+*/
+					        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
+				   							 ""+c.getString(c.getColumnIndex("author"))+"\n"+
+				   							 "<font color='#644d17'><b>"+price+"</b> \n[Free Delivery]</font>";
+				    				break;
+			        		}
+			        	}
+			        }
+			        else {
+			           // Cursor is empty
+			        	Log.d(">>>>>", "cursor is empty");
+			        }
+			     }
+			     else {
+			        // Cursor is null
+			        	Log.d(">>>>>", "cursor is null");
+			     }
+        } catch (Exception ex) {
+           ex.printStackTrace();
+        } finally {
+            try {
+                myDbHelper.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                myDbHelper.close();
+            }        	 
+        }
+    }
+    
+    public void performSearch(String s) {
+    	myDbHelper = new UsbongDbHelper(this);
+        myDbHelper.initializeDataBase();
+
+        listOfTreesArrayList.clear(); //added by Mike, 20170525
+        
+        try {
+	         mySQLiteDatabase = myDbHelper.getReadableDatabase();
+	         
 		     String table = "product";
 		     String query = "";
 		     
@@ -349,7 +424,15 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        		}
 			        		
 			        		String productDetails="";
-			        		if (s==null) {
+/*			        		if (s==null) {
+  */
+		    			     String queryMerchantName = "select merchant_name from '" + "merchant" + "'" + " where merchant_id="+c.getString(c.getColumnIndex("merchant_id"));
+		    			     Cursor cMerchantName = mySQLiteDatabase.rawQuery(queryMerchantName, null);
+		    			     String merchantName="N/A";
+		    			     if (cMerchantName.moveToFirst()) {
+		    			    	 merchantName = cMerchantName.getString(cMerchantName.getColumnIndex("merchant_name"));
+		    			     }
+		    			     
 				        		switch(currCategory) {
 					    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
 /*					    				
@@ -357,8 +440,11 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 					   							 "Price: "+price+"\n"+
 					   							 "Language: "+c.getString(c.getColumnIndex("language"));
 */
+
+					    				
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
-					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>";
+					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>\n"+
+					   							 "MerchantName: "+merchantName;
 						        		break;
 					    			default:
 /*					    				
@@ -370,11 +456,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 */
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
 					   							 ""+c.getString(c.getColumnIndex("author"))+"\n"+
-					   							 "<font color='#644d17'><b>"+price+"</b> \n[Free Delivery]</font>";
+					   							 "<font color='#644d17'><b>"+price+"</b> \n[Free Delivery]</font>\n"+
+					   							 "MerchantName: "+merchantName;
 					    				break;
 				        		}
+/*				        
 			        		}
 			        		else {
+*/			        		
 				        		/*if (Integer.parseInt(c.getString(c.getColumnIndex("product_type_id")))
 				        				==UsbongConstants.PRODUCT_TYPE_BEVERAGES) {
 				        			//TODO: remove field labels
@@ -390,13 +479,16 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
 				   							 "Language: "+c.getString(c.getColumnIndex("language"));			        			
 */
+/*			        			
 				        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n\n"+
 			   							 ""+c.getString(c.getColumnIndex("author"))+"\n\n"+
-			   							 "<b><font color='#7c693d'>"+price+"</font></b>";					    				
+			   							 "<b><font color='#7c693d'>"+price+"</font></b>";	
+*/				        		
 /*				        		}			        		
 */	
+/*				        		
 			        		}
-
+*/
 				        	listOfTreesArrayList.add(productDetails);
 			        	    c.moveToNext();
 			        	  }
@@ -551,7 +643,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 initTreeLoader(UsbongConstants.ITEMS_LIST_BEVERAGES);
             }
         });    
-
+                    
 /*      //edited by Mike, 20170520  
  * 		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
 */
@@ -1128,7 +1220,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 */			                    		
 			    				s = o.toString()
-	            					.replace("\n", "<br>");
+	            					.replace("\n", "<br>")
+	            					.subSequence(0, o.indexOf("MerchantName: ")).toString();
 			    				imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
 		                    		.replace("<b>","")
 		                    		.replace("’","")
@@ -1153,7 +1246,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 */			                    		
 			    				s = o.toString()
-		            				.replace("\n", "<br>");
+		            				.replace("\n", "<br>")
+		            				.subSequence(0, o.indexOf("MerchantName: ")).toString();
 			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("</b>"))
 			                    		.replace("<b>","")
 			                    		.replace("’","")
@@ -1210,6 +1304,18 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
                 		});
+                		
+                        final Button merchantNameButton = (Button)v.findViewById(R.id.merchant_name);
+                        int index = o.indexOf("MerchantName: ")+"MerchantName: ".length();
+                        merchantNameButton.setText("☗ "+o.toString().substring(
+                        								index)
+                        		);
+                        merchantNameButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            	loadMerchantStore(merchantNameButton.getText().toString());
+                            }
+                        });
                 	}
 	            	catch(Exception e) {
 	            		e.printStackTrace();
