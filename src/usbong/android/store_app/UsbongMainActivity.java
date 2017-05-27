@@ -363,7 +363,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 */
 					        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
 				   							 ""+c.getString(c.getColumnIndex("author"))+"\n"+
-				   							 "<font color='#644d17'><b>"+price+"</b> \n[Free Delivery]</font>";
+				   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>";
 				    				break;
 			        		}
 			        	}
@@ -443,7 +443,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 
 					    				
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
-					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>\n"+
+					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
 					   							 "MerchantName: "+merchantName;
 						        		break;
 					    			default:
@@ -456,7 +456,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 */
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
 					   							 ""+c.getString(c.getColumnIndex("author"))+"\n"+
-					   							 "<font color='#644d17'><b>"+price+"</b> \n[Free Delivery]</font>\n"+
+					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
 					   							 "MerchantName: "+merchantName;
 					    				break;
 				        		}
@@ -1199,6 +1199,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
                     	//edited by Mike, 20170522
                     	final String s;
+                    	String tempS;
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
 	                    final String imageFileName;
@@ -1219,9 +1220,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			                    		.replace("'","")
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 */			                    		
-			    				s = o.toString()
-	            					.replace("\n", "<br>")
-	            					.subSequence(0, o.indexOf("MerchantName: ")).toString();
+			    				tempS = o.toString().replace("\n", "<br>");
+			    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
 			    				imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
 		                    		.replace("<b>","")
 		                    		.replace("’","")
@@ -1245,9 +1245,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			                    		.replace("'","")
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 */			                    		
+/*			    				
 			    				s = o.toString()
 		            				.replace("\n", "<br>")
 		            				.subSequence(0, o.indexOf("MerchantName: ")).toString();
+*/
+			    				tempS = o.toString().replace("\n", "<br>");
+			    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
 			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("</b>"))
 			                    		.replace("<b>","")
 			                    		.replace("’","")
