@@ -20,7 +20,8 @@ CREATE TABLE merchant (
 ); 
 
 INSERT INTO merchant (merchant_id, merchant_name) VALUES
-(1, 'Usbong Specialty Bookstore');
+(1, 'Usbong Specialty Bookstore'),
+(2, 'RetroCC');
 
 CREATE TABLE product (
   product_id INTEGER PRIMARY KEY,
@@ -73,7 +74,9 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, lang
 (32, 1, 5, 'COMBO-Wikinomics, Guns, Germs, and Steel, The Soul of a New Machine, The Different Drum', 1650, 'English', 'Tapscott/Williams, Diamond, Kidder, Peck', NULL, 'Used - Acceptable', NULL, 'Mixed', 0, NULL),
 (33, 1, 5, 'COMBO-Made in Japan, The Soul of a New Machine, Founders at Work, Outliers', 1650, 'English', 'Morita et al., Kidder, Gladwell, Livingston', NULL, 'Used - Acceptable', NULL, 'Mixed', 0, NULL),
 (34, 1, 5, 'COMBO-Starting Point, Turning Point', 2200, 'English', 'Hayao Miyazaki', NULL, 'New', NULL, 'Mixed', 0, 'Beth Cary and Frederik L. Schodt'),
-(35, 1, 5, 'COMBO-Steve Jobs, The Innovators', 1050, 'English', 'Walter Isaacson', NULL, 'Used - Very Good', NULL, 'Paperback', 0, NULL);
+(35, 1, 5, 'COMBO-Steve Jobs, The Innovators', 1050, 'English', 'Walter Isaacson', NULL, 'Used - Very Good', NULL, 'Paperback', 0, NULL),
+(36, 2, 6, 'ACTION COMICS 1-52 (complete set)', 8000, 'English', NULL, NULL, 'new, 1-52 + extras, VF-NM', NULL, NULL, 0, NULL),
+(37, 2, 6, 'Silver Surfer vol 1 (complete set)', 32000, 'English', NULL, NULL, '1-18, VG-F', NULL, NULL, 0, NULL);
 
 CREATE TABLE product_type (
   product_type_id INTEGER PRIMARY KEY,
@@ -85,6 +88,9 @@ INSERT INTO product_type (product_type_id, product_type_name) VALUES
 (2, 'books'),
 (3, 'beverages'),
 (4, 'books/beverages'),
-(5, 'combos');
+(5, 'combos'),
+(6, 'comics'),
+(7, 'manga');
+
 
 COMMIT;

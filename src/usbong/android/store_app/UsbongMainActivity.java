@@ -316,6 +316,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     }
     
     public void loadMerchantStore(String merchantName) {
+    	merchantName = "RetroCC";
+    	
     	myDbHelper = new UsbongDbHelper(this);
         myDbHelper.initializeDataBase();
 
@@ -1267,6 +1269,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                             @Override
                             public void onClick(View v) {
                             	loadMerchantStore(merchantNameButton.getText().toString());
+                            	
                             }
                         });
 	            		
