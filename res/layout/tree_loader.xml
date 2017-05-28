@@ -29,7 +29,7 @@
         android:layout_alignTop="@+id/tree_item_image_view"
 	/>
 	<Button
-	    android:id="@+id/merchant_name"
+	    android:id="@+id/merchant_button"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:gravity="center"

@@ -1258,6 +1258,18 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	
+                        final Button merchantNameButton = (Button)v.findViewById(R.id.merchant_button);
+                        int index = o.indexOf("MerchantName: ")+"MerchantName: ".length();
+                        merchantNameButton.setText("☗ "+o.toString().substring(
+                        								index)
+                        		);
+                        merchantNameButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            	loadMerchantStore(merchantNameButton.getText().toString());
+                            }
+                        });
+	            		
 	                	dataCurrentTextView.setText(Html.fromHtml(s));
 //	                	dataCurrentTextView.setText(o.toString());
 	                	dataCurrentTextView.setOnClickListener(new OnClickListener() {
@@ -1274,7 +1286,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
-	            				toBuyActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);	            				
+	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantNameButton.getText().toString()); //added by Mike, 20170528        				
 	            				startActivityForResult(toBuyActivityIntent,1);
 	            			}
 	                	});
@@ -1304,18 +1317,6 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
                 		});
-                		
-                        final Button merchantNameButton = (Button)v.findViewById(R.id.merchant_name);
-                        int index = o.indexOf("MerchantName: ")+"MerchantName: ".length();
-                        merchantNameButton.setText("☗ "+o.toString().substring(
-                        								index)
-                        		);
-                        merchantNameButton.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            	loadMerchantStore(merchantNameButton.getText().toString());
-                            }
-                        });
                 	}
 	            	catch(Exception e) {
 	            		e.printStackTrace();

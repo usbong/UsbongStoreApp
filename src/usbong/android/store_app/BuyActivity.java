@@ -70,6 +70,8 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 	private Button buyButton; //added by Mike, 20170220	
 	private Button backButton;
 
+	private Button merchantButton; //added by Mike, 20170528
+	
 /*	private Button sellButton;
 	private Button requestButton;
 */	
@@ -385,6 +387,17 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 */				
 			}
     	});    	
+    	
+    	//added by Mike, 20160126
+    	merchantButton = (Button)findViewById(R.id.merchant_button);    	
+    	merchantButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {		
+			}
+    	});
+    	merchantButton.setText(getIntent().getExtras().getString(UsbongConstants.MERCHANT_NAME)); 
+    	
+    	
 /*    	
     	//added by Mike, 20160126
     	backButton = (Button)findViewById(R.id.back_button);

@@ -64,7 +64,10 @@ public class UsbongConstants {
 
 	//added by Mike, 20170526
 	public final static int MERCHANT_USBONG_SPECIALTY_BOOKSTORE=1;
-		
+
+	//added by Mike, 20170528
+	public final static String MERCHANT_NAME="merchantName";
+	
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
 	public static final int MULTIPLE_RADIO_BUTTONS_SCREEN=1;	

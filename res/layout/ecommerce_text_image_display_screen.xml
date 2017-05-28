@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	style="@style/UsbongSpecialParentLayout"
 	android:id="@+id/parent_layout_id"       	
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical"	
 	>
 	<LinearLayout 
 	    android:layout_width="fill_parent" 
@@ -23,20 +26,35 @@
 	        android:layout_gravity="center_vertical"
 	        android:gravity="center"/>				
 	</LinearLayout>
+	<Button
+	    android:id="@+id/merchant_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:textSize="18dp"
+		android:textColor="#4a452a"
+		android:layout_below="@+id/brand_logo"
+        android:layout_marginTop="3dp"		
+        android:layout_marginBottom="3dp"		
+        android:layout_marginLeft="3dp"				
+        android:layout_marginRight="3dp"				
+		android:padding="3dp"
+        android:text="☗ "
+        android:background="#706f5630"        
+	/>
 	<ScrollView style="@style/UsbongDefaultScrollView"
 	>		 	
-	<LinearLayout style="@style/UsbongTextImageMainLayout">
-		<TextView android:id="@+id/text_image_display_textview"
-		    style="@style/UsbongDefaultTextView"	    	
-		    android:text="@string/default_textview" 
-		    android:textSize="24dp"
-		    android:gravity="left"
-		/>
-	    
-	    <ImageView android:id="@+id/image_display_imageview"
-		    style="@style/UsbongTextImageDisplayImageView"	    	
-		/>
-	</LinearLayout>	
+		<LinearLayout style="@style/UsbongTextImageMainLayout">
+			<TextView android:id="@+id/text_image_display_textview"
+			    style="@style/UsbongDefaultTextView"	    	
+			    android:text="@string/default_textview" 
+			    android:textSize="24dp"
+			    android:gravity="left"
+			/>	    
+		    <ImageView android:id="@+id/image_display_imageview"
+			    style="@style/UsbongTextImageDisplayImageView"	    	
+			/>
+		</LinearLayout>	
 	</ScrollView>	
 	<LinearLayout 
 		    android:layout_width="fill_parent" 
@@ -69,7 +87,10 @@
 			/>
 	</LinearLayout>	    	    
 	<LinearLayout
-	style="@style/UsbongDefaultBuySellRequestButtonLayout">	
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"	
+		android:gravity="center"
+	>	
 	    <Button android:id="@+id/confirm_button"
 		    style="@style/UsbongDefaultBuySellRequestButton"
 			android:text="@string/add_to_cart" 
