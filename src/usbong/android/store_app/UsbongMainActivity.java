@@ -432,34 +432,30 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		    			     if (cMerchantName.moveToFirst()) {
 		    			    	 merchantName = cMerchantName.getString(cMerchantName.getColumnIndex("merchant_name"));
 		    			     }
-		    			     
+/*		    			     
 				        		switch(currCategory) {
 					    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
-/*					    				
-						        		productDetails =  "Name: "+c.getString(c.getColumnIndex("name"))+"\n"+
-					   							 "Price: "+price+"\n"+
-					   							 "Language: "+c.getString(c.getColumnIndex("language"));
-*/
-
-					    				
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
 					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
 					   							 "MerchantName: "+merchantName;
 						        		break;
 					    			default:
-/*					    				
-						        		productDetails =  "Title: "+c.getString(c.getColumnIndex("name"))+"\n"+
-					   							 "Author: "+c.getString(c.getColumnIndex("author"))+"\n"+
-					   							 "Price: "+price+"\n"+
-					   							 "<b>Format:</b> "+c.getString(c.getColumnIndex("format"))+"\n"+	
-					   							 "Language: "+c.getString(c.getColumnIndex("language"));
-*/
+*/					    			
+					    				String authorString = c.getString(c.getColumnIndex("author"));
+					    				if (authorString==null) {
+					    					authorString="";
+					    				}
+					    				else {
+					    					authorString = authorString +"\n";
+					    				}
+					    				
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
-					   							 ""+c.getString(c.getColumnIndex("author"))+"\n"+
+					   							 authorString+
 					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
 					   							 "MerchantName: "+merchantName;
-					    				break;
+/*					    				break;
 				        		}
+*/				        		
 /*				        
 			        		}
 			        		else {
