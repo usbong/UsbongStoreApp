@@ -1168,30 +1168,32 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
+            	final String o = items.get(position);
                 View v = convertView;
                 if (v == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    if (o.contains("COMBO")) {
+                        v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
+                    }
+                    else {
+                        v = vi.inflate(R.layout.tree_loader, null);                
+                    }
 
+/*
                     switch (currCategory) {
                     	case UsbongConstants.ITEMS_LIST_COMBOS:
                             v = vi.inflate(R.layout.tree_loader_alternative, null);
                             break;
                         default:
-/*                    	case UsbongConstants.ITEMS_LIST_BOOKS:
-                    	case UsbongConstants.ITEMS_LIST_TEAS:*/
+//                    	case UsbongConstants.ITEMS_LIST_BOOKS:
+//                    	case UsbongConstants.ITEMS_LIST_TEAS:
                             v = vi.inflate(R.layout.tree_loader, null);
                         	break;                            
                     }
-/*                    
-                    if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
-                        v = vi.inflate(R.layout.tree_loader, null);
-                    }
-                    else { //combo
-                        v = vi.inflate(R.layout.tree_loader_alternative, null);
-                    }
 */                    
                 }
-                final String o = items.get(position);
+
+//                final String o = items.get(position);
                 if (o != null) {
                 	try {       
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
