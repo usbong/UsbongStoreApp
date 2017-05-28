@@ -1021,14 +1021,17 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
             			}
 */
-	    				s = o.toString()
-            					.replace("\n", "<br>");//+"<br><br>";
+	    				String tempS = o.toString().replace("\n", "<br>");
+	    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
 		    			imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
 	                    		.replace("<b>","")
 	                    		.replace("’","")
 	                    		.replace("'","")
 	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 
+		    			//added by Mike, 20170529
+		    			final String merchantName = o.substring(o.indexOf("MerchantName: ")+"MerchantName: ".length());
+		    			
 /*
 	                    String imageString = o.toString()
 	            				.replace("\n", "<br>")+"<br><br>";	    					    					    					    				
@@ -1062,6 +1065,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantName); //added by Mike, 20170529        				
 	            				startActivityForResult(toBuyActivityIntent,1);
 	            			}
 	                	});
@@ -1087,6 +1091,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantName); //added by Mike, 20170529        				
 	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
                 		});

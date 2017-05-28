@@ -1291,7 +1291,6 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
-	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);	            				
 	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantNameButton.getText().toString()); //added by Mike, 20170528        				
 	            				startActivityForResult(toBuyActivityIntent,1);
 	            			}
@@ -1318,6 +1317,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantNameButton.getText().toString()); //added by Mike, 20170529   				
 	            				toBuyActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
