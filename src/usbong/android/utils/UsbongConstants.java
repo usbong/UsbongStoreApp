@@ -57,6 +57,7 @@ public class UsbongConstants {
 	public final static int PRODUCT_TYPE_BEVERAGES=3;
 	public final static int PRODUCT_TYPE_BOOKS_BEVERAGES=4;
 	public final static int PRODUCT_TYPE_COMBOS=5;
+	public final static int PRODUCT_TYPE_COMICS=6;
 	
 	//added by Mike, 20170525
 	public final static int USBONG_MAIN_ACTIVITY=0;
