@@ -16,12 +16,13 @@ INSERT INTO fields (fields_id, fields_name, product_type_id) VALUES
 
 CREATE TABLE merchant (
   merchant_id INTEGER PRIMARY KEY,
-  merchant_name TEXT
+  merchant_name TEXT,
+  merchant_motto TEXT
 ); 
 
-INSERT INTO merchant (merchant_id, merchant_name) VALUES
-(1, 'Usbong Specialty Bookstore'),
-(2, 'RetroCC');
+INSERT INTO merchant (merchant_id, merchant_name, merchant_motto) VALUES
+(1, 'Usbong Specialty Bookstore', 'Uplifting Human Lives'),
+(2, 'RetroCC', 'Keep Reading. Keep Collecting.');
 
 CREATE TABLE product (
   product_id INTEGER PRIMARY KEY,

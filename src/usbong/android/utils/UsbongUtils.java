@@ -2196,6 +2196,41 @@ public class UsbongUtils {
 //		return imageFile;
     }
     
+    //added by Mike, 20170529
+    public static void setImage(Activity a, String resFileName, View v) {
+    	//added by Mike, 20170202
+		//check if it's in the assets folder
+		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+        Resources myRes = a.getResources();
+        
+        try {
+            Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(resFileName), null); //edited by Mike, 20170202                	
+            if (myDrawableImage !=null) {
+        		v.setBackground(myDrawableImage);	                	
+            }
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+        }
+    }
+
+    //added by Mike, 20170529
+    public static Drawable getImageDrawable(Activity a, String resFileName) {
+    	//added by Mike, 20170202
+		//check if it's in the assets folder
+		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+        Resources myRes = a.getResources();
+        
+        try {
+            Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(resFileName), null);
+            return myDrawableImage;
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+        }
+        return null;
+    }
+    
     //supports .png, .jpg and .jpeg
     public static boolean setImageDisplay(Activity a, ImageView myImageView, String myTree, String resFileName) {
     	/*
@@ -3346,7 +3381,7 @@ public class UsbongUtils {
 
     //added by JP, 26 May 2015
 	public static String parseYouTubeLink(String l) {
-		String pattern = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|watch\\?v%3D|%2Fvideos%2F|embed%鬩包ｽｯ�ｽ�ｶ髯橸ｽｽ�ｽ�ｯ�ｽ�ｽ�ｽ�ｽ2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\n]*";
+		String pattern = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|watch\\?v%3D|%2Fvideos%2F|embed%鬯ｩ蛹�ｽｽ�ｯ�ｽ�ｽ�ｽ�ｶ鬮ｯ讖ｸ�ｽ�ｽ�ｽ�ｽ�ｽ�ｯ�ｽ�ｽ�ｽ�ｽ�ｽ�ｽ�ｽ�ｽ2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\n]*";
 
 		Pattern compiledPattern = Pattern.compile(pattern);
 	    Matcher matcher = compiledPattern.matcher(l);
