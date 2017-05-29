@@ -33,6 +33,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -244,14 +245,23 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
      		 //added by Mike, 20170529
      	     String getMerchantBrandMotto = "select merchant_motto from '" + "merchant" + "'" + " where merchant_id="+merchantId;
      	     Cursor cMerchantBrandMotto = mySQLiteDatabase.rawQuery(getMerchantBrandMotto, null);
+
+     	     String getMerchantBrandMottoFontColor = "select merchant_motto_font_color from '" + "merchant" + "'" + " where merchant_id="+merchantId;
+     	     Cursor cMerchantBrandMottoFontColor = mySQLiteDatabase.rawQuery(getMerchantBrandMottoFontColor, null);
      	     
      	     if (cMerchantBrandMotto != null) {
  		        if (cMerchantBrandMotto.moveToFirst()) { // if Cursor is not empty
  		     		 TextView brandMottoTextView = (TextView)findViewById(R.id.brand_motto);
- 		     		 brandMottoTextView.setText(cMerchantBrandMotto.getString(cMerchantBrandMotto.getColumnIndex("merchant_motto")));
+ 		     		 brandMottoTextView.setText(Html.fromHtml(cMerchantBrandMotto.getString(cMerchantBrandMotto.getColumnIndex("merchant_motto"))));
+ 		     		 
+ 		     	     if (cMerchantBrandMottoFontColor != null) {
+ 		 		        if (cMerchantBrandMottoFontColor.moveToFirst()) { // if Cursor is not empty
+ 		 		        	brandMottoTextView.setTextColor(Color.parseColor(cMerchantBrandMottoFontColor.getString(cMerchantBrandMottoFontColor.getColumnIndex("merchant_motto_font_color"))));
+ 		 		        }
+ 		     	     }
  		        }
      	     }
-     	     
+     	         	     
      		 //Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
              Resources myRes = instance.getResources();
 
