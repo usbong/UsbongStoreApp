@@ -6,6 +6,19 @@
 	android:background="@drawable/bg"
 	android:orientation="vertical"
 >
+	<EditText android:id="@+id/search_edittext"
+			style="@style/UsbongDefaultEditText"	
+			android:imeOptions="actionSearch"
+			android:inputType="text"
+			android:singleLine="true"
+            android:ellipsize="end"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:hint="I'm looking for..."
+            android:textColorHint="#b7b7b7"
+            android:textSize="24dp"
+            android:drawableRight="@drawable/magnifying_glass"
+	/>
 	<LinearLayout 
 	    android:id="@+id/brand_bg"
 	    android:layout_width="fill_parent" 
