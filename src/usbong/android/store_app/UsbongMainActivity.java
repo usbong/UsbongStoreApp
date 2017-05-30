@@ -124,6 +124,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	        setContentView(R.layout.main);	        
 //	    	startTime = new Date();	        
 
+/*	        
             //added by Mike, 20161117
         	Bundle extras = getIntent().getExtras();
         	if (extras!=null) {
@@ -133,16 +134,26 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        AppRater.showRateDialog(this); 
 	        	}	        		
         	}
-
+*/
+	        //added by Mike, 20170530
+			listOfTreesArrayList = new ArrayList<String>();
+	        
 	        reset();
-
-        	//added by Mike, 20170525
-    		myProgressDialog = ProgressDialog.show(instance, "Loading...",
-    				  "This takes only a short while.", true, false);				  
-    		new MyBackgroundTask().execute();    
         	
 //	        initMainMenuScreen();
 //	        init();
+    		
+    		//edited by Mike, 20170530
+        	Bundle extras = getIntent().getExtras();
+        	if (extras!=null) {
+    			String merchantName = getIntent().getExtras().getString("loadMerchantStore");
+    			loadMerchantStore(merchantName);			
+    		} 
+        	else {
+        		myProgressDialog = ProgressDialog.show(instance, "Loading...",
+        				  "This takes only a short while.", true, false);				  
+        		new MyBackgroundTask().execute();    
+    		}
     }
     
     public static UsbongMainActivity getInstance() {
@@ -156,7 +167,6 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     {    	    	
 		//added by Mike, 20170310
     	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
-
     	
     	try{    		
     		//commented out by Mike, 4 Oct. 2015
@@ -173,8 +183,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		isInTreeLoader=false;		
 
 		UsbongUtils.clearTempFolder();
-		
-		initSearch();
+
+		initSearch();			
     }
     
     public void initSearch() {
@@ -336,7 +346,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }        	 
         }
         
-        //added by Mike, 20170529
+        //edited by Mike, 20170530
+    	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+		mCustomAdapter.sort(); //edited by Mike, 20170203
+
 		treesListView = (ListView)findViewById(R.id.tree_list_view);
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
@@ -595,8 +608,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 /*      //edited by Mike, 20170520  
  * 		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
 */
-		listOfTreesArrayList = new ArrayList<String>();
-		
+/*		listOfTreesArrayList = new ArrayList<String>();
+*/		
 		currProductTypeId = UsbongConstants.PRODUCT_TYPE_ALL; //default
 		switch(currCategory) {
 			case UsbongConstants.ITEMS_LIST_BOOKS:
@@ -1223,8 +1236,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                         merchantNameButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                            	loadMerchantStore(merchantNameButton.getText().toString());
-                            	
+                            	loadMerchantStore(merchantNameButton.getText().toString());                            	
                             }
                         });
 	            		

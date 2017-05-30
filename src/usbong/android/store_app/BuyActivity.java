@@ -390,14 +390,33 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 			}
     	});    	
     	
-    	//added by Mike, 20160126
+    	//edited by Mike, 2017530
+    	final String merchantName = getIntent().getExtras().getString(UsbongConstants.MERCHANT_NAME);
+    	
     	merchantButton = (Button)findViewById(R.id.merchant_button);    	
     	merchantButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {		
+			public void onClick(View v) {	
+				//added by Mike, 20170530
+				final Activity a;
+				if ((getIntent().getExtras().getInt("activity caller")==0) 
+						|| (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY)) {
+					a = UsbongMainActivity.getInstance();
+				}
+				else {
+					a = UsbongDecisionTreeEngineActivity.getInstance();						
+//	            	((UsbongDecisionTreeEngineActivity)a).loadMerchantStore(merchantButton.getText().toString());
+				}
+
+				//edited by Mike, 20170525
+				finish();
+				Intent toCallingActivityIntent = new Intent(getInstance(), a.getClass());
+				toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+				toCallingActivityIntent.putExtra("loadMerchantStore", merchantName); //added by Mike, 20170530				
+				startActivity(toCallingActivityIntent);
 			}
     	});
-    	merchantButton.setText(getIntent().getExtras().getString(UsbongConstants.MERCHANT_NAME)); 
+    	merchantButton.setText(merchantName); 
     	
     	
 /*    	
