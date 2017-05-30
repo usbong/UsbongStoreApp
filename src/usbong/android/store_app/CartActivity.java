@@ -351,7 +351,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						
 						int tempListSize = tempList.size();
 						for (int i=0; i<tempListSize; i++) {
-							buySummary.append(tempList.get(i)+"\n");
+							buySummary.append(Html.fromHtml(tempList.get(i)).toString().replace("MerchantName: ", "\n")+"\n");
 							buySummary.append("Quantity: "+quantityList.get(i)+"\n");							
 							
 							if (i<tempListSize-1) {
@@ -435,7 +435,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
 					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.ORDER_EMAIL_ADDRESS});
 //					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+productDetails.substring(0,productDetails.indexOf("\n")).replace("Title: ",""));
-					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+tempList.get(0).substring(0,tempList.get(0).indexOf("\n")).replace("Title: ","")+s);
+					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+tempList.get(0).substring("<b>".length(),tempList.get(0).indexOf("</b>"))+s);
 					    i.putExtra(Intent.EXTRA_TEXT   , buySummary.toString());
 					    try {
 					    	isSendingData=true; //added by Mike, 20170225
@@ -538,11 +538,18 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	    	if (isSendingData) {
 	    		isSendingData=false;
 	
+	    		//edited by Mike, 20170525
+	    		finish();
+	    		Intent toCallingActivityIntent = new Intent(getInstance(), UsbongMainActivity.class);
+	    		toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	    		startActivity(toCallingActivityIntent);		
+/*	    		
 		        //added by Mike, 20170225
 				finish();    
 				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(CartActivity.this, UsbongDecisionTreeEngineActivity.class);
 				toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 				startActivity(toUsbongDecisionTreeEngineActivityIntent);
+*/				
 	    	}
         }
     }//onActivityResult
