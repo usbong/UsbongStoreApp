@@ -102,7 +102,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	private SQLiteDatabase mySQLiteDatabase;
 	
 	private int currProductTypeId = 1; //default
-    
+	private static boolean isInMerchantShop=false;
+	private static boolean hasPerformedSearch=false;
+	private String searchEditTextString="";
+	
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -187,8 +190,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		initSearch();			
     }
     
-    public void initSearch() {
+    public void initSearch() {    	
         final EditText searchEditText = (EditText)findViewById(R.id.search_edittext);
+        
+    	//added by Mike, 20170530
+    	if (!searchEditTextString.equals("")) {
+        	searchEditText.setText(searchEditTextString);
+    	}
+        
         //Reference: https://stackoverflow.com/questions/3205339/android-how-to-make-keyboard-enter-button-say-search-and-handle-its-click;
     	//last accessed: 20170523
     	//answer by: Robby Pond; edited by: sergej shafarenka
@@ -196,14 +205,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     	    @Override
     	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
     	        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-    	            performSearch(searchEditText.getText().toString());
-    	            showSearchResults();
+    	        	processSearch(searchEditText);
     	            return true;
     	        }
     	        return false;
     	    }
     	});
-    	
+
     	//Reference: https://stackoverflow.com/questions/13135447/setting-onclicklistner-for-the-drawable-right-of-an-edittext;
     	//last accessed: 20170525
     	//answer by: AZ_
@@ -217,10 +225,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(event.getRawX() >= (searchEditText.getRight() - searchEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        // your action here
+                    	processSearch(searchEditText);
+/*                    	
+                    	// your action here
         	            performSearch(searchEditText.getText().toString());
         	            showSearchResults();
         	            searchEditText.clearFocus();
+*/        	            
                         return true;
                     }
                 }
@@ -229,7 +240,40 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         });
     }
     
-    public void loadMerchantStore(String merchantName) {
+    public void processSearch(EditText searchEditText) {
+        performSearch(searchEditText.getText().toString());
+        showSearchResults();
+        searchEditText.clearFocus();
+
+    	//added by Mike, 20170530
+    	if (isInMerchantShop) {
+    		isInMerchantShop=false;
+    		searchEditTextString = searchEditText.getText().toString();
+        	setContentView(R.layout.main);
+
+        	hasPerformedSearch=true;
+        	
+        	initSearch();
+    		initTreeLoader();
+
+/*    		myProgressDialog = ProgressDialog.show(instance, "Loading...",
+    				  "This takes only a short while.", true, false);				  
+    		new MyBackgroundTask().execute();  
+*/    		
+    	}    	        	
+    	else {
+    		searchEditTextString = "";    	        		
+    	}
+//    	setContentView(R.layout.main);
+/*
+        performSearch(searchEditText.getText().toString());
+        showSearchResults();
+        searchEditText.clearFocus();
+*/        
+    }
+    
+    public void loadMerchantStore(String merchantName) { 
+    	isInMerchantShop=true;
 		setContentView(R.layout.tree_list_interface);				
     	initSearch(); //added by Mike, 20170529		
 		
@@ -623,7 +667,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				break;
 		}
 
-		performSearch(null);
+		//edited by Mike, 20170530
+		if (!hasPerformedSearch) {
+			performSearch(null);			
+		}	
+		else {
+			hasPerformedSearch=false;
+		}
 		
         switch (currCategory) {
         	case UsbongConstants.ITEMS_LIST_BOOKS:
