@@ -1119,8 +1119,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
             	final String o = items.get(position);
-                View v = convertView;
+            	final View v; //edited by Mike, 20170530
+/*                View v = convertView;
                 if (v == null) {
+*/                
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     if (o.contains("COMBO")) {
                         v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
@@ -1141,8 +1143,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                         	break;                            
                     }
 */                    
+/*                    
                 }
-
+*/
 //                final String o = items.get(position);
                 if (o != null) {
                 	try {       
