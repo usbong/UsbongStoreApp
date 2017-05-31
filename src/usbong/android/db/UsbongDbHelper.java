@@ -33,7 +33,7 @@ import android.provider.BaseColumns;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "usbong_store.db";
     
     private static String DB_DIR = "/data/data/android.example/databases/";
@@ -112,7 +112,7 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
                 FileHelper.copyFile(DB_PATH, OLD_DB_PATH);
                 copyDataBase();
                 SQLiteDatabase old_db = SQLiteDatabase.openDatabase(OLD_DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
-                SQLiteDatabase new_db = SQLiteDatabase.openDatabase(DB_PATH,null, SQLiteDatabase.OPEN_READWRITE);
+                SQLiteDatabase new_db = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
                 /*
                  * Add code to load data into the new database from the old
                  * database and then delete the old database from internal
