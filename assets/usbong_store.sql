@@ -77,14 +77,14 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, lang
 (33, 1, 5, 'COMBO-Made in Japan, The Soul of a New Machine, Founders at Work, Outliers', 1650, 'English', 'Morita et al., Kidder, Gladwell, Livingston', NULL, 'Used - Acceptable', NULL, 'Mixed', 0, NULL),
 (34, 1, 5, 'COMBO-Starting Point, Turning Point', 2200, 'English', 'Hayao Miyazaki', NULL, 'New', NULL, 'Mixed', 0, 'Beth Cary and Frederik L. Schodt'),
 (35, 1, 5, 'COMBO-Steve Jobs, The Innovators', 1050, 'English', 'Walter Isaacson', NULL, 'Used - Very Good', NULL, 'Paperback', 0, NULL),
-(36, 2, 5, 'COMBO-ACTION COMICS 1-52 (complete set)', 8000, 'English', NULL, NULL, 'new, 1-52 + extras, VF-NM', NULL, NULL, 0, NULL),
-(37, 2, 5, 'COMBO-Silver Surfer vol 1 (complete set)', 32000, 'English', NULL, NULL, '1-18, VG-F', NULL, NULL, 0, NULL),
-(38, 2, 5, 'COMBO-Batman Superman set', 3000, 'English', NULL, NULL, '1-31, annual 1-2, future''s end 1, missing issue 32, VF-NM', NULL, NULL, 0, NULL),
-(39, 2, 5, 'COMBO-ULTIMATE FALL OUT set', 1800, 'English', NULL, NULL, 'ultimate fallout 1-6, issue 4 1st appearance miles morales, death of spider-man 2nd print, VF-NM', NULL, NULL, 0, NULL),
-(40, 2, 5, 'COMBO-KLAUS boom studios', 1200, 'English', NULL, NULL, 'complete set 1-7, VF-NM', NULL, NULL, 0, NULL),
-(41, 2, 5, 'COMBO-Empire of the Dead', 1500, 'English', NULL, NULL, 'complete 1st arc, 1-5, VF', NULL, NULL, 0, NULL),
-(42, 2, 5, 'COMBO-Fairest (complete set)', 4000, 'English', NULL, NULL, 'VF', NULL, NULL, 0, NULL),
-(43, 2, 5, 'COMBO-Batman and Robin New 52 set', 6000, 'English', NULL, NULL, 'complete set of batman and robin new 52, VF-NM', NULL, NULL, 0, NULL);
+(36, 2, 6, 'ACTION COMICS 1-52 (complete set)', 8000, 'English', NULL, NULL, 'new, 1-52 + extras, VF-NM', NULL, NULL, 0, NULL),
+(37, 2, 6, 'Silver Surfer vol 1 (complete set)', 32000, 'English', NULL, NULL, '1-18, VG-F', NULL, NULL, 0, NULL),
+(38, 2, 6, 'Batman Superman set', 3000, 'English', NULL, NULL, '1-31, annual 1-2, future''s end 1, missing issue 32, VF-NM', NULL, NULL, 0, NULL),
+(39, 2, 6, 'ULTIMATE FALL OUT set', 1800, 'English', NULL, NULL, 'ultimate fallout 1-6, issue 4 1st appearance miles morales, death of spider-man 2nd print, VF-NM', NULL, NULL, 0, NULL),
+(40, 2, 6, 'KLAUS boom studios', 1200, 'English', NULL, NULL, 'complete set 1-7, VF-NM', NULL, NULL, 0, NULL),
+(41, 2, 6, 'Empire of the Dead', 1500, 'English', NULL, NULL, 'complete 1st arc, 1-5, VF', NULL, NULL, 0, NULL),
+(42, 2, 6, 'Fairest (complete set)', 4000, 'English', NULL, NULL, 'VF', NULL, NULL, 0, NULL),
+(43, 2, 6, 'Batman and Robin New 52 set', 6000, 'English', NULL, NULL, 'Complete set of batman and robin new 52,VF-NM', NULL, NULL, 0, NULL);
 
 CREATE TABLE product_type (
   product_type_id INTEGER PRIMARY KEY,
