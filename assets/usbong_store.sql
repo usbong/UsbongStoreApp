@@ -84,7 +84,8 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, lang
 (40, 2, 6, 'KLAUS boom studios', 1200, 'English', NULL, NULL, 'complete set 1-7, VF-NM', NULL, NULL, 0, NULL),
 (41, 2, 6, 'Empire of the Dead', 1500, 'English', NULL, NULL, 'complete 1st arc, 1-5, VF', NULL, NULL, 0, NULL),
 (42, 2, 6, 'Fairest (complete set)', 4000, 'English', NULL, NULL, 'VF', NULL, NULL, 0, NULL),
-(43, 2, 6, 'Batman and Robin New 52 set', 6000, 'English', NULL, NULL, 'Complete set of batman and robin new 52,VF-NM', NULL, NULL, 0, NULL);
+(43, 2, 6, 'Batman and Robin New 52 set', 6000, 'English', NULL, NULL, 'Complete set of batman and robin new 52,VF-NM', NULL, NULL, 0, NULL),
+(44, 1, 7, 'One Piece Manga set (1-20)', 3700, 'English', NULL, NULL, 'Used - Acceptable', NULL, NULL, 0, NULL);
 
 CREATE TABLE product_type (
   product_type_id INTEGER PRIMARY KEY,

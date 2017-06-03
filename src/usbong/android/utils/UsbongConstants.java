@@ -22,6 +22,7 @@ public class UsbongConstants {
 	public static final String ITEMS_LIST_COMBOS = "items_list_combos";
 	public static final String ITEMS_LIST_BEVERAGES = "items_list_beverages";
 	public static final String ITEMS_LIST_COMICS = "items_list_comics";
+	public static final String ITEMS_LIST_MANGA = "items_list_manga";
 
 	//added by Mike, 20170207
     public static final String MY_ACCOUNT_DETAILS= "MyAccountDetails";
@@ -59,6 +60,7 @@ public class UsbongConstants {
 	public final static int PRODUCT_TYPE_BOOKS_BEVERAGES=4;
 	public final static int PRODUCT_TYPE_COMBOS=5;
 	public final static int PRODUCT_TYPE_COMICS=6;
+	public final static int PRODUCT_TYPE_MANGA=7;
 	
 	//added by Mike, 20170525
 	public final static int USBONG_MAIN_ACTIVITY=0;

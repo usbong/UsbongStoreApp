@@ -656,7 +656,15 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 initTreeLoader(UsbongConstants.ITEMS_LIST_COMICS);
             }
         });    
-        
+
+        Button mangaButton = (Button)findViewById(R.id.manga_button);
+        mangaButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_MANGA);
+            }
+        });    
+
 /*      //edited by Mike, 20170520  
  * 		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
 */
@@ -676,6 +684,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			case UsbongConstants.ITEMS_LIST_COMICS:
 				currProductTypeId = UsbongConstants.PRODUCT_TYPE_COMICS;
 				break;
+			case UsbongConstants.ITEMS_LIST_MANGA:
+				currProductTypeId = UsbongConstants.PRODUCT_TYPE_MANGA;
+				break;
 		}
 
 		//edited by Mike, 20170530
@@ -691,25 +702,38 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
                 combosButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
-        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.ITEMS_LIST_COMBOS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
-        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
                 break;
         	case UsbongConstants.ITEMS_LIST_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
-        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                comicsButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.ITEMS_LIST_COMICS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT_BOLD);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.ITEMS_LIST_MANGA:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT);            
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT_BOLD);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         }
@@ -1205,7 +1229,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 if (v == null) {
 */                
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if (o.contains("COMBO")||o.contains("RetroCC")) { //TODO: make this more generic 
+                    if (o.contains("COMBO")||o.contains("RetroCC")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
                         v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
                     }
                     else {
