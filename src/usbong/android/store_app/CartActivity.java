@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -428,6 +429,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						if (tempList.size()>1) {
 							s="...";
 						}
+/*						
 						//http://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application;
 						//answer by: Jeremy Logan, 20100204
 						//added by Mike, 20170220
@@ -443,6 +445,18 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 					    } catch (android.content.ActivityNotFoundException ex) {
 					        Toast.makeText(CartActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
 					    }	
+*/
+/*						
+				    	isSendingData=true; //added by Mike, 20170225
+
+						Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+						intent.setType("message/rfc822");
+						intent.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+tempList.get(0).substring("<b>".length(),tempList.get(0).indexOf("</b>"))+s);
+						intent.putExtra(Intent.EXTRA_TEXT,  buySummary.toString());
+						intent.setData(Uri.parse("mailto:"+UsbongConstants.ORDER_EMAIL_ADDRESS)); // or just "mailto:" for blank
+						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+						startActivity(intent);
+*/						
 					}
 				}				
 /*			}

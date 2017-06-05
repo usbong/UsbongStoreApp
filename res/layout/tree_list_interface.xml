@@ -41,13 +41,22 @@
 	        android:layout_gravity="center_vertical"
 	        android:gravity="center"/>				
 	</LinearLayout>
-	<LinearLayout
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal"
-	android:background="#706f5630"
-	>
-	</LinearLayout>
+	<HorizontalScrollView 
+	    android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:fillViewport="true"
+	    android:measureAllChildren="false"
+	    android:scrollbars="none"	
+   	>		
+		<LinearLayout
+			android:id="@+id/category_linearlayout"	    
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:background="#706f5630"
+		>
+		</LinearLayout>
+	</HorizontalScrollView>
 	<ListView
 		android:id="@+id/tree_list_view"
 		android:layout_width="fill_parent"

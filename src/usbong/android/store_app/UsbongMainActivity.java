@@ -55,6 +55,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -293,10 +294,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     	initSearch(); //added by Mike, 20170529		
 		
 		merchantName = merchantName.substring(2); //remove "☗ "
-		
+/*		
     	myDbHelper = new UsbongDbHelper(this);
         myDbHelper.initializeDataBase();
-
+*/
         listOfTreesArrayList.clear(); //added by Mike, 20170525
         
         try {
@@ -340,6 +341,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 //     		 brandLogoImageView.setBackground(UsbongUtils.getImageDrawable(this, merchantName+"_brand_logo.jpg"));
      		 brandLogoImageView.setImageDrawable(Drawable.createFromStream(myRes.getAssets().open(merchantName+"_brand_logo.jpg"), null));
 
+     		 //added by Mike, 20170605
+     		 ArrayList<Integer> categoryListInteger = new ArrayList<Integer>();
+//     		 ArrayList<String> categoryListString = new ArrayList<String>();
+     		 
 		     String getMerchantProducts = "select * from '" + "product" + "'" + " where merchant_id="+merchantId;
 		     Cursor c = mySQLiteDatabase.rawQuery(getMerchantProducts, null);
 		     
@@ -381,8 +386,15 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
 		   							 "MerchantName: "+merchantName;
 				        	listOfTreesArrayList.add(productDetails);
-			        		c.moveToNext();
-			        	}
+				        	
+				        	//added by Mike, 20170605
+				        	int cat = Integer.parseInt(c.getString(c.getColumnIndex("product_type_id")));
+				        	if (!categoryListInteger.contains(cat)) {
+				        		categoryListInteger.add(cat);
+				        	}			
+				        	
+				        	c.moveToNext();
+				        }
 			        }
 			        else {
 			           // Cursor is empty
@@ -393,6 +405,32 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        // Cursor is null
 			        	Log.d(">>>>>", "cursor is null");
 			     }
+
+	        	String getProductTypeIDs = "select * from '" + "product_type" + "'";
+				Cursor cProductTypeIDs = mySQLiteDatabase.rawQuery(getProductTypeIDs, null);
+				ArrayList<String> productTypeIDsList = new ArrayList<String>();
+				
+			    if (cProductTypeIDs != null) {
+			        if (cProductTypeIDs.moveToFirst()) { // if Cursor is not empty
+			        	while (!cProductTypeIDs.isAfterLast()) {
+			        		String productTypeName = cProductTypeIDs.getString(cProductTypeIDs.getColumnIndex("product_type_name"));
+			        		productTypeIDsList.add(productTypeName);
+			        		cProductTypeIDs.moveToNext();
+			        	}
+			        }
+			    }
+		     
+				//added by Mike, 20170605
+				LinearLayout categoryLinearLayout = (LinearLayout)findViewById(R.id.category_linearlayout);
+				for(int i=0; i<productTypeIDsList.size(); i++) {
+					 Button b = new Button(this);
+					 b.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+					 b.setTextColor(Color.parseColor("#554223"));
+					 b.setTypeface(Typeface.DEFAULT_BOLD);
+					 b.setBackgroundColor(Color.TRANSPARENT);  
+					 b.setText(productTypeIDsList.get(i+1)); //doesn't start at 0
+					 categoryLinearLayout.addView(b);
+				}
         } catch (Exception ex) {
            ex.printStackTrace();
         } finally {
@@ -411,7 +449,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 
 		treesListView = (ListView)findViewById(R.id.tree_list_view);
 		treesListView.setLongClickable(true);
-		treesListView.setAdapter(mCustomAdapter);
+		treesListView.setAdapter(mCustomAdapter);		
     }
     
     public void performSearch(String s) {
