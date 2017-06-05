@@ -405,10 +405,15 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        // Cursor is null
 			        	Log.d(">>>>>", "cursor is null");
 			     }
-
+/*
+		     	for(int i=0; i<categoryListInteger.size(); i++) {
+		     		Log.d(">>>>categoryListInteger", ""+categoryListInteger.get(i));
+		     	}
+*/		     
 	        	String getProductTypeIDs = "select * from '" + "product_type" + "'";
 				Cursor cProductTypeIDs = mySQLiteDatabase.rawQuery(getProductTypeIDs, null);
 				ArrayList<String> productTypeIDsList = new ArrayList<String>();
+				
 				
 			    if (cProductTypeIDs != null) {
 			        if (cProductTypeIDs.moveToFirst()) { // if Cursor is not empty
@@ -422,13 +427,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		     
 				//added by Mike, 20170605
 				LinearLayout categoryLinearLayout = (LinearLayout)findViewById(R.id.category_linearlayout);
-				for(int i=0; i<productTypeIDsList.size(); i++) {
+				for(int i=0; i<categoryListInteger.size(); i++) {
 					 Button b = new Button(this);
 					 b.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 					 b.setTextColor(Color.parseColor("#554223"));
 					 b.setTypeface(Typeface.DEFAULT_BOLD);
 					 b.setBackgroundColor(Color.TRANSPARENT);  
-					 b.setText(productTypeIDsList.get(i+1)); //doesn't start at 0
+//					 b.setText(productTypeIDsList.get(i+1)); //doesn't start at 0
+					 b.setText(productTypeIDsList.get(categoryListInteger.get(i)-1));
 					 categoryLinearLayout.addView(b);
 				}
         } catch (Exception ex) {
