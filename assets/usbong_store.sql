@@ -1,3 +1,4 @@
+
 BEGIN;
 CREATE TABLE fields (
   fields_id INTEGER PRIMARY KEY,
@@ -87,7 +88,10 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, lang
 (43, 2, 6, 'Batman and Robin New 52 set', 6000, 'English', NULL, NULL, 'Complete set of batman and robin new 52,VF-NM', NULL, NULL, 0, NULL),
 (44, 1, 7, 'One Piece Manga set (1-20)', 3700, 'Japanese', NULL, NULL, 'Used - Acceptable', NULL, NULL, 0, NULL),
 (45, 1, 7, 'Conan Manga set (1-9)', 1665, 'Japanese', NULL, NULL, 'Used - Acceptable', NULL, NULL, 0, NULL),
-(46, 1, 7, 'Rurouni Kenshin Manga set (1-10)', 1850, 'Japanese', NULL, NULL, 'Used - Acceptable', NULL, NULL, 0, NULL);
+(46, 1, 7, 'Rurouni Kenshin Manga set (1-10)', 1850, 'Japanese', NULL, NULL, 'Used - Acceptable', NULL, NULL, 0, NULL),
+(47, 2, 8, 'DAREDEVIL', 800, 'English', NULL, NULL, NULL, NULL, NULL, 0, NULL),
+(48, 2, 8, 'Spider-man Marvel Toybiz 90s', 700, 'English', NULL, NULL, 'MOC', NULL, NULL, 0, NULL),
+(49, 2, 8, 'Marvel Legends Wave 1 X-MEN BAF Juggernaut', 10000, 'English', NULL, NULL, 'VF-NM', NULL, NULL, 0, NULL);
 
 
 CREATE TABLE product_type (
@@ -102,7 +106,7 @@ INSERT INTO product_type (product_type_id, product_type_name) VALUES
 (4, 'books/beverages'),
 (5, 'combos'),
 (6, 'comics'),
-(7, 'manga');
-
+(7, 'manga'),
+(8, 'Toys & Collectibles');
 
 COMMIT;

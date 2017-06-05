@@ -30,18 +30,19 @@ import java.io.OutputStream;
 import usbong.android.utils.UsbongConstants;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
-    public static final String DATABASE_NAME = "usbong_store.db";
+    public static final int DATABASE_VERSION = 3;
+//    public static final String DB_NAME = "usbong_store.db";
     
-    private static String DB_DIR = "/data/data/usbong.android.store_app/databases/";
+//    private static String DB_DIR = "/data/data/usbong.android.store_app/databases/";
     private static String DB_NAME = "usbong_store.sql";//"database.sqlite";
-    private static String DB_PATH = DB_DIR + DB_NAME;
-    private static String OLD_DB_PATH = DB_DIR + "old_" + DB_NAME;
+    private static String DB_PATH;// = DB_DIR + DB_NAME;
+//    private static String OLD_DB_PATH = DB_DIR + "old_" + DB_NAME;
     
     private final Context myContext;
 
@@ -54,7 +55,7 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_SUBTITLE = "subtitle";
     }
-    
+/*    
     private static final String SQL_CREATE_ENTRIES =
     	    "CREATE TABLE " + UsbongStoreEntry.TABLE_NAME + " (" +
     	    UsbongStoreEntry._ID + " INTEGER PRIMARY KEY," +
@@ -63,13 +64,22 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
 
     	private static final String SQL_DELETE_ENTRIES =
     	    "DROP TABLE IF EXISTS " + UsbongStoreEntry.TABLE_NAME;
-
+*/
     public UsbongDbHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DB_NAME, null, DATABASE_VERSION);
         
         myContext = context;
         // Get the path of the database that is based on the context.
         DB_PATH = myContext.getDatabasePath(DB_NAME).getAbsolutePath();
+        
+//		 getWritableDatabase(); // In the constructor
+        
+        try {
+        	SQLiteDatabase.deleteDatabase(new File(DB_PATH));              		 
+        }
+        catch (NullPointerException e) {
+        	//no DB to delete
+        }
     }
     
     /**
@@ -180,45 +190,47 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        /*
-         * Signal that a new database needs to be copied. The copy process must
-         * be performed after the database in the cache has been closed causing
-         * it to be committed to internal storage. Otherwise the database in
-         * internal storage will not have the same creation timestamp as the one
-         * in the cache causing the database in internal storage to be marked as
-         * corrupted.
-         */
-        createDatabase = true;
-
-        /*
-         * This will create by reading a sql file and executing the commands in
-         * it.
-         */
-	        try {
-	        	InputStream is = myContext.getResources().getAssets().open(
-	        			"usbong_store.sql");
+    	if (!upgradeDatabase) {   	
+	        /*
+	         * Signal that a new database needs to be copied. The copy process must
+	         * be performed after the database in the cache has been closed causing
+	         * it to be committed to internal storage. Otherwise the database in
+	         * internal storage will not have the same creation timestamp as the one
+	         * in the cache causing the database in internal storage to be marked as
+	         * corrupted.
+	         */
+	        createDatabase = true;
 	        
-	        	String[] statements = FileHelper.parseSqlFile(is);
-	        
-	        	for (String statement : statements) {
-	        		db.execSQL(statement);
-	        	}
-	        }catch (Exception ex) {
-	        		ex.printStackTrace();
-	        	}
-
-            // try {
-            // InputStream is = myContext.getResources().getAssets().open(
-            // "create_database.sql");
-            //
-            // String[] statements = FileHelper.parseSqlFile(is);
-            //
-            // for (String statement : statements) {
-            // db.execSQL(statement);
-            // }
-            // } catch (Exception ex) {
-            // ex.printStackTrace();
-            // }
+	        /*
+	         * This will create by reading a sql file and executing the commands in
+	         * it.
+	         */
+		        try {
+		        	InputStream is = myContext.getResources().getAssets().open(
+		        			"usbong_store.sql");
+		        
+		        	String[] statements = FileHelper.parseSqlFile(is);
+		        
+		        	for (String statement : statements) {
+		        		db.execSQL(statement);
+		        	}
+		        }catch (Exception ex) {
+		        		ex.printStackTrace();
+		        	}
+	
+	            // try {
+	            // InputStream is = myContext.getResources().getAssets().open(
+	            // "create_database.sql");
+	            //
+	            // String[] statements = FileHelper.parseSqlFile(is);
+	            //
+	            // for (String statement : statements) {
+	            // db.execSQL(statement);
+	            // }
+	            // } catch (Exception ex) {
+	            // ex.printStackTrace();
+	            // }
+    	}
     }
 
     /**
@@ -246,16 +258,20 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
          * it.
          */        
          try {
-        	 myContext.deleteDatabase(DATABASE_NAME);
+//        	 myContext.deleteDatabase(DB_PATH);        	 
+//        	 String p = myContext.getDatabasePath(DB_NAME).getAbsolutePath();
+//        	 myContext.deleteDatabase(p);
         	 
-	         InputStream is = myContext.getResources().getAssets().open(
-	         "usbong_store.sql");
-        
-         	 String[] statements = FileHelper.parseSqlFile(is);
-        
-	         for (String statement : statements) {
-	        	 db.execSQL(statement);
-	         }
+//        	 if (SQLiteDatabase.deleteDatabase(new File(p))) {              		 
+	        	 InputStream is = myContext.getResources().getAssets().open(
+		         "usbong_store.sql");
+	        
+	         	 String[] statements = FileHelper.parseSqlFile(is);
+	        
+		         for (String statement : statements) {
+		        	 db.execSQL(statement);
+		         }
+//        	 }
          } catch (Exception ex) {
         	 ex.printStackTrace();
          }
