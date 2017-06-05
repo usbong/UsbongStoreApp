@@ -21,9 +21,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import usbong.android.db.UsbongDbHelper;
-import usbong.android.utils.AppRater;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -58,6 +58,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -204,7 +205,12 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     	searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
     	    @Override
     	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-    	        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+    	        if (actionId == EditorInfo.IME_ACTION_SEARCH) {    	        	
+    	        	//added by Mike, 20170605
+    	        	//hide keyboard
+    	        	InputMethodManager imm = (InputMethodManager) instance.getSystemService(Activity.INPUT_METHOD_SERVICE);
+    	        	imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    	        	
     	        	processSearch(searchEditText);
     	            return true;
     	        }
@@ -225,6 +231,11 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(event.getRawX() >= (searchEditText.getRight() - searchEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+        	        	//added by Mike, 20170605
+        	        	//hide keyboard
+        	        	InputMethodManager imm = (InputMethodManager) instance.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        	        	imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                     	processSearch(searchEditText);
 /*                    	
                     	// your action here
