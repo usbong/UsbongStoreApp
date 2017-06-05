@@ -7,6 +7,8 @@ public class UsbongConstants {
 
     }
     
+    public static final String USBONG_STORE_DB_SQL = "usbong_store.sql";
+    
     //TREE types
 	public static final String TREE_TYPE_SELL = "usbong_specialty_bookstore_sell";
 	public static final String TREE_TYPE_REQUEST = "usbong_specialty_bookstore_request";

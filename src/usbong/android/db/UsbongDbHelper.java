@@ -21,11 +21,13 @@
 
 package usbong.android.db;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import usbong.android.utils.UsbongConstants;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -33,10 +35,10 @@ import android.provider.BaseColumns;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "usbong_store.db";
     
-    private static String DB_DIR = "/data/data/android.example/databases/";
+    private static String DB_DIR = "/data/data/usbong.android.store_app/databases/";
     private static String DB_NAME = "usbong_store.sql";//"database.sqlite";
     private static String DB_PATH = DB_DIR + DB_NAME;
     private static String OLD_DB_PATH = DB_DIR + "old_" + DB_NAME;
@@ -109,10 +111,13 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
              * old database from internal storage.
              */
             try {
-                FileHelper.copyFile(DB_PATH, OLD_DB_PATH);
+/*                FileHelper.copyFile(DB_PATH, OLD_DB_PATH); 
+ */
                 copyDataBase();
+/*                
                 SQLiteDatabase old_db = SQLiteDatabase.openDatabase(OLD_DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
                 SQLiteDatabase new_db = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
+*/                
                 /*
                  * Add code to load data into the new database from the old
                  * database and then delete the old database from internal
@@ -239,19 +244,21 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         /*
          * This will upgrade by reading a sql file and executing the commands in
          * it.
-         */
-        // try {
-        // InputStream is = myContext.getResources().getAssets().open(
-        // "upgrade_database.sql");
-        //
-        // String[] statements = FileHelper.parseSqlFile(is);
-        //
-        // for (String statement : statements) {
-        // db.execSQL(statement);
-        // }
-        // } catch (Exception ex) {
-        // ex.printStackTrace();
-        // }
+         */        
+         try {
+        	 myContext.deleteDatabase(DATABASE_NAME);
+        	 
+	         InputStream is = myContext.getResources().getAssets().open(
+	         "usbong_store.sql");
+        
+         	 String[] statements = FileHelper.parseSqlFile(is);
+        
+	         for (String statement : statements) {
+	        	 db.execSQL(statement);
+	         }
+         } catch (Exception ex) {
+        	 ex.printStackTrace();
+         }
     }
 
     /**
