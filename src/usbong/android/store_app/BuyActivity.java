@@ -398,7 +398,8 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 			@Override
 			public void onClick(View v) {	
 				//added by Mike, 20170530
-				final Activity a;
+				final Activity a = UsbongMainActivity.getInstance();
+/*				
 				if ((getIntent().getExtras().getInt("activity caller")==0) 
 						|| (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY)) {
 					a = UsbongMainActivity.getInstance();
@@ -407,7 +408,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 					a = UsbongDecisionTreeEngineActivity.getInstance();						
 //	            	((UsbongDecisionTreeEngineActivity)a).loadMerchantStore(merchantButton.getText().toString());
 				}
-
+*/
 				//edited by Mike, 20170525
 				finish();
 				Intent toCallingActivityIntent = new Intent(getInstance(), a.getClass());

@@ -158,6 +158,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     		//edited by Mike, 20170530
         	Bundle extras = getIntent().getExtras();
         	if (extras!=null) {
+        		//added by Mike, 20170606
+            	myDbHelper = new UsbongDbHelper(this);
+                myDbHelper.initializeDataBase();
+        		
     			String merchantName = getIntent().getExtras().getString("loadMerchantStore");
     			loadMerchantStore(merchantName);			
     		} 
