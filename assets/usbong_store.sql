@@ -100,13 +100,13 @@ CREATE TABLE product_type (
 ); 
 
 INSERT INTO product_type (product_type_id, product_type_name) VALUES
-(1, 'all'),
-(2, 'books'),
-(3, 'beverages'),
-(4, 'books/beverages'),
-(5, 'combos'),
-(6, 'comics'),
-(7, 'manga'),
+(1, 'All'),
+(2, 'Books'),
+(3, 'Beverages'),
+(4, 'Books/Beverages'),
+(5, 'Combos'),
+(6, 'Comics'),
+(7, 'Manga'),
 (8, 'Toys & Collectibles');
 
 COMMIT;

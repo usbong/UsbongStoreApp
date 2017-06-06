@@ -75,8 +75,8 @@ import android.widget.TextView;
  */
 public class UsbongMainActivity extends AppCompatActivity/*Activity*/ 
 {	
-	//added by Mike, 20170525
-	private String currCategory = UsbongConstants.ITEMS_LIST_DEFAULT;
+	//edited by Mike, 20170606
+//	private int currCategory = UsbongConstants.PRODUCT_TYPE_ALL;//ITEMS_LIST_DEFAULT;
 
 	private static UsbongMainActivity instance;
 				
@@ -103,10 +103,12 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	private UsbongDbHelper myDbHelper;
 	private SQLiteDatabase mySQLiteDatabase;
 	
-	private int currProductTypeId = 1; //default
+	private int currProductTypeId = UsbongConstants.PRODUCT_TYPE_BOOKS; //default
 	private static boolean isInMerchantShop=false;
 	private static boolean hasPerformedSearch=false;
 	private String searchEditTextString="";
+	
+	private ArrayList<String> categoryButtonsList;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -143,6 +145,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	        //added by Mike, 20170530
 			listOfTreesArrayList = new ArrayList<String>();
 	        
+			//added by Mike, 20170606
+			categoryButtonsList = new ArrayList<String>();
+			
 	        reset();
         	
 //	        initMainMenuScreen();
@@ -431,11 +436,22 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 					 Button b = new Button(this);
 					 b.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 					 b.setTextColor(Color.parseColor("#554223"));
-					 b.setTypeface(Typeface.DEFAULT_BOLD);
+					 b.setTextSize(14);
+					 if (i==0) {
+						 b.setTypeface(Typeface.DEFAULT_BOLD);						 
+					 }
 					 b.setBackgroundColor(Color.TRANSPARENT);  
-//					 b.setText(productTypeIDsList.get(i+1)); //doesn't start at 0
-					 b.setText(productTypeIDsList.get(categoryListInteger.get(i)-1));
+					 b.setText("    "+productTypeIDsList.get(categoryListInteger.get(i)-1).toUpperCase()+"    ");
+/*					 					 
+			         b.setOnClickListener(new OnClickListener() {
+			            @Override
+			            public void onClick(View v) {
+//			                initTreeLoaderDynamically(UsbongConstants.ITEMS_LIST_BOOKS);
+			            }
+			         });    
+*/					 
 					 categoryLinearLayout.addView(b);
+					 categoryButtonsList.add(b.getText().toString());
 				}
         } catch (Exception ex) {
            ex.printStackTrace();
@@ -472,7 +488,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		     }
 		     else {
 			     query = "select * from '"+table+"' where NAME like '%"+s+"%' OR author LIKE '%"+s+"%'";		     		    	 
-			     currCategory = UsbongConstants.ITEMS_LIST_DEFAULT;
+			     /*currCategory*/currProductTypeId = UsbongConstants.PRODUCT_TYPE_BOOKS; //.ITEMS_LIST_DEFAULT;
 		     }		     
 		     
 //		     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
@@ -670,8 +686,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	}
     
   //added by Mike, 20170330
-    public void initTreeLoader(String currCategory) {
-        this.currCategory = currCategory;
+    public void initTreeLoader(int currProductTypeId) {
+        this.currProductTypeId = currProductTypeId;
         initTreeLoader();
     }
     
@@ -685,7 +701,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         booksButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_BOOKS);
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_BOOKS);
             }
         });    
 
@@ -693,7 +709,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         combosButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_COMBOS);
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_COMBOS);
             }
         });    
 
@@ -701,7 +717,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         beveragesButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_BEVERAGES);
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_BEVERAGES);
             }
         });    
 
@@ -709,7 +725,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         comicsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_COMICS);
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_COMICS);
             }
         });    
 
@@ -717,7 +733,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         mangaButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_MANGA);
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_MANGA);
             }
         });    
 
@@ -725,37 +741,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         toysAndCollectiblesButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_TOYS_AND_COLLECTIBLES);
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES);
             }
         });    
-
-        
-/*      //edited by Mike, 20170520  
- * 		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
-*/
-/*		listOfTreesArrayList = new ArrayList<String>();
-*/		
-		currProductTypeId = UsbongConstants.PRODUCT_TYPE_ALL; //default
-		switch(currCategory) {
-			case UsbongConstants.ITEMS_LIST_BOOKS:
-				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BOOKS;
-				break;
-			case UsbongConstants.ITEMS_LIST_BEVERAGES:
-				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BEVERAGES;
-				break;
-			case UsbongConstants.ITEMS_LIST_COMBOS:
-				currProductTypeId = UsbongConstants.PRODUCT_TYPE_COMBOS;
-				break;
-			case UsbongConstants.ITEMS_LIST_COMICS:
-				currProductTypeId = UsbongConstants.PRODUCT_TYPE_COMICS;
-				break;
-			case UsbongConstants.ITEMS_LIST_MANGA:
-				currProductTypeId = UsbongConstants.PRODUCT_TYPE_MANGA;
-				break;
-			case UsbongConstants.ITEMS_LIST_TOYS_AND_COLLECTIBLES:
-				currProductTypeId = UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES;
-				break;
-		}
 
 		//edited by Mike, 20170530
 		if (!hasPerformedSearch) {
@@ -765,8 +753,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			hasPerformedSearch=false;
 		}
 		
-        switch (currCategory) {
-        	case UsbongConstants.ITEMS_LIST_BOOKS:
+        switch (currProductTypeId) {
+        	case UsbongConstants.PRODUCT_TYPE_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
                 combosButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -774,7 +762,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
-        	case UsbongConstants.ITEMS_LIST_COMBOS:
+        	case UsbongConstants.PRODUCT_TYPE_COMBOS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -782,7 +770,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
                 break;
-        	case UsbongConstants.ITEMS_LIST_BEVERAGES:
+        	case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
@@ -791,7 +779,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
-        	case UsbongConstants.ITEMS_LIST_COMICS:
+        	case UsbongConstants.PRODUCT_TYPE_COMICS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -800,7 +788,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
-        	case UsbongConstants.ITEMS_LIST_MANGA:
+        	case UsbongConstants.PRODUCT_TYPE_MANGA:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -809,7 +797,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
-        	case UsbongConstants.ITEMS_LIST_TOYS_AND_COLLECTIBLES:
+        	case UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -855,48 +843,162 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		  }				  
 	}
     
-/*    
-    public void initMainMenuScreen()
-    {    	
-    	//added by Mike, 20160126
-    	buyButton = (Button)findViewById(R.id.buy_button);
-    	buyButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {		
-				reset(); //generate new timestamp
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad",UsbongConstants.TREE_TYPE_BUY); 								
-				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
-			}
-    	});
-    	
-    	//added by Mike, 20160119
-    	sellButton = (Button)findViewById(R.id.sell_button);
-		sellButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {		
-				reset(); //generate new timestamp
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad",UsbongConstants.TREE_TYPE_SELL); 								
-				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
-			}
-    	});
-    	
-    	requestButton = (Button)findViewById(R.id.request_button);
-		requestButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {		
-				reset(); //generate new timestamp
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad",UsbongConstants.TREE_TYPE_REQUEST); 								
-				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
-			}
-    	});
-    }
-*/    
+
+	public void initTreeLoaderDynamically()
+	{
+		isInTreeLoader=true;
+
+		for (int i=0; i<categoryButtonsList.size(); i++) {
+			
+		}
+		
+        Button booksButton = (Button)findViewById(R.id.books_button);
+        booksButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_BOOKS);
+            }
+        });    
+
+        Button combosButton = (Button)findViewById(R.id.combos_button);
+        combosButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_COMBOS);
+            }
+        });    
+
+        Button beveragesButton = (Button)findViewById(R.id.beverages_button);
+        beveragesButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_BEVERAGES);
+            }
+        });    
+
+        Button comicsButton = (Button)findViewById(R.id.comics_button);
+        comicsButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_COMICS);
+            }
+        });    
+
+        Button mangaButton = (Button)findViewById(R.id.manga_button);
+        mangaButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_MANGA);
+            }
+        });    
+
+        Button toysAndCollectiblesButton = (Button)findViewById(R.id.toys_collectibles_button);
+        toysAndCollectiblesButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES);
+            }
+        });    
+
+		//edited by Mike, 20170530
+		if (!hasPerformedSearch) {
+			performSearch(null);			
+		}	
+		else {
+			hasPerformedSearch=false;
+		}
+		
+        switch (currProductTypeId) {
+        	case UsbongConstants.PRODUCT_TYPE_BOOKS:
+                booksButton.setTypeface(Typeface.DEFAULT_BOLD);
+                combosButton.setTypeface(Typeface.DEFAULT);
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_COMBOS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT);            
+                beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
+                comicsButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_COMICS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT);            
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT_BOLD);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_MANGA:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT);            
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT_BOLD);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT);            
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT_BOLD);               
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        }
+		mCustomAdapter.sort(); //edited by Mike, 20170203
+		
+/*
+		//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
+		//last accessed: 2 Jan. 2014; answer by Alex Lockwood
+		mCustomAdapter.sort(new Comparator<String>() {
+		    public int compare(String arg0, String arg1) {
+		        return arg0.compareTo(arg1);
+		    }
+		});
+*/		
+		treesListView = (ListView)findViewById(R.id.tree_list_view);
+		treesListView.setLongClickable(true);
+		treesListView.setAdapter(mCustomAdapter);
+/*
+    	String pleaseMakeSureThatXMLTreeExistsString = (String) getResources().getText(R.string.pleaseMakeSureThatXMLTreeExistsString);
+    	String alertString = (String) getResources().getText(R.string.alertStringValueEnglish);
+*/
+		if (listOfTreesArrayList.isEmpty()){
+        	new AlertDialog.Builder(UsbongMainActivity.this).setTitle("Hey!")
+//			.setMessage(pleaseMakeSureThatXMLTreeExistsString)
+			.setMessage("There are presently no items in this category.")
+        	.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//UsbongDecisionTreeEngineActivity is already the Main Menu
+/*
+					finish();    
+					Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
+					toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+					startActivity(toUsbongMainActivityIntent);
+*/					
+				}
+			}).show();	        		        	
+		  }				  
+	}
+	
     public void reset() {
     	UsbongUtils.generateDateTimeStamp(); //create a new timestamp for this "New Entry"
     }
@@ -1344,8 +1446,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	                    Resources myRes = instance.getResources();
 	                    final String imageFileName;
 	                    
-                    	switch(currCategory) {
-			    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
+                    	switch(currProductTypeId) {
+			    			case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
 /*			    				
 		                    	s = o.toString()
                     			.replace("Name:", "<b>Name:</b>")
