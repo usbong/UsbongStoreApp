@@ -147,6 +147,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			listOfTreesArrayList = new ArrayList<String>();
 	        
 			//added by Mike, 20170606
+    		categoryListInteger = new ArrayList<Integer>();
 			categoryButtonsList = new ArrayList<Button>();
 			
 	        reset();
@@ -305,6 +306,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         myDbHelper.initializeDataBase();
 */
         listOfTreesArrayList.clear(); //added by Mike, 20170525
+        categoryButtonsList.clear();
+        categoryListInteger.clear();
         
         try {
 	         mySQLiteDatabase = myDbHelper.getReadableDatabase();
@@ -346,11 +349,11 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
      		 ImageView brandLogoImageView = (ImageView)findViewById(R.id.brand_logo);
 //     		 brandLogoImageView.setBackground(UsbongUtils.getImageDrawable(this, merchantName+"_brand_logo.jpg"));
      		 brandLogoImageView.setImageDrawable(Drawable.createFromStream(myRes.getAssets().open(merchantName+"_brand_logo.jpg"), null));
-
+/*
      		 //added by Mike, 20170605
      		 categoryListInteger = new ArrayList<Integer>();
 //     		 ArrayList<String> categoryListString = new ArrayList<String>();
-     		 
+*/     		 
 		     String getMerchantProducts = "select * from '" + "product" + "'" + " where merchant_id="+merchantId;
 		     Cursor c = mySQLiteDatabase.rawQuery(getMerchantProducts, null);
 		     
