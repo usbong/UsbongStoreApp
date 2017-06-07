@@ -1329,6 +1329,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 /*                View v = convertView;
                 if (v == null) {
 */                
+            	//Reference: https://stackoverflow.com/questions/14156996/out-of-memory-on-android-app-on-scrolling-list-with-images;
+            	//last accessed: 20170607
+            	//answer by: dev_android
+            	if (convertView == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     if (o.contains("COMBO")||o.contains("RetroCC")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
                         v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
@@ -1336,6 +1340,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                     else {
                         v = vi.inflate(R.layout.tree_loader, null);                
                     }
+            	}
+            	else {
+            		v = convertView;
+            	}
 
 /*
                     switch (currCategory) {

@@ -429,7 +429,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						if (tempList.size()>1) {
 							s="...";
 						}
-/*						
+						
 						//http://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application;
 						//answer by: Jeremy Logan, 20100204
 						//added by Mike, 20170220
@@ -445,7 +445,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 					    } catch (android.content.ActivityNotFoundException ex) {
 					        Toast.makeText(CartActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
 					    }	
-*/
+
 /*						
 				    	isSendingData=true; //added by Mike, 20170225
 
