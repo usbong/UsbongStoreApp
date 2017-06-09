@@ -69,8 +69,8 @@ function myFunction() {
        var now = new Date().getTime(); //produces a number based on the date-time stamp
 //       Logger.log(new Date(1496968250761)); //to convert the number into a data-time stamp
        
-//       GmailApp.sendEmail(retroCCEmailAddress, "Purchase Order: "+now.toString(), retroCCOrderSummary);
-       GmailApp.sendEmail(usbongSpecialtyBookstoreEmailAddress, "Purchase Order: "+now.toString(), usbongSpecialtyBookstoreOrderSummary);
+//       GmailApp.sendEmail(retroCCEmailAddress, "Purchase Order: #"+now.toString(), retroCCOrderSummary);
+       GmailApp.sendEmail(usbongSpecialtyBookstoreEmailAddress, "Purchase Order: #"+now.toString(), usbongSpecialtyBookstoreOrderSummary);
      }     
    }
 }
