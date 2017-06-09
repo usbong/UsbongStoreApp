@@ -13,11 +13,8 @@
  * limitations under the License.
  */
 function myFunction() {
-   var unreadCount = GmailApp.getInboxUnreadCount();
-//   Logger.log("Unread count: "+unreadCount);
-
-   var usbongSpecialtyBookstoreEmailAddress = "order@usbong.ph";
    var retroCCEmailAddress = "order@retrocc.ph"
+   var usbongSpecialtyBookstoreEmailAddress = "order@usbong.ph";
    
    var usbongSpecialtyBookstoreOrderContainer = [];
    var retroCCOrderContainer = [];
@@ -27,22 +24,17 @@ function myFunction() {
      var subjectHeader = purchaseOrderThread[i].getFirstMessageSubject();
      if (subjectHeader.indexOf("Purchase Order") != -1) {
        var message = purchaseOrderThread[i].getMessages()[0];
-//       Logger.log("Purchase Order: "+message.getBody());
        
        var productItemsArrayList = [];
-       //Logger.log(message.getBody().indexOf("-Purchase Order Summary-"));
        var startIndex = message.getBody().indexOf("-Purchase Order Summary-");
-//       Logger.log(message.getBody().substring(startIndex));
        
        var rawProductItems = message.getBody().substring(startIndex).split("Customer")[0];
-//       Logger.log(rawProductItems);
        var extractedProductItems = [];
        extractedProductItems = rawProductItems.replace("--<br>","-<br>").split("-<br>");
-//       Logger.log(extractedProductItems[1].replace(/<br>/g,""));
        
-       Logger.log(extractedProductItems.length);
-//       for (var i in extractedProductItems) {
-       for (var k=1; k<extractedProductItems.length-1; k++) { //start with 1, not 0, which is "-Purchase Order Summary-"
+       //start with 1, not 0, which is "-Purchase Order Summary-", 
+       //until the second to the last item in extractedProductItems
+       for (var k=1; k<extractedProductItems.length-1; k++) {
          var s = extractedProductItems[k].replace(/<br>/g,"");
          if (s.indexOf("? RetroCC") != -1) {
            retroCCOrderContainer.push(s);
@@ -52,27 +44,33 @@ function myFunction() {
          }
        }
 
+       var customerInfo = "Customer" + message.getBody().substring(startIndex).split("Customer")[1];
+       customerInfo = customerInfo.substring(0,customerInfo.indexOf("</p>")).replace(/<br>/g,"");
+
        //RETROCC ORDER SUMMARY------------------------------------------------
-       var retroCCOrderSummary = "";
+       var retroCCOrderSummary = "-Purchase Order Summary-";
        for (var j=0; j<retroCCOrderContainer.length; j++) {
-         //Logger.log(retroCCOrderContainer[j]);
-         retroCCOrderSummary += retroCCOrderContainer[j];
+         retroCCOrderSummary += (retroCCOrderContainer[j]+"-\n");
        }
+       retroCCOrderSummary += customerInfo;
 
        //USBONG SPECIALTY BOOKSTORE ORDER SUMMARY------------------------------------------------
-       var usbongSpecialtyBookstoreOrderSummary = "";
+       var usbongSpecialtyBookstoreOrderSummary = "-Purchase Order Summary-";
        for (var j=0; j<usbongSpecialtyBookstoreOrderContainer.length; j++) {
-         usbongSpecialtyBookstoreOrderSummary += usbongSpecialtyBookstoreOrderContainer[j];
+         usbongSpecialtyBookstoreOrderSummary += (usbongSpecialtyBookstoreOrderContainer[j]+"-\n");
        }
-
+       usbongSpecialtyBookstoreOrderSummary += customerInfo;
+/*       
        Logger.log(retroCCOrderSummary);       
        Logger.log(usbongSpecialtyBookstoreOrderSummary);
+*/
+
+       //SEND PURCHASE ORDER EMAIL TO EACH RELEVANT MERCHANT       
+       var now = new Date().getTime(); //produces a number based on the date-time stamp
+//       Logger.log(new Date(1496968250761)); //to convert the number into a data-time stamp
        
-       var customerInfo = "Customer" + message.getBody().substring(startIndex).split("Customer")[1];
-//       Logger.log(customerInfo);       
-/*     
-         message.forward("merchant@address.ph");         
-*/       
+//       GmailApp.sendEmail(retroCCEmailAddress, "Purchase Order: "+now.toString(), retroCCOrderSummary);
+       GmailApp.sendEmail(usbongSpecialtyBookstoreEmailAddress, "Purchase Order: "+now.toString(), usbongSpecialtyBookstoreOrderSummary);
      }     
    }
 }
