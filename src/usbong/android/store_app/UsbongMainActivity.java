@@ -364,6 +364,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		     if (c != null) {
 			        if (c.moveToFirst()) { // if Cursor is not empty
 			        	while (!c.isAfterLast()) {
+/*			        		
 			        		String price = c.getString(c.getColumnIndex("price"));
 			        		if (price==null) {
 			        			price = "out of stock";
@@ -373,19 +374,6 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        		}
 			        		
 			        		String productDetails="";
-/*			        		
-			        		switch(currCategory) {
-				    			case UsbongConstants.ITEMS_LIST_BEVERAGES:
-					        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
-				   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>";
-					        		break;
-				    			default:
-					        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
-				   							 ""+c.getString(c.getColumnIndex("author"))+"\n"+
-				   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>";
-				    				break;
-			        		}
-*/
 		    				String authorString = c.getString(c.getColumnIndex("author"));
 		    				if (authorString==null) {
 		    					authorString="";
@@ -399,8 +387,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
 		   							 "MerchantName: "+merchantName;
 				        	listOfTreesArrayList.add(productDetails);
-				        	
-				        	//added by Mike, 20170605
+*/				        	
+				        	//edited by Mike, 20170610
 				        	int cat = Integer.parseInt(c.getString(c.getColumnIndex("product_type_id")));
 				        	if (!categoryListInteger.contains(cat)) {
 				        		categoryListInteger.add(cat);
@@ -418,11 +406,6 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        // Cursor is null
 			        	Log.d(">>>>>", "cursor is null");
 			     }
-/*
-		     	for(int i=0; i<categoryListInteger.size(); i++) {
-		     		Log.d(">>>>categoryListInteger", ""+categoryListInteger.get(i));
-		     	}
-*/		     
 	        	String getProductTypeIDs = "select * from '" + "product_type" + "'";
 				Cursor cProductTypeIDs = mySQLiteDatabase.rawQuery(getProductTypeIDs, null);
 				ArrayList<String> productTypeIDsList = new ArrayList<String>();
@@ -475,6 +458,23 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }        	 
         }
         
+        //added by Mike, 20170610    	
+    	int highestCategory=0;
+    	for (int i=0; i<categoryListInteger.size(); i++) { 
+    		if (highestCategory < categoryListInteger.get(i)) {
+    			highestCategory = categoryListInteger.get(i);
+    		}    		
+    	}
+    	//get the lowestcategoryListInteger 
+    	int lowestCategory=highestCategory; 
+    	for (int i=0; i<categoryListInteger.size(); i++) { 
+    		if (lowestCategory > categoryListInteger.get(i)) {
+    			lowestCategory = categoryListInteger.get(i);
+    		}
+    	}		
+        //show only product items of merchant for the default (lowest/first) category
+    	initTreeLoaderDynamically(lowestCategory);
+/*    			
         //edited by Mike, 20170530
     	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
 		mCustomAdapter.sort(); //edited by Mike, 20170203
@@ -482,6 +482,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		treesListView = (ListView)findViewById(R.id.tree_list_view);
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);		
+*/		
     }
     
     public void performSearch(String s) {
