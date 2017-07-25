@@ -145,7 +145,8 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 
         	//edited by Mike, 20170529
         	productDetails = getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME)+
-        			"MerchantName: "+getIntent().getStringExtra(UsbongConstants.MERCHANT_NAME);
+        			"MerchantName: "+getIntent().getStringExtra(UsbongConstants.MERCHANT_NAME)+
+        			"ImageFileName: "+getIntent().getStringExtra(UsbongConstants.ITEM_IMAGE_NAME);
         	
     		ImageView myTextImageDisplayImageView = (ImageView)findViewById(R.id.image_display_imageview);
 
@@ -240,6 +241,8 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 					
 					int quantityNumber = Integer.parseInt(quantity.getText().toString());
 					for (int i=0; i<quantityNumber; i++) {
+						//edited by Mike, 20170725
+//			        	UsbongUtils.itemsInCart.add(productDetails);						
 			        	UsbongUtils.itemsInCart.add(productDetails);						
 					}
 

@@ -1016,45 +1016,22 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 //                    	String tempS;
                     	final String s; 
 	                    final String imageFileName;
+	                    final String folderName;
+	                    
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
-/*
-                    	if (tempS.contains("Format")) { //BOOK/COMBO
-		    				s = o.toString()
-                			.replace("Title:", "<b>Title:</b>")
-        					.replace("\nAuthor:", "\n<b>Author:</b>")
-        					.replace("\nPrice:", "\n<b>Price:</b>")
-//        					.replace("\nDetails:", "\n<b>Details:</b>")
-        					.replace("\nLanguage:", "\n<b>Language:</b>")
-        					.replace("\n", "<br>");
-//        					.substring(o.indexOf("T"));
-
-		                    imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
-		                    		.replace("Title: ","")
-		                    		.replace("’","")
-		                    		.replace("'","")
-		                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
-            			}
-            			else {
-		    				s = o.toString()
-	            					.replace("\n", "<br>");
-			    			imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
-		                    		.replace("<b>","")
-		                    		.replace("’","")
-		                    		.replace("'","")
-		                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
-            			}
-*/
 	    				String tempS = o.toString().replace("\n", "<br>");
 	    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
-		    			imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
+
+	    				imageFileName = o.toString().substring(o.indexOf("ImageFileName: ")+"ImageFileName: ".length());
+/*	    				imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
 	                    		.replace("<b>","")
 	                    		.replace("’","")
 	                    		.replace("'","")
 	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
-
+*/
 		    			//added by Mike, 20170529
-		    			final String merchantName = o.substring(o.indexOf("MerchantName: ")+"MerchantName: ".length());
+		    			final String merchantName = o.substring(o.indexOf("MerchantName: ")+"MerchantName: ".length(), o.indexOf("ImageFileName: "));
 		    			
 /*
 	                    String imageString = o.toString()

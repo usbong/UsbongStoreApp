@@ -499,7 +499,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		     }
 		     else {
 			     query = "select * from '"+table+"' where NAME like '%"+s+"%' OR author LIKE '%"+s+"%'";		     		    	 
-			     /*currCategory*/currProductTypeId = UsbongConstants.PRODUCT_TYPE_BOOKS; //.ITEMS_LIST_DEFAULT;
+//			     currProductTypeId = UsbongConstants.PRODUCT_TYPE_BOOKS; //.ITEMS_LIST_DEFAULT;
 		     }		     
 		     
 //		     String query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
@@ -507,6 +507,17 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		     if (c != null) {
 			        if (c.moveToFirst()) { // if Cursor is not empty
 			        	while (!c.isAfterLast()) {
+			        		//edited by Mike, 20170725
+			        		String price;
+			        		int quantityInStock = c.getInt(c.getColumnIndex("quantity_in_stock"));
+			        		if (quantityInStock<1) {
+			        			price = "out of stock";
+			        		}
+			        		else {
+			        			price = "₱" + c.getString(c.getColumnIndex("price"));
+			        		}
+			        		
+/*			        		
 			        		String price = c.getString(c.getColumnIndex("price"));
 			        		if (price==null) {
 			        			price = "out of stock";
@@ -514,6 +525,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        		else {
 			        			price = "₱" + price;
 			        		}
+*/			        		
+			        		
+			        		//added by Mike, 20170725			        		 
+						    currProductTypeId = c.getInt(c.getColumnIndex("product_type_id"));
 			        		
 			        		String productDetails="";
 /*			        		if (s==null) {
@@ -1424,7 +1439,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			    			case UsbongConstants.PRODUCT_TYPE_BEVERAGES:		                    		
 			    				tempS = o.toString().replace("\n", "<br>");
 			    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
-			    				imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
+			    				imageFileName = folderName+"/"+o.toString().substring(0, o.toString().indexOf("</b>"))
 		                    		.replace("<b>","")
 		                    		.replace("’","")
 		                    		.replace("'","")
@@ -1433,14 +1448,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			    			default:
 			    				tempS = o.toString().replace("\n", "<br>");
 			    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
-			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("</b>"))
+			                    imageFileName = folderName+"/"+o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("</b>"))
 			                    		.replace("<b>","")
 			                    		.replace("’","")
 			                    		.replace("'","")
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 			    				break;
                     	}
-	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(folderName+"/"+imageFileName), null); //edited by Mike, 20170202
+	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	
                         final Button merchantNameButton = (Button)v.findViewById(R.id.merchant_button);
