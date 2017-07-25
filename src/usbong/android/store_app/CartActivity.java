@@ -352,7 +352,11 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						
 						int tempListSize = tempList.size();
 						for (int i=0; i<tempListSize; i++) {
-							buySummary.append(Html.fromHtml(tempList.get(i)).toString().replace("MerchantName: ", "\n")+"\n");
+							//edited by Mike, 20170725
+							String o = tempList.get(i).toString();
+							buySummary.append(Html.fromHtml(o.substring(0, o.indexOf("ImageFileName: "))
+																				.replace("MerchantName: ", "<br>"))
+																				+"\n");						
 							buySummary.append("Quantity: "+quantityList.get(i)+"\n");							
 							
 							if (i<tempListSize-1) {
@@ -1016,7 +1020,6 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 //                    	String tempS;
                     	final String s; 
 	                    final String imageFileName;
-	                    final String folderName;
 	                    
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
