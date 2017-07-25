@@ -753,7 +753,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             }
         });    
 
-        Button combosButton = (Button)findViewById(R.id.combos_button);
+        Button combosButton = (Button)findViewById(R.id.promos_button);
         combosButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -785,7 +785,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BEVERAGES;
 				break;
 			case UsbongConstants.ITEMS_LIST_COMBOS:
-				currProductTypeId = UsbongConstants.PRODUCT_TYPE_COMBOS;
+				currProductTypeId = UsbongConstants.PRODUCT_TYPE_PROMOS;
 				break;
 		}
 

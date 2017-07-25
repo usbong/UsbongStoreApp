@@ -716,11 +716,19 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }
         });    
 
-        Button combosButton = (Button)findViewById(R.id.combos_button);
-        combosButton.setOnClickListener(new OnClickListener() {
+        Button textbooksButton = (Button)findViewById(R.id.textbooks_button);
+        textbooksButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.PRODUCT_TYPE_COMBOS);
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_TEXTBOOKS);
+            }
+        });    
+
+        Button promosButton = (Button)findViewById(R.id.promos_button);
+        promosButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_PROMOS);
             }
         });    
 
@@ -767,15 +775,26 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         switch (currProductTypeId) {
         	case UsbongConstants.PRODUCT_TYPE_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
-                combosButton.setTypeface(Typeface.DEFAULT);
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
-        	case UsbongConstants.PRODUCT_TYPE_COMBOS:
+        	case UsbongConstants.PRODUCT_TYPE_TEXTBOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                textbooksButton.setTypeface(Typeface.DEFAULT_BOLD);
+                promosButton.setTypeface(Typeface.DEFAULT);
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_PROMOS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT_BOLD);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
@@ -783,7 +802,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT);            
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
@@ -792,7 +812,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_COMICS:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT);            
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT_BOLD);
                 mangaButton.setTypeface(Typeface.DEFAULT);
@@ -801,7 +822,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_MANGA:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT);            
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT_BOLD);
@@ -810,7 +832,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT);            
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
@@ -1335,7 +1358,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             	//answer by: dev_android
             	if (convertView == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if (o.contains("COMBO")||o.contains("RetroCC")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
+                    if (o.contains("PROMO")||o.contains("RetroCC")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
                         v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
                     }
                     else {
@@ -1370,24 +1393,35 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                     	String tempS;
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
-	                    final String imageFileName;
-	                    
+	                    final String imageFileName;	                    
+	                    final String folderName; //added by Mike, 20170725
+	                    	                	
                     	switch(currProductTypeId) {
 			    			case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
-/*			    				
-		                    	s = o.toString()
-                    			.replace("Name:", "<b>Name:</b>")
-            					.replace("\nPrice:", "\n<b>Price:</b>")
-            					.replace("\nLanguage:", "\n<b>Language:</b>")
-            					.replace("\n", "<br>");
-//            					.substring(o.indexOf("T"));
-
-			                    imageFileName = o.toString().substring(0, o.toString().indexOf("\nPrice:"))
-			                    		.replace("Name: ","")
-			                    		.replace("’","")
-			                    		.replace("'","")
-			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
-*/			                    		
+			    				folderName = UsbongConstants.PRODUCT_TYPE_BEVERAGES_STRING;
+			    				break;
+			    			case UsbongConstants.PRODUCT_TYPE_PROMOS:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_PROMOS_STRING;
+			    				break;
+			    			case UsbongConstants.PRODUCT_TYPE_COMICS:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_COMICS_STRING;
+			    				break;
+			    			case UsbongConstants.PRODUCT_TYPE_MANGA:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_MANGA_STRING;
+			    				break;
+			    			case UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES_STRING;
+			    				break;		
+			    			case UsbongConstants.PRODUCT_TYPE_TEXTBOOKS:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_TEXTBOOKS_STRING;
+			    				break;		
+			    			default:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_BOOKS_STRING;
+			    				break;
+                    	}
+	                    
+                    	switch(currProductTypeId) {
+			    			case UsbongConstants.PRODUCT_TYPE_BEVERAGES:		                    		
 			    				tempS = o.toString().replace("\n", "<br>");
 			    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
 			    				imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
@@ -1397,27 +1431,6 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 			    				break;
 			    			default:
-/*
-			    				s = o.toString()
-                    			.replace("Title:", "<b>Title:</b>")
-            					.replace("\nAuthor:", "\n<b>Author:</b>")
-            					.replace("\nPrice:", "\n<b>Price:</b>")
-//            					.replace("\nDetails:", "\n<b>Details:</b>")
-            					.replace("\nLanguage:", "\n<b>Language:</b>")
-            					.replace("\n", "<br>");
-//            					.substring(o.indexOf("T"));
-
-			                    imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
-			                    		.replace("Title: ","")
-			                    		.replace("’","")
-			                    		.replace("'","")
-			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
-*/			                    		
-/*			    				
-			    				s = o.toString()
-		            				.replace("\n", "<br>")
-		            				.subSequence(0, o.indexOf("MerchantName: ")).toString();
-*/
 			    				tempS = o.toString().replace("\n", "<br>");
 			    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
 			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("</b>"))
@@ -1427,7 +1440,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 			    				break;
                     	}
-	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
+	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(folderName+"/"+imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	
                         final Button merchantNameButton = (Button)v.findViewById(R.id.merchant_button);
