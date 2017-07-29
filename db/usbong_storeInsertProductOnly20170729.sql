@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `product`
 --
-
+/*
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `merchant_id` int(11) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `product` (
   `translator` varchar(50) DEFAULT NULL,
   `product_overview` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+*/
 --
 -- Dumping data for table `product`
 --
@@ -124,7 +124,7 @@ INSERT INTO `product` (`product_id`, `merchant_id`, `product_type_id`, `name`, `
 --
 -- Indexes for dumped tables
 --
-
+/*
 --
 -- Indexes for table `product`
 --
@@ -152,6 +152,7 @@ ALTER TABLE `product`
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`),
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`product_type_id`) REFERENCES `product_type` (`product_type_id`);
+*/
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
