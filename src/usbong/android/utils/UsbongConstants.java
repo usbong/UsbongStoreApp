@@ -31,10 +31,10 @@ public class UsbongConstants {
     public static final String MY_ACCOUNT_DETAILS= "MyAccountDetails";
     public static final String EMAIL_ADDRESS= "support@usbong.ph";//"order@retrocc.ph";	
 
-    //added by Mike, 20170514
-    public static final String ORDER_EMAIL_ADDRESS= "usbong.ph@gmail.com";//"order@usbong.ph";
-    public static final String REQUEST_EMAIL_ADDRESS= "usbong.ph@gmail.com";//"request@usbong.ph";
-    public static final String SELL_EMAIL_ADDRESS= "usbong.ph@gmail.com";//"sell@usbong.ph";
+    //edited by Mike, 20170801
+    public static final String ORDER_EMAIL_ADDRESS= "order@usbong.ph"; //"usbong.ph@gmail.com";
+    public static final String REQUEST_EMAIL_ADDRESS= "request@usbong.ph";
+    public static final String SELL_EMAIL_ADDRESS= "sell@usbong.ph";
     
     //added by Mike, 20170225
 	public final static int MEETUP=0;
@@ -125,6 +125,8 @@ public class UsbongConstants {
 	
 	public static final int END_STATE_SCREEN=34;		
 
+    //added by Mike, 20170801
+	public static final String FROM_SENDING_EMAIL="fromSendingEmail";
     
     //JSON constants
 	public static String MY_TREE = "MY_TREE";

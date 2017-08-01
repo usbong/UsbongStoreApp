@@ -1,6 +1,6 @@
 --Usbong Store App--
-ver: 1.0.6
-date: 20170725
+ver: 1.0.7
+date: 20170801
 
 Usbong Social Systems, Inc.
 
@@ -22,6 +22,6 @@ Gimp
 
 Contact:
 Website: www.usbong.ph
-Email: usbong.ph@gmail.com
+Email: support@usbong.ph
 
 Copyright 2016-2017. All rights reserved.

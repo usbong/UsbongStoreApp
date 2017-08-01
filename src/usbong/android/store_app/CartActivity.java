@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import usbong.android.store_app.CartActivity;
+import usbong.android.store_app.UsbongDecisionTreeEngineActivity;
+import usbong.android.store_app.R;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
 import android.app.Activity;
@@ -555,12 +558,44 @@ public class CartActivity extends AppCompatActivity/*Activity*/
             //added by Mike, 20170225
 	    	if (isSendingData) {
 	    		isSendingData=false;
-	
+	    		
+//				returnToProductSelection();
+				//added by Mike, 20170730
+        		AlertDialog.Builder allowUsToEmptyCartAlertDialog = new AlertDialog.Builder(CartActivity.this).setTitle("Hey!");
+				TextView tv = new TextView(getInstance());
+				tv.setText("\nAllow us to empty your cart?");
+				tv.setGravity(Gravity.CENTER_HORIZONTAL);
+				tv.setTextSize(16);
+				allowUsToEmptyCartAlertDialog.setView(tv);
+				allowUsToEmptyCartAlertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//added by Mike, 20170730
+			    		UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon;
+			    		UsbongMainActivity.getInstance().invalidateOptionsMenu();
+						UsbongUtils.itemsInCart.clear();			            						    	
+						
+						returnToProductSelection();
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+        				}).show();	
+/*	    		
+	    		//added by Mike, 20170729
+	    		UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon;
+				myActivityInstance.invalidateOptionsMenu();
+				UsbongUtils.itemsInCart.clear();
+*/
+/*				
 	    		//edited by Mike, 20170525
 	    		finish();
 	    		Intent toCallingActivityIntent = new Intent(getInstance(), UsbongMainActivity.class);
 	    		toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	    		startActivity(toCallingActivityIntent);		
+*/	    		
 /*	    		
 		        //added by Mike, 20170225
 				finish();    
@@ -572,20 +607,8 @@ public class CartActivity extends AppCompatActivity/*Activity*/
         }
     }//onActivityResult
 
-    //added by Mike, July 2, 2015
-    @Override
-	public void onBackPressed() {
-/*
-    	//edited by Mike, 20160417
-		if ((mTts!=null) && (mTts.isSpeaking())) {
-			mTts.stop();
-		}
-		//edited by Mike, 20160417
-		if ((myMediaPlayer!=null) && (myMediaPlayer.isPlaying())) {
-			myMediaPlayer.stop();
-		}
-*/
-		//added by Mike, 20170525
+    //added by Mike, 20170801
+    public void returnToProductSelection() {
 		final Activity a;
 		if ((getIntent().getExtras().getInt("activity caller")==0) 
 				|| (getIntent().getExtras().getInt("activity caller")==UsbongConstants.USBONG_MAIN_ACTIVITY)) {
@@ -599,7 +622,24 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		finish();
 		Intent toCallingActivityIntent = new Intent(getInstance(), a.getClass());
 		toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-		startActivity(toCallingActivityIntent);		
+		startActivity(toCallingActivityIntent);				
+    }
+    
+    //added by Mike, July 2, 2015
+    @Override
+	public void onBackPressed() {
+/*
+    	//edited by Mike, 20160417
+		if ((mTts!=null) && (mTts.isSpeaking())) {
+			mTts.stop();
+		}
+		//edited by Mike, 20160417
+		if ((myMediaPlayer!=null) && (myMediaPlayer.isPlaying())) {
+			myMediaPlayer.stop();
+		}
+*/
+    	//edited by Mike, 20170801
+    	returnToProductSelection();
     	
 /*
     	//Reference: http://stackoverflow.com/questions/11495188/how-to-put-application-to-background
