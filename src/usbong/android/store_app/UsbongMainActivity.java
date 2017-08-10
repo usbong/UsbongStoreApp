@@ -357,13 +357,43 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
      		 //added by Mike, 20170605
      		 categoryListInteger = new ArrayList<Integer>();
 //     		 ArrayList<String> categoryListString = new ArrayList<String>();
-*/     		 
+*/     		      		
 		     String getMerchantProducts = "select * from '" + "product" + "'" + " where merchant_id="+merchantId;
 		     Cursor c = mySQLiteDatabase.rawQuery(getMerchantProducts, null);
 		     
 		     if (c != null) {
 			        if (c.moveToFirst()) { // if Cursor is not empty
 			        	while (!c.isAfterLast()) {
+			        		//edited by Mike, 20170725
+			        		String price;
+			        		int quantityInStock = c.getInt(c.getColumnIndex("quantity_in_stock"));
+			        		if (quantityInStock<1) {
+			        			price = "out of stock";
+			        		}
+			        		else {
+			        			price = "₱" + c.getString(c.getColumnIndex("price"));
+			        		}
+			        					        		
+			        		//added by Mike, 20170725			        		 
+						    currProductTypeId = c.getInt(c.getColumnIndex("product_type_id"));
+			        		
+			        		String productDetails="";
+
+		    				String authorString = c.getString(c.getColumnIndex("author"));
+		    				if (authorString==null) {
+		    					authorString="";
+		    				}
+		    				else {
+		    					authorString = authorString +"\n";
+		    				}
+		    				
+			        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
+		   							 authorString+
+		   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
+		   							 "MerchantName: "+merchantName+
+		   							 "currProductTypeId: "+currProductTypeId;
+				        	listOfTreesArrayList.add(productDetails);
+				        	
 /*			        		
 			        		String price = c.getString(c.getColumnIndex("price"));
 			        		if (price==null) {
@@ -472,6 +502,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     			lowestCategory = categoryListInteger.get(i);
     		}
     	}		
+    	
+		hasPerformedSearch=true;
+
         //show only product items of merchant for the default (lowest/first) category
     	initTreeLoaderDynamically(lowestCategory);
 /*    			
@@ -559,7 +592,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
 					   							 authorString+
 					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
-					   							 "MerchantName: "+merchantName;
+					   							 "MerchantName: "+merchantName+
+					   							 "currProductTypeId: "+currProductTypeId;
 /*					    				break;
 				        		}
 */				        		
@@ -1406,6 +1440,11 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                     	//edited by Mike, 20170522
                     	final String s;
                     	String tempS;
+                    	
+                    	//added by Mike, 20170810
+	    				tempS = o.toString();
+	    				currProductTypeId = Integer.parseInt(tempS.substring(tempS.indexOf("currProductTypeId: ")+"currProductTypeId: ".length()).toString());
+                    	
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
 	                    final String imageFileName;	                    
@@ -1429,6 +1468,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			    				break;		
 			    			case UsbongConstants.PRODUCT_TYPE_TEXTBOOKS:
 			    				folderName = UsbongConstants.PRODUCT_TYPE_TEXTBOOKS_STRING;
+			    				break;		
+			    			case UsbongConstants.PRODUCT_TYPE_CHILDRENS:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_CHILDRENS_STRING;
 			    				break;		
 			    			default:
 			    				folderName = UsbongConstants.PRODUCT_TYPE_BOOKS_STRING;
@@ -1460,9 +1502,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		            	
                         final Button merchantNameButton = (Button)v.findViewById(R.id.merchant_button);
                         int index = o.indexOf("MerchantName: ")+"MerchantName: ".length();
-                        merchantNameButton.setText("☗ "+o.toString().substring(
-                        								index)
-                        		);
+                        int endIndex = o.indexOf("currProductTypeId: ");
+                        merchantNameButton.setText("☗ "+o.toString().subSequence(
+                        								index, endIndex));
                         merchantNameButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {

@@ -1,58 +1,63 @@
+-- phpMyAdmin SQL Dump
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 10, 2017 at 04:17 AM
+-- Server version: 10.1.22-MariaDB
+-- PHP Version: 7.1.4
 
-BEGIN;
-CREATE TABLE fields (
-  fields_id INTEGER PRIMARY KEY,
-  fields_name TEXT,
-  product_type_id INTEGER
-); 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-INSERT INTO fields (fields_id, fields_name, product_type_id) VALUES
-(1, 'name', 1),
-(2, 'price', 1),
-(3, 'supplier', 1),
-(4, 'description', 1),
-(5, 'image_location', 1),
-(6, 'author', 2),
-(7, 'language', 2);
 
-CREATE TABLE merchant (
-  merchant_id INTEGER PRIMARY KEY,
-  merchant_name TEXT,
-  merchant_motto TEXT,
-  merchant_motto_font_color TEXT
-); 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-INSERT INTO merchant (merchant_id, merchant_name, merchant_motto, merchant_motto_font_color) VALUES
-(1, 'Usbong Specialty Bookstore', 'Uplifting Human Lives', '#6f5630'),
-(2, 'RetroCC', 'Keep Reading.<br>Keep Collecting.', '#FFFFFF'),
-(3, 'Adarna House, Inc', 'Every Filipino Child Literate', '#4f4c41');
+--
+-- Database: `usbong_specialty_bookstore`
+--
 
-CREATE TABLE product (
-  product_id INTEGER PRIMARY KEY,
-  merchant_id INTEGER,
-  product_type_id INTEGER,
-  name TEXT,
-  price INTEGER,
-  language TEXT,
-  author TEXT,
-  supplier TEXT,
-  description TEXT,
-  image_location TEXT,
-  format TEXT,
-  quantity_in_stock INTEGER,
-  translator TEXT,
-  pages INTEGER
-); 
+-- --------------------------------------------------------
 
-INSERT INTO product (product_id, merchant_id, product_type_id, name, price, language, author, supplier, description, image_location, format, quantity_in_stock, translator, pages) VALUES
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `product_id` int(11) NOT NULL,
+  `merchant_id` int(11) NOT NULL,
+  `product_type_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `price` int(11) DEFAULT NULL,
+  `language` varchar(20) DEFAULT 'English',
+  `author` varchar(50) DEFAULT NULL,
+  `supplier` varchar(30) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `image_location` varchar(30) DEFAULT NULL,
+  `format` varchar(10) DEFAULT NULL,
+  `quantity_in_stock` int(11) NOT NULL,
+  `translator` varchar(50) DEFAULT NULL,
+  `pages` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `merchant_id`, `product_type_id`, `name`, `price`, `language`, `author`, `supplier`, `description`, `image_location`, `format`, `quantity_in_stock`, `translator`, `pages`) VALUES
 (1, 1, 2, 'The Remains of the Day', 400, 'English', 'Kazuo Ishiguro', NULL, 'Used - Acceptable', NULL, 'Hardcover', 1, '', NULL),
 (2, 1, 2, 'The Daydreamer', 400, 'English', 'Ian McEwan', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, '', NULL),
 (3, 1, 2, 'Myths to Live By', 400, 'English', 'Joseph Campbell', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, '', NULL),
-(4, 1, 2, 'The Seasons of a Man''s Life', 500, 'English', 'Daniel Levinson et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, '', NULL),
+(4, 1, 2, 'The Seasons of a Man\'s Life', 500, 'English', 'Daniel Levinson et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, '', NULL),
 (5, 1, 2, 'The Last Lecture', 400, 'English', 'Randy Pausch et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, '', NULL),
 (6, 1, 2, 'The Innovators', 600, 'English', 'Walter Isaacson', NULL, 'Used - Very Good', NULL, 'Paperback', 1, '', NULL),
 (7, 1, 2, 'Steve Jobs', 500, 'English', 'Walter Isaacson', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, '', NULL),
-(8, 1, 9, 'Tokyo University''s English', 1000, 'Japanese/English', 'Masafumi Satou', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, '', NULL),
+(8, 1, 9, 'Tokyo University\'s English', 1000, 'Japanese/English', 'Masafumi Satou', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, '', NULL),
 (9, 1, 2, 'Siddhartha', 300, 'English', 'Herman Hesse', NULL, 'Used - Very Good', NULL, 'Paperback', 1, '', NULL),
 (10, 1, 2, 'The Montessori Method', 400, 'English', 'Maria Montessori', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, '', NULL),
 (11, 1, 2, 'The Soul of a New Machine', 400, 'English', 'Tracy Kidder', NULL, 'Used - Acceptable', NULL, 'Hardcover', 1, '', NULL),
@@ -107,7 +112,7 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, lang
 (60, 1, 2, 'Godel, Escher, Bach', 700, 'English', 'Douglas Hofstadter', NULL, 'Used - Acceptable', NULL, 'Paperback', 2, NULL, NULL),
 (61, 1, 2, 'The Intelligent Investor', 550, 'English', 'Benjamin Graham', NULL, 'Used - Acceptable', NULL, 'Hardcover', 2, NULL, NULL),
 (63, 1, 2, 'The Hero with a Thousand Faces', 600, 'English', 'Joseph Campbell', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
-(64, 1, 2, 'The Seasons of a Woman''s Life', 500, 'English', 'Daniel Levinson et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
+(64, 1, 2, 'The Seasons of a Woman\'s Life', 500, 'English', 'Daniel Levinson et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
 (65, 1, 2, 'A New Earth', 500, 'English', 'Eckhart Tolle', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
 (66, 1, 2, 'The Richest Man in Babylon', 300, 'English', 'George Clason', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
 (67, 1, 7, 'Full Metal Alchemist Manga set (1-27 complete)', 5700, 'Japanese', 'Hiromu Arakawa', NULL, 'Used - Very Good', NULL, 'Paperback', 1, NULL, NULL),
@@ -156,21 +161,39 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, lang
 (110, 3, 10, 'Si Diwayen, Noong Bago Dumating ang mga Espanyol', 260, 'Filipino/English', 'Augie Rivera/Paolo Lim', 'Adarna House, Inc.', 'New', NULL, 'Paperback', 99, NULL, 32),
 (111, 1, 8, 'Scratchbuild Revolution Hobbymate 12th Anniversary Edition', 3500, 'English', NULL, 'USA Gundam Store', 'New', NULL, 'Paperback', 1, NULL, NULL);
 
-CREATE TABLE product_type (
-  product_type_id INTEGER PRIMARY KEY,
-  product_type_name TEXT
-); 
+--
+-- Indexes for dumped tables
+--
 
-INSERT INTO product_type (product_type_id, product_type_name) VALUES
-(1, 'All'),
-(2, 'Books'),
-(3, 'Beverages'),
-(4, 'Books/Beverages'),
-(5, 'Combos'),
-(6, 'Comics'),
-(7, 'Manga'),
-(8, 'Toys & Collectibles'),
-(9, 'Textbooks'),
-(10, 'Children''s');
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`product_id`),
+  ADD KEY `merchant_id` (`merchant_id`),
+  ADD KEY `product_type_id` (`product_type_id`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`),
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`product_type_id`) REFERENCES `product_type` (`product_type_id`);
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
