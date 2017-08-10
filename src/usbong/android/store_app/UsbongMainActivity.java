@@ -458,9 +458,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 					 b.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 					 b.setTextColor(Color.parseColor("#554223"));
 					 b.setTextSize(14);
-					 if (i==0) {
+/*					 if (i==0) {
 						 b.setTypeface(Typeface.DEFAULT_BOLD);						 
 					 }
+*/					 
 					 b.setBackgroundColor(Color.TRANSPARENT);  
 					 
 					 final int cat = categoryListInteger.get(i);
@@ -475,7 +476,26 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 					 
 					 categoryLinearLayout.addView(b);
 					 categoryButtonsList.add(b);
+				}								
+/*				
+				ArrayList<Button> categoryButtonsListTemp = categoryButtonsList;
+				
+				Collections.sort(categoryButtonsListTemp, new Comparator<Button>() {
+			        @Override
+			        public int compare(Button b1, Button b2)
+			        {
+			            return  b1.getText().toString().compareTo(b2.getText().toString());
+			        }
+			    });
+
+				for (int i=0; i<categoryButtonsList.size();i++) {
+					if (categoryButtonsListTemp.get(0)==categoryButtonsList.get(i)) {
+						currProductTypeId = categoryListInteger.get(i);
+					}
 				}
+*/
+				currProductTypeId = categoryListInteger.get(0);
+				
         } catch (Exception ex) {
            ex.printStackTrace();
         } finally {
@@ -487,7 +507,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 myDbHelper.close();
             }        	 
         }
-        
+/*        
         //added by Mike, 20170610    	
     	int highestCategory=0;
     	for (int i=0; i<categoryListInteger.size(); i++) { 
@@ -502,11 +522,16 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     			lowestCategory = categoryListInteger.get(i);
     		}
     	}		
-    	
+*/    	
 		hasPerformedSearch=true;
-
+/*
         //show only product items of merchant for the default (lowest/first) category
     	initTreeLoaderDynamically(lowestCategory);
+*/    	
+		//edited by Mike, 20170810
+    	initTreeLoaderDynamically();
+    	
+    	
 /*    			
         //edited by Mike, 20170530
     	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
@@ -832,6 +857,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         switch (currProductTypeId) {
         	case UsbongConstants.PRODUCT_TYPE_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -851,6 +877,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_TEXTBOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT_BOLD);
                 promosButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -860,6 +887,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_PROMOS:
                 booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT_BOLD);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -869,6 +897,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
@@ -879,6 +908,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_COMICS:
                 booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -889,6 +919,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_MANGA:
                 booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -899,6 +930,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 break;
         	case UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES:
                 booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
@@ -961,13 +993,28 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			hasPerformedSearch=false;
 		}
 
+/*		
 		for (int i=0; i<categoryButtonsList.size(); i++) {
+			Log.d(">>>>>", "cat name: "+categoryButtonsList.get(i).getText().toString());
+		}
+		categoryButtonsList.get(0).setTypeface(Typeface.DEFAULT_BOLD);						 				
+*/
+		
+		for (int i=0; i<categoryListInteger.size(); i++) {
+/*			
+			if (categoryListInteger.get(i)==0) {
+				categoryButtonsList.get(0).setTypeface(Typeface.DEFAULT_BOLD);						 							
+			}
+			else {
+				categoryButtonsList.get(i).setTypeface(Typeface.DEFAULT);				
+			}
+*/						
 			if (categoryListInteger.get(i)==currProductTypeId) {
 				categoryButtonsList.get(i).setTypeface(Typeface.DEFAULT_BOLD);			    
 			}
 			else {
 				categoryButtonsList.get(i).setTypeface(Typeface.DEFAULT);
-			}
+			}			
 		}
         mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
 		mCustomAdapter.sort(); //edited by Mike, 20170203
