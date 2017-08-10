@@ -1464,6 +1464,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		public View getView(final int position, View convertView, ViewGroup parent) {
             	final String o = items.get(position);
             	final View v; //edited by Mike, 20170530
+            	
 /*                View v = convertView;
                 if (v == null) {
 */                
@@ -1507,8 +1508,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                     	String tempS;
                     	
                     	//added by Mike, 20170810
-	    				tempS = o.toString();
-	    				currProductTypeId = Integer.parseInt(tempS.substring(tempS.indexOf("currProductTypeId: ")+"currProductTypeId: ".length()).toString());
+	    				String tempS2 = o.toString();
+	    				currProductTypeId = Integer.parseInt(tempS2.substring(tempS2.indexOf("currProductTypeId: ")+"currProductTypeId: ".length()).toString());
                     	
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();

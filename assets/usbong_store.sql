@@ -25,7 +25,7 @@ CREATE TABLE merchant (
 INSERT INTO merchant (merchant_id, merchant_name, merchant_motto, merchant_motto_font_color) VALUES
 (1, 'Usbong Specialty Bookstore', 'Uplifting Human Lives', '#6f5630'),
 (2, 'RetroCC', 'Keep Reading.<br>Keep Collecting.', '#FFFFFF'),
-(3, 'Adarna House, Inc', 'Every Filipino Child Literate', '#4f4c41');
+(3, 'Adarna House, Inc', 'Una sa Filipino', '#4f4c41');
 
 CREATE TABLE product (
   product_id INTEGER PRIMARY KEY,
