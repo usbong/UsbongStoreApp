@@ -765,6 +765,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }
         });    
 
+        Button childrensButton = (Button)findViewById(R.id.childrens_button);
+        childrensButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_CHILDRENS);
+            }
+        });    
+
         Button textbooksButton = (Button)findViewById(R.id.textbooks_button);
         textbooksButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -824,6 +832,16 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
         switch (currProductTypeId) {
         	case UsbongConstants.PRODUCT_TYPE_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_CHILDRENS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT_BOLD);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);

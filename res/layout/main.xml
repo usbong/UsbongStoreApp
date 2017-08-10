@@ -36,15 +36,23 @@
 				    android:textColor="#554223"
 				    android:textStyle="bold"
 				    android:background="@android:color/transparent"		    
-				    android:text="Books"
+				    android:text="    Books    "
 				    />
+				<Button 
+				    android:id="@+id/childrens_button"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textColor="#554223"
+				    android:background="@android:color/transparent"		    
+				    android:text="    Children's    "
+				    />			
 				<Button 
 				    android:id="@+id/textbooks_button"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:textColor="#554223"
 				    android:background="@android:color/transparent"		    
-				    android:text="Textbooks"
+				    android:text="    Textbooks    "
 				    />	
 				<Button 
 				    android:id="@+id/promos_button"		    
@@ -52,7 +60,7 @@
 				    android:layout_height="wrap_content"
 				    android:textColor="#554223"
 				    android:background="@android:color/transparent"		    
-				    android:text="Promos"
+				    android:text="    Promos    "
 				    />
 				<Button 
 				    android:id="@+id/beverages_button"		    
@@ -60,7 +68,7 @@
 				    android:layout_height="wrap_content"
 				    android:textColor="#554223"
 				    android:background="@android:color/transparent"		    
-				    android:text="Beverages"
+				    android:text="    Beverages    "
 				    />		
 				<Button 
 				    android:id="@+id/comics_button"		    
@@ -68,7 +76,7 @@
 				    android:layout_height="wrap_content"
 				    android:textColor="#554223"
 				    android:background="@android:color/transparent"		    
-				    android:text="Comics"
+				    android:text="    Comics    "
 				    />			    
 				<Button 
 				    android:id="@+id/manga_button"		    
@@ -76,7 +84,7 @@
 				    android:layout_height="wrap_content"
 				    android:textColor="#554223"
 				    android:background="@android:color/transparent"		    
-				    android:text="Manga"
+				    android:text="    Manga    "
 				    />			    				
 				<Button 
 				    android:id="@+id/toys_collectibles_button"		    
@@ -84,7 +92,7 @@
 				    android:layout_height="wrap_content"
 				    android:textColor="#554223"
 				    android:background="@android:color/transparent"		    
-				    android:text="Toys &amp; Collectibles"
+				    android:text="    Toys &amp; Collectibles    "
 				    />			    								
 			</LinearLayout>
 		</HorizontalScrollView>	
