@@ -111,6 +111,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	private ArrayList<Button> categoryButtonsList;
 	private ArrayList<Integer> categoryListInteger;
 	
+	private static int merchantId;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -318,7 +320,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	         
 		     String getMerchantId = "select * from '" + "merchant" + "'" + " where merchant_name LIKE '%"+merchantName+"%'";
 		     Cursor cMerchantId = mySQLiteDatabase.rawQuery(getMerchantId, null);
-		     int merchantId=1; //1 is the default
+		     
+		     merchantId=1; //1 is the default
 		     if (cMerchantId != null) {
 			     if (cMerchantId.moveToFirst()) {
 		     		 merchantId = Integer.parseInt(cMerchantId.getString(cMerchantId.getColumnIndex("merchant_id")));
@@ -553,7 +556,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		     String query = "";
 		     
 		     if (s==null) {
-			     query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;
+		    	 if (merchantId==-1) {
+				     query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId;		    		 
+		    	 }
+		    	 else {
+				     query = "select * from '" + table + "'" + " where product_type_id="+currProductTypeId
+								 							 + " AND merchant_id="+merchantId;		    		 
+		    	 }
 		     }
 		     else {
 			     query = "select * from '"+table+"' where NAME like '%"+s+"%' OR author LIKE '%"+s+"%'";		     		    	 
@@ -782,6 +791,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 
 		isInTreeLoader=true;
 		
+		//added by Mike, 20170813
+		merchantId=-1; //search product items of all merchants
+				
         Button booksButton = (Button)findViewById(R.id.books_button);
         booksButton.setOnClickListener(new OnClickListener() {
             @Override
