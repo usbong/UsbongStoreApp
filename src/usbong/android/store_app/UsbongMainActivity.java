@@ -444,14 +444,24 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				        	while (!c2.isAfterLast()) {
 				        		//edited by Mike, 20170725
 				        		String price;
+				        		String prevPrice="";//added by Mike, 20170825
 				        		int quantityInStock = c2.getInt(c2.getColumnIndex("quantity_in_stock"));
 				        		if (quantityInStock<1) {
 				        			price = "out of stock";
 				        		}
 				        		else {
-				        			price = "₱" + c2.getString(c2.getColumnIndex("price"));
+				        			price = "₱" + c2.getString(c.getColumnIndex("price"));
+				        			
+				        			//added by Mike, 2017
+					        		prevPrice = c2.getString(c2.getColumnIndex("previous_price"));
+					        		if (prevPrice!=null) {
+					        			prevPrice = "\n<i>(from ₱" + prevPrice + ")</i>";
+					        		}			     
+					        		else {
+					        			prevPrice="";
+					        		}
 				        		}
-				        					        		
+
 				        		//added by Mike, 20170725			        		 
 							    currProductTypeId = c2.getInt(c2.getColumnIndex("product_type_id"));
 				        		
@@ -467,7 +477,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			    				
 				        		productDetails =  "<b>"+c2.getString(c2.getColumnIndex("name"))+"</b>\n"+
 			   							 authorString+
-			   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
+			   							 "<font color='#644d17'><b>"+price+prevPrice+"</b>\n[Free Delivery]</font>"+
 			   							 "MerchantName: "+merchantName+
 			   							 "currProductTypeId: "+currProductTypeId;
 					        	listOfTreesArrayList.add(productDetails);
@@ -571,13 +581,24 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        if (c.moveToFirst()) { // if Cursor is not empty
 			        	while (!c.isAfterLast()) {
 			        		//edited by Mike, 20170725
-			        		String price;
+			        		String price="";
+			        		String prevPrice=""; //added by Mike, 20170825
+			        		
 			        		int quantityInStock = c.getInt(c.getColumnIndex("quantity_in_stock"));
 			        		if (quantityInStock<1) {
 			        			price = "out of stock";
 			        		}
 			        		else {
 			        			price = "₱" + c.getString(c.getColumnIndex("price"));
+			        			
+			        			//added by Mike, 2017
+				        		prevPrice = c.getString(c.getColumnIndex("previous_price"));
+				        		if (prevPrice!=null) {
+				        			prevPrice = "\n<i>(from ₱" + prevPrice + ")</i>";
+				        		}			     
+				        		else {
+				        			prevPrice="";
+				        		}
 			        		}
 			        		
 /*			        		
@@ -621,7 +642,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 					    				
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
 					   							 authorString+
-					   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
+					   							 "<font color='#644d17'><b>"+price+prevPrice+"</b>\n[Free Delivery]</font>"+
 					   							 "MerchantName: "+merchantName+
 					   							 "currProductTypeId: "+currProductTypeId;
 /*					    				break;
