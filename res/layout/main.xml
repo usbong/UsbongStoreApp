@@ -63,6 +63,14 @@
 				    android:text="    Promos    "
 				    />
 				<Button 
+				    android:id="@+id/food_button"		    
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textColor="#554223"
+				    android:background="@android:color/transparent"		    
+				    android:text="    Food    "
+				    />				
+				<Button 
 				    android:id="@+id/beverages_button"		    
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
@@ -94,6 +102,14 @@
 				    android:background="@android:color/transparent"		    
 				    android:text="    Toys &amp; Collectibles    "
 				    />			    								
+				<Button 
+				    android:id="@+id/miscellaneous_button"		    
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textColor="#554223"
+				    android:background="@android:color/transparent"		    
+				    android:text="    Miscellaneous    "
+				    />								
 			</LinearLayout>
 		</HorizontalScrollView>	
 		<ListView

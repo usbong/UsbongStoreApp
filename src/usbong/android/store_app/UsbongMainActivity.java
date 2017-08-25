@@ -822,6 +822,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }
         });    
 
+        Button foodButton = (Button)findViewById(R.id.food_button);
+        foodButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_FOOD);
+            }
+        });    
+
         Button beveragesButton = (Button)findViewById(R.id.beverages_button);
         beveragesButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -854,6 +862,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }
         });    
 
+        Button miscellaneousButton = (Button)findViewById(R.id.miscellaneous_button);
+        miscellaneousButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_MISCELLANEOUS);
+            }
+        });    
+
 		//edited by Mike, 20170530
 		if (!hasPerformedSearch) {
 			performSearch(null);			
@@ -868,9 +884,12 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);
+                foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_CHILDRENS:
@@ -878,9 +897,12 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 childrensButton.setTypeface(Typeface.DEFAULT_BOLD);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);
+                foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_TEXTBOOKS:
@@ -888,9 +910,12 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT_BOLD);
                 promosButton.setTypeface(Typeface.DEFAULT);
+                foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_PROMOS:
@@ -898,20 +923,38 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_FOOD:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
+                foodButton.setTypeface(Typeface.DEFAULT_BOLD);
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);            
+                foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_COMICS:
@@ -919,32 +962,48 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
                 promosButton.setTypeface(Typeface.DEFAULT);            
+                foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT_BOLD);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_MANGA:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);            
+                foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT_BOLD);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);            
+                foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT_BOLD);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.PRODUCT_TYPE_MISCELLANEOUS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                childrensButton.setTypeface(Typeface.DEFAULT);                
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                foodButton.setTypeface(Typeface.DEFAULT);
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                comicsButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);
+                toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
+                miscellaneousButton.setTypeface(Typeface.DEFAULT_BOLD);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         }
@@ -1545,6 +1604,12 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			    				break;		
 			    			case UsbongConstants.PRODUCT_TYPE_CHILDRENS:
 			    				folderName = UsbongConstants.PRODUCT_TYPE_CHILDRENS_STRING;
+			    				break;		
+			    			case UsbongConstants.PRODUCT_TYPE_FOOD:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_FOOD_STRING;
+			    				break;		
+			    			case UsbongConstants.PRODUCT_TYPE_MISCELLANEOUS:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_MISCELLANEOUS_STRING;
 			    				break;		
 			    			default:
 			    				folderName = UsbongConstants.PRODUCT_TYPE_BOOKS_STRING;
