@@ -164,7 +164,7 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, prev
 (116, 1, 2, 'Goethe''s Faust', 400, NULL, 'German/English', 'Goethe/Walter Kaufmann', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, 'Walter Kaufmann', NULL),
 (117, 1, 2, 'Blink', 300, NULL, 'English', 'Malcolm Gladwell', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
 (118, 1, 2, 'The Tipping Point', 300, NULL, 'English', 'Malcolm Gladwell', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
-(119, 1, 8, 'The Art of Matrix', 500, NULL, 'English', NULL, NULL, 'Used - Very Good', NULL, 'Paperback', 1, NULL, NULL),
+(119, 1, 8, 'The Art of the Matrix', 500, NULL, 'English', NULL, NULL, 'Used - Very Good', NULL, 'Paperback', 1, NULL, NULL),
 (120, 1, 9, 'BJT Business Japanese Proficiency Test Listening and Reading Comprehension (with 2 CDs)', 1170, NULL, 'Japanese', 'JETRO', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
 (121, 1, 9, 'BJT Business Japanese Proficiency Test Official Guide (with CD)', 820, NULL, 'Japanese', 'JETRO', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
 (122, 1, 9, 'BJT Business Japanese Proficiency Test-Practice Test and Strategies (with CD)', 1100, NULL, 'Japanese', 'JAL Academy', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),

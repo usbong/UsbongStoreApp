@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:stretchColumns="1"
     android:padding="6dip">
+    <RelativeLayout 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+    >    
     <ImageView
         android:id="@+id/tree_item_image_view"
         android:layout_width="fill_parent"
@@ -25,10 +29,11 @@
 		android:padding="3dip"
 		android:textSize="20dp"
 		android:textColor="#4a452a"
-		android:layout_below="@+id/tree_item_image_view"
         android:layout_marginBottom="6dp"		
         android:layout_marginLeft="6dp"		
+        android:layout_below="@+id/tree_item_image_view"        
 	/>
+    </RelativeLayout>       
     <Button
 	    android:id="@+id/merchant_button"
 		android:layout_width="fill_parent"
@@ -36,7 +41,6 @@
 		android:gravity="center"
 		android:textSize="18dp"
 		android:textColor="#4a452a"
-		android:layout_below="@+id/tree_item"
         android:layout_marginBottom="3dp"		
         android:layout_marginLeft="3dp"				
         android:layout_marginRight="3dp"				
@@ -44,4 +48,4 @@
         android:text="☗ Usbong Specialty Bookstore"
         android:background="#706f5630"        
 	/>
-</RelativeLayout>
+</LinearLayout>
