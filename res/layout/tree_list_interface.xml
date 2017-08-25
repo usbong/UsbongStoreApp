@@ -23,7 +23,6 @@
 	    android:id="@+id/brand_bg"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
-	    android:background="@drawable/brand_bg"
 	    android:orientation="horizontal">
 	    <ImageView android:id="@+id/brand_logo"
 			android:layout_width="wrap_content"
