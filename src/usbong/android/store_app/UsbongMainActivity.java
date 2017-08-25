@@ -361,66 +361,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
      		 categoryListInteger = new ArrayList<Integer>();
 //     		 ArrayList<String> categoryListString = new ArrayList<String>();
 */     		      		
+
 		     String getMerchantProducts = "select * from '" + "product" + "'" + " where merchant_id="+merchantId;
 		     Cursor c = mySQLiteDatabase.rawQuery(getMerchantProducts, null);
 		     
 		     if (c != null) {
 			        if (c.moveToFirst()) { // if Cursor is not empty
-			        	while (!c.isAfterLast()) {
-			        		//edited by Mike, 20170725
-			        		String price;
-			        		int quantityInStock = c.getInt(c.getColumnIndex("quantity_in_stock"));
-			        		if (quantityInStock<1) {
-			        			price = "out of stock";
-			        		}
-			        		else {
-			        			price = "₱" + c.getString(c.getColumnIndex("price"));
-			        		}
-			        					        		
-			        		//added by Mike, 20170725			        		 
-						    currProductTypeId = c.getInt(c.getColumnIndex("product_type_id"));
-			        		
-			        		String productDetails="";
-
-		    				String authorString = c.getString(c.getColumnIndex("author"));
-		    				if (authorString==null) {
-		    					authorString="";
-		    				}
-		    				else {
-		    					authorString = authorString +"\n";
-		    				}
-		    				
-			        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
-		   							 authorString+
-		   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
-		   							 "MerchantName: "+merchantName+
-		   							 "currProductTypeId: "+currProductTypeId;
-				        	listOfTreesArrayList.add(productDetails);
-				        	
-/*			        		
-			        		String price = c.getString(c.getColumnIndex("price"));
-			        		if (price==null) {
-			        			price = "out of stock";
-			        		}
-			        		else {
-			        			price = "₱" + price;
-			        		}
-			        		
-			        		String productDetails="";
-		    				String authorString = c.getString(c.getColumnIndex("author"));
-		    				if (authorString==null) {
-		    					authorString="";
-		    				}
-		    				else {
-		    					authorString = authorString +"\n";
-		    				}
-		    				
-			        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
-		   							 authorString+
-		   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
-		   							 "MerchantName: "+merchantName;
-				        	listOfTreesArrayList.add(productDetails);
-*/				        	
+			        	while (!c.isAfterLast()) {			        		
 				        	//edited by Mike, 20170610
 				        	int cat = Integer.parseInt(c.getString(c.getColumnIndex("product_type_id")));
 				        	if (!categoryListInteger.contains(cat)) {
@@ -439,36 +386,41 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			        // Cursor is null
 			        	Log.d(">>>>>", "cursor is null");
 			     }
-	        	String getProductTypeIDs = "select * from '" + "product_type" + "'";
+
+	     		String getProductTypeIDs = "select * from '" + "product_type" + "'";
 				Cursor cProductTypeIDs = mySQLiteDatabase.rawQuery(getProductTypeIDs, null);
-				ArrayList<String> productTypeIDsList = new ArrayList<String>();
-				
-				
+				ArrayList<String> productTypeNamesList = new ArrayList<String>();
+				ArrayList<Integer> productTypeIDsList = new ArrayList<Integer>();
+							
 			    if (cProductTypeIDs != null) {
 			        if (cProductTypeIDs.moveToFirst()) { // if Cursor is not empty
 			        	while (!cProductTypeIDs.isAfterLast()) {
 			        		String productTypeName = cProductTypeIDs.getString(cProductTypeIDs.getColumnIndex("product_type_name"));
-			        		productTypeIDsList.add(productTypeName);
+			        		productTypeNamesList.add(productTypeName);
+
+			        		int productTypeID = cProductTypeIDs.getInt(cProductTypeIDs.getColumnIndex("product_type_id"));
+			        		productTypeIDsList.add(productTypeID);
+
 			        		cProductTypeIDs.moveToNext();
 			        	}
 			        }
 			    }
-		     
-				//added by Mike, 20170605
+
+		   //added by Mike, 20170605
 				LinearLayout categoryLinearLayout = (LinearLayout)findViewById(R.id.category_linearlayout);
 				for(int i=0; i<categoryListInteger.size(); i++) {
 					 Button b = new Button(this);
 					 b.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 					 b.setTextColor(Color.parseColor("#554223"));
 					 b.setTextSize(14);
-/*					 if (i==0) {
+	/*					 if (i==0) {
 						 b.setTypeface(Typeface.DEFAULT_BOLD);						 
 					 }
-*/					 
+	*/					 
 					 b.setBackgroundColor(Color.TRANSPARENT);  
 					 
 					 final int cat = categoryListInteger.get(i);
-					 b.setText("    "+productTypeIDsList.get(categoryListInteger.get(i)-1).toUpperCase()+"    ");
+					 b.setText("    "+productTypeNamesList.get(categoryListInteger.get(i)-1).toUpperCase()+"    ");
 					 					 
 			         b.setOnClickListener(new OnClickListener() {
 			            @Override
@@ -480,28 +432,68 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 					 categoryLinearLayout.addView(b);
 					 categoryButtonsList.add(b);
 				}								
-/*				
-				ArrayList<Button> categoryButtonsListTemp = categoryButtonsList;
-				
-				Collections.sort(categoryButtonsListTemp, new Comparator<Button>() {
-			        @Override
-			        public int compare(Button b1, Button b2)
-			        {
-			            return  b1.getText().toString().compareTo(b2.getText().toString());
-			        }
-			    });
-
-				for (int i=0; i<categoryButtonsList.size();i++) {
-					if (categoryButtonsListTemp.get(0)==categoryButtonsList.get(i)) {
-						currProductTypeId = categoryListInteger.get(i);
-					}
-				}
-*/
 				currProductTypeId = categoryListInteger.get(0);
+	     		 
+				
+				//added by Mike, 20170825
+				 String getMerchantProductsForFirstCategoryOnly = "select * from '" + "product" + "'" + " where merchant_id="+merchantId+" and product_type_id="+categoryListInteger.get(0);
+			     Cursor c2 = mySQLiteDatabase.rawQuery(getMerchantProductsForFirstCategoryOnly, null);
+			     
+			     if (c2 != null) {
+				        if (c2.moveToFirst()) { // if Cursor is not empty
+				        	while (!c2.isAfterLast()) {
+				        		//edited by Mike, 20170725
+				        		String price;
+				        		int quantityInStock = c2.getInt(c2.getColumnIndex("quantity_in_stock"));
+				        		if (quantityInStock<1) {
+				        			price = "out of stock";
+				        		}
+				        		else {
+				        			price = "₱" + c2.getString(c2.getColumnIndex("price"));
+				        		}
+				        					        		
+				        		//added by Mike, 20170725			        		 
+							    currProductTypeId = c2.getInt(c2.getColumnIndex("product_type_id"));
+				        		
+				        		String productDetails="";
+
+			    				String authorString = c2.getString(c2.getColumnIndex("author"));
+			    				if (authorString==null) {
+			    					authorString="";
+			    				}
+			    				else {
+			    					authorString = authorString +"\n";
+			    				}
+			    				
+				        		productDetails =  "<b>"+c2.getString(c2.getColumnIndex("name"))+"</b>\n"+
+			   							 authorString+
+			   							 "<font color='#644d17'><b>"+price+"</b>\n[Free Delivery]</font>"+
+			   							 "MerchantName: "+merchantName+
+			   							 "currProductTypeId: "+currProductTypeId;
+					        	listOfTreesArrayList.add(productDetails);
+					        	
+					        	//edited by Mike, 20170610
+					        	int cat = Integer.parseInt(c2.getString(c2.getColumnIndex("product_type_id")));
+					        	if (!categoryListInteger.contains(cat)) {
+					        		categoryListInteger.add(cat);
+					        	}			
+					        	
+					        	c2.moveToNext();
+					        }
+				        }
+				        else {
+				           // Cursor is empty
+				        	Log.d(">>>>>", "cursor is empty");
+				        }
+				     }
+				     else {
+				        // Cursor is null
+				        	Log.d(">>>>>", "cursor is null");
+				     }
 				
         } catch (Exception ex) {
            ex.printStackTrace();
-        } finally {
+        } /*finally {
             try {
                 myDbHelper.close();
             } catch (Exception ex) {
@@ -509,7 +501,11 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             } finally {
                 myDbHelper.close();
             }        	 
-        }
+        }*/
+        
+	     
+        
+        
 /*        
         //added by Mike, 20170610    	
     	int highestCategory=0;
