@@ -352,10 +352,10 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
              Resources myRes = instance.getResources();
 
      		 LinearLayout brandBgLinearLayout = (LinearLayout)findViewById(R.id.brand_bg);
-     		 brandBgLinearLayout.setBackground(Drawable.createFromStream(myRes.getAssets().open(merchantName+"_brand_bg.jpg"), null));
+     		 brandBgLinearLayout.setBackground(Drawable.createFromStream(myRes.getAssets().open("merchants/"+merchantName+"_brand_bg.jpg"), null));
      		 ImageView brandLogoImageView = (ImageView)findViewById(R.id.brand_logo);
 //     		 brandLogoImageView.setBackground(UsbongUtils.getImageDrawable(this, merchantName+"_brand_logo.jpg"));
-     		 brandLogoImageView.setImageDrawable(Drawable.createFromStream(myRes.getAssets().open(merchantName+"_brand_logo.jpg"), null));
+     		 brandLogoImageView.setImageDrawable(Drawable.createFromStream(myRes.getAssets().open("merchants/"+merchantName+"_brand_logo.jpg"), null));
 /*
      		 //added by Mike, 20170605
      		 categoryListInteger = new ArrayList<Integer>();
