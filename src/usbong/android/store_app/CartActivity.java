@@ -113,7 +113,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     private ArrayList<String> quantityList; //added by Mike, 20170505
     private ArrayList<String> tempList; //added by Mike, 20170511
     private int orderSubtotalCost; //added by Mike, 20170511
-    private int less25pesosPromoTotal; //added by Mike, 20170902
+    private int less75pesosPromoTotal; //added by Mike, 20170902
     
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -231,7 +231,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
 
-		processLess25PesosPromoAndOrderTotal();
+		processLess75PesosPromoAndOrderTotal();
 		
 		//added by Mike, 20170511
 		//added by Mike, 20160126
@@ -254,9 +254,9 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     }
     
     //edited by Mike, 20170902
-    public void processLess25PesosPromoAndOrderTotal() {    	
+    public void processLess75PesosPromoAndOrderTotal() {    	
 		orderSubtotalCost = 0;
-    	less25pesosPromoTotal = 0;
+    	less75pesosPromoTotal = 0;
     	
 		for (int i=0; i<tempList.size(); i++) { 
 			String s = tempList.get(i); 	
@@ -264,16 +264,16 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 			String sPart1 = s.substring(s.indexOf("₱"));	            				
 			String item_price = sPart1.substring(0,sPart1.indexOf("<"));//("("));//(used), (new)				
 
-			less25pesosPromoTotal+=Integer.parseInt(quantityList.get(i))*25;				
+			less75pesosPromoTotal+=Integer.parseInt(quantityList.get(i))*75;				
 			orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));							
 		}	
 
-		less25pesosPromoTotal-=25; //no promo for only 1 item
+		less75pesosPromoTotal-=75; //no promo for only 1 item
 		
-		TextView less25pesosTextView = (TextView)findViewById(R.id.less_25pesos);
-		less25pesosTextView.setText("Less ₱25 promo: -₱"+less25pesosPromoTotal);		 				
+		TextView less25pesosTextView = (TextView)findViewById(R.id.less_75pesos);
+		less25pesosTextView.setText("Less ₱75 promo: -₱"+less75pesosPromoTotal);		 				
 		
-		orderSubtotalCost-=less25pesosPromoTotal;
+		orderSubtotalCost-=less75pesosPromoTotal;
 		
 		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
 		orderSubtotalCostTextView.setText("Order Total: ₱"+orderSubtotalCost);		 				
@@ -368,7 +368,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 							}
 						}
 						buySummary.append("--\n");
-						buySummary.append("Less ₱25 promo: -₱"+less25pesosPromoTotal+"\n");
+						buySummary.append("Less ₱25 promo: -₱"+less75pesosPromoTotal+"\n");
 						buySummary.append("Order Total: ₱"+orderSubtotalCost+"\n");
 						buySummary.append("--\n");
 						
@@ -1208,7 +1208,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 										
 					            		processSubtotal(v, Integer.parseInt(q), s);
 										//processOrderTotal();
-					            		processLess25PesosPromoAndOrderTotal();
+					            		processLess75PesosPromoAndOrderTotal();
 //									}
 								}
 							}
