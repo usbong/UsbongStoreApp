@@ -1037,6 +1037,10 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 				paypal.setText("PayPal");
 				modeOfPayment.addView(paypal);
 				
+				RadioButton meetupAtMOSC = new AppCompatRadioButton(this);
+				meetupAtMOSC.setText("Meetup at MOSC");
+				modeOfPayment.addView(meetupAtMOSC);
+
 			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 		        //; last accessed: 20150609
 		        //answer by Elenasys

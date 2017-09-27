@@ -63,7 +63,7 @@
 			android:background="#306f5630"
 		>
 		<TextView
-	        android:id="@+id/less_75pesos"
+	        android:id="@+id/less_70pesos"
 	        android:textSize="22sp"
 	        android:textStyle="bold"
 	        android:textColor="#6f5630"

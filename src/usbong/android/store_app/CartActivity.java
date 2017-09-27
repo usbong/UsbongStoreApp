@@ -113,7 +113,8 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     private ArrayList<String> quantityList; //added by Mike, 20170505
     private ArrayList<String> tempList; //added by Mike, 20170511
     private int orderSubtotalCost; //added by Mike, 20170511
-    private int less75pesosPromoTotal; //added by Mike, 20170902
+    private int less70pesosPromoTotal; //added by Mike, 20170902
+    
     
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -231,7 +232,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
 
-		processLess75PesosPromoAndOrderTotal();
+		processPromoAndOrderTotal();
 		
 		//added by Mike, 20170511
 		//added by Mike, 20160126
@@ -253,10 +254,10 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     	});    	
     }
     
-    //edited by Mike, 20170902
-    public void processLess75PesosPromoAndOrderTotal() {    	
+    //edited by Mike, 20170928
+    public void processPromoAndOrderTotal() {    	
 		orderSubtotalCost = 0;
-    	less75pesosPromoTotal = 0;
+    	less70pesosPromoTotal = 0;
     	
 		for (int i=0; i<tempList.size(); i++) { 
 			String s = tempList.get(i); 	
@@ -264,16 +265,16 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 			String sPart1 = s.substring(s.indexOf("₱"));	            				
 			String item_price = sPart1.substring(0,sPart1.indexOf("<"));//("("));//(used), (new)				
 
-			less75pesosPromoTotal+=Integer.parseInt(quantityList.get(i))*75;				
+			less70pesosPromoTotal+=Integer.parseInt(quantityList.get(i))*70;				
 			orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));							
 		}	
 
-		less75pesosPromoTotal-=75; //no promo for only 1 item
+		less70pesosPromoTotal-=70; //no promo for only 1 item
 		
-		TextView less25pesosTextView = (TextView)findViewById(R.id.less_75pesos);
-		less25pesosTextView.setText("Less ₱75 promo: -₱"+less75pesosPromoTotal);		 				
+		TextView less70pesosTextView = (TextView)findViewById(R.id.less_70pesos);
+		less70pesosTextView.setText("Less ₱70 promo: -₱"+less70pesosPromoTotal);		 				
 		
-		orderSubtotalCost-=less75pesosPromoTotal;
+		orderSubtotalCost-=less70pesosPromoTotal;
 		
 		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
 		orderSubtotalCostTextView.setText("Order Total: ₱"+orderSubtotalCost);		 				
@@ -368,7 +369,17 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 							}
 						}
 						buySummary.append("--\n");
-						buySummary.append("Less ₱25 promo: -₱"+less75pesosPromoTotal+"\n");
+						buySummary.append("Less ₱70 promo: -₱"+less70pesosPromoTotal+"\n");
+						
+						int paymentMethodRadioButtonID = paymentMethodRadioButtonGroup.getCheckedRadioButtonId();					
+						RadioButton paymentMethodRadioButton = (RadioButton) paymentMethodRadioButtonGroup.findViewById(paymentMethodRadioButtonID);
+						String paymentMethodSelectedText = paymentMethodRadioButton.getText().toString();	 
+
+						if (paymentMethodSelectedText.contains("Meetup at MOSC")) {
+							buySummary.append("Meetup at MOSC promo: -₱70\n");							
+							orderSubtotalCost-=70;
+						}						
+						
 						buySummary.append("Order Total: ₱"+orderSubtotalCost+"\n");
 						buySummary.append("--\n");
 						
@@ -399,14 +410,24 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						String selectedText = radioButton.getText().toString();	 
 						buySummary.append("Preference: "+selectedText+"\n");    	
 */	
+/*						
 						buySummary.append("Address: "+
 								((TextView)findViewById(R.id.address)).getText().toString()+"\n");    	
+*/						
+						if (paymentMethodSelectedText.contains("Meetup at MOSC")) {
+							buySummary.append("Address: Marikina Orthopedic Specialty Clinic\n");    	
+						}						
+						else {
+							buySummary.append("Address: "+
+									((TextView)findViewById(R.id.address)).getText().toString()+"\n");    	
+						}
 						
+/*						
 //						RadioGroup paymentMethodRadioButtonGroup = (RadioGroup)findViewById(R.id.mode_of_payment_radiogroup);
 						int paymentMethodRadioButtonID = paymentMethodRadioButtonGroup.getCheckedRadioButtonId();					
 						RadioButton paymentMethodRadioButton = (RadioButton) paymentMethodRadioButtonGroup.findViewById(paymentMethodRadioButtonID);
 						String paymentMethodSelectedText = paymentMethodRadioButton.getText().toString();	 
-	
+*/	
 						buySummary.append("Payment Method: "+paymentMethodSelectedText+"\n");    	
 	
 						String additionalInstructionsString = ((TextView)findViewById(R.id.additional_instructions)).getText().toString();					
@@ -914,6 +935,11 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				RadioButton paypal = new AppCompatRadioButton(this);
 				paypal.setText("PayPal");
 				modeOfPayment.addView(paypal);
+
+				RadioButton meetupAtMOSC = new AppCompatRadioButton(this);
+				meetupAtMOSC.setText("Meetup at MOSC");
+				modeOfPayment.addView(meetupAtMOSC);
+
 				
 			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 		        //; last accessed: 20150609
@@ -1208,7 +1234,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 										
 					            		processSubtotal(v, Integer.parseInt(q), s);
 										//processOrderTotal();
-					            		processLess75PesosPromoAndOrderTotal();
+					            		processPromoAndOrderTotal();
 //									}
 								}
 							}
