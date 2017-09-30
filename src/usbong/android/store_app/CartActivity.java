@@ -269,7 +269,10 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 			orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));							
 		}	
 
-		less70pesosPromoTotal-=70; //no promo for only 1 item
+		//edited by Mike, 20170930
+		if (tempList.size()>0) {
+			less70pesosPromoTotal-=70;		
+		}
 		
 		TextView less70pesosTextView = (TextView)findViewById(R.id.less_70pesos);
 		less70pesosTextView.setText("Less ₱70 promo: -₱"+less70pesosPromoTotal);		 				
