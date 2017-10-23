@@ -1565,12 +1565,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             	//answer by: dev_android
             	if (convertView == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if (o.contains("PROMO")||o.contains("RetroCC")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
+/*                    if (o.contains("PROMO")||o.contains("RetroCC")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
                         v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
                     }
-                    else {
+                    else {*/
                         v = vi.inflate(R.layout.tree_loader, null);                
-                    }
+/*                  } 
+ */
             	}
             	else {
             		v = convertView;

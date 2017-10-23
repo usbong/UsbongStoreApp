@@ -1075,13 +1075,15 @@ public class CartActivity extends AppCompatActivity/*Activity*/
             	//answer by: dev_android
             	if (convertView == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if (o.contains("PROMO")||o.contains("RetroCC")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
+/*                    if (o.contains("PROMO")||o.contains("RetroCC")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
 //                    if (o.toString().substring(0,items.get(position).indexOf("T")).equals(""+UsbongConstants.PRODUCT_TYPE_COMBOS)) { //COMBO
                     		v = vi.inflate(R.layout.tree_loader_alternative_cart, null);
                     }
                     else {
+*/                    
 	                        v = vi.inflate(R.layout.tree_loader_cart, null);
-                    }
+/*                    }
+ */
             	}
             	else {
             		v = convertView;
