@@ -75,7 +75,7 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, prev
 (26, 1, 2, 'Standard First Aid & Personal Safety', 500, NULL, 'English', 'American Red Cross', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
 (27, 1, 9, 'HSK Level 5 Sample Exam', 1500, NULL, 'Mandarin/Japanese', 'Confucius Institute (Hanban)', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, '株式会社スプリックス', NULL),
 (28, 4, 3, 'M&S Earl Grey Tea', 295, NULL, 'English', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL),
-(29, 4, 3, 'UCC Coffee (Rich Blend)', 580, NULL, 'Japanese', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL),
+(29, 4, 3, 'UCC Coffee (Rich Blend)', 580, NULL, 'Japanese', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL),
 (30, 4, 3, 'sencha (Green Tea)', 225, NULL, 'Japanese', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL),
 (31, 1, 5, 'PROMO-Le Petit Prince, Living Language French, The Plague', 1250, NULL, 'French/English', 'Saint-Exupéry, Heminway, Camus', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
 (32, 1, 5, 'PROMO-Wikinomics, Guns, Germs, and Steel, The Soul of a New Machine, The Different Drum', 1650, NULL, 'English', 'Tapscott/Williams, Diamond, Kidder, Peck', NULL, 'Used - Acceptable', NULL, 'Mixed', 1, NULL, NULL),
@@ -444,7 +444,14 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, prev
 (401, 1, 6, 'Expeditions Comics', 599, NULL, 'English', 'Rhea Llamas, et al.', NULL, 'Used - Good', NULL, 'Paperback', 0, NULL, NULL),
 (402, 1, 2, 'Expeditions Prose', 499, NULL, 'English', 'Rhea Llamas, et al.', NULL, 'Used - Good', NULL, 'Paperback', 0, NULL, NULL),
 (403, 1, 2, 'Preparation for the SAT (11th ed)', 250, NULL, 'English', 'Edward Deptula, MA, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
-(404, 1, 8, 'Chinese Classic Cartoons (7plus1 films)', 2800, NULL, 'English/Mandarin (Traditional)', NULL, NULL, 'Used - Good', NULL, NULL, 0, NULL, NULL);
+(404, 1, 8, 'Chinese Classic Cartoons (7plus1 films)', 2800, NULL, 'English/Mandarin (Traditional)', NULL, NULL, 'Used - Good', NULL, NULL, 0, NULL, NULL),
+(405, 1, 8, 'Disney Hits Easy Piano', 500, NULL, 'English', NULL, NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, 0),
+(406, 1, 9, 'Hangeul Wikang korean Prime Korean', 280, NULL, 'English/Korean', 'Johnson Park', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, 0),
+(407, 1, 10, 'Journey to the West (xiyouji)', 420, NULL, 'Mandarin (Traditional)', 'wu cheng en, et al.', NULL, 'Used - Good', NULL, 'Paperback', 0, NULL, 0),
+(408, 1, 10, 'Water Margin (shuihuzhuan)', 420, NULL, 'Mandarin (Traditional)', 'shi nai an, et al.', NULL, 'New', NULL, 'Paperback', 0, NULL, 0),
+(409, 1, 2, 'The Analects of Confucius', 180, NULL, 'English', 'Yuan Fang Publishing', NULL, 'Used - Good', NULL, 'Paperback', 0, NULL, 0),
+(410, 1, 9, 'Select Essays for Recitation', 420, NULL, 'English/Mandarin (Traditional)', 'yi xiong ge yue, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, 0),
+(411, 1, 9, '2008-2010 English Reading', 450, NULL, 'English/Mandarin (Traditional)', 'nie qun, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, 0);
 
 
 
