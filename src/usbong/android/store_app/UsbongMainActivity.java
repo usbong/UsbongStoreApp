@@ -995,6 +995,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
@@ -1007,6 +1008,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
@@ -1019,6 +1021,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);

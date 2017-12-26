@@ -398,7 +398,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 */  			
   			//added by Mike, 20170330
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_BOOKS+".txt");  
-  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_COMBOS+".txt");  
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_PROMOS+".txt");  
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_BEVERAGES+".txt");   //added by Mike, 20170419
 
 /*
@@ -753,11 +753,11 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             }
         });    
 
-        Button combosButton = (Button)findViewById(R.id.promos_button);
-        combosButton.setOnClickListener(new OnClickListener() {
+        Button promosButton = (Button)findViewById(R.id.promos_button);
+        promosButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_COMBOS);
+                initTreeLoader(UsbongConstants.ITEMS_LIST_PROMOS);
             }
         });    
 
@@ -784,7 +784,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 			case UsbongConstants.ITEMS_LIST_BEVERAGES:
 				currProductTypeId = UsbongConstants.PRODUCT_TYPE_BEVERAGES;
 				break;
-			case UsbongConstants.ITEMS_LIST_COMBOS:
+			case UsbongConstants.ITEMS_LIST_PROMOS:
 				currProductTypeId = UsbongConstants.PRODUCT_TYPE_PROMOS;
 				break;
 		}
@@ -806,7 +806,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		        			price = "out of stock";
 		        		}
 		        		else {
-		        			price = "₱" + price;
+		        			price = "竄ｱ" + price;
 		        		}
 		        		
 		        		String productDetails="";
@@ -852,19 +852,19 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         switch (currCategory) {
         	case UsbongConstants.ITEMS_LIST_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
-                combosButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
         		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
-        	case UsbongConstants.ITEMS_LIST_COMBOS:
+        	case UsbongConstants.ITEMS_LIST_PROMOS:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                promosButton.setTypeface(Typeface.DEFAULT_BOLD);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
         		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
                 break;
         	case UsbongConstants.ITEMS_LIST_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT);            
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
         		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
@@ -3706,7 +3706,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                     switch (currCategory) {
-                    	case UsbongConstants.ITEMS_LIST_COMBOS:
+                    	case UsbongConstants.ITEMS_LIST_PROMOS:
                             v = vi.inflate(R.layout.tree_loader_alternative, null);
                             break;
                         default:
@@ -3745,7 +3745,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 
 			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nPrice:"))
 			                    		.replace("Name: ","")
-			                    		.replace("’","")
+			                    		.replace("窶�","")
 			                    		.replace("'","")
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 			    				break;
@@ -3761,7 +3761,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 
 			                    imageFileName = o.toString().substring(0/*o.indexOf("T")*/, o.toString().indexOf("\nAuthor:"))
 			                    		.replace("Title: ","")
-			                    		.replace("’","")
+			                    		.replace("窶�","")
 			                    		.replace("'","")
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 			    				break;

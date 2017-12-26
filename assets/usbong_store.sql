@@ -458,7 +458,7 @@ INSERT INTO product_type (product_type_id, product_type_name) VALUES
 (2, 'Books'),
 (3, 'Beverages'),
 (4, 'Books/Beverages'),
-(5, 'Combos'),
+(5, 'Promos'),
 (6, 'Comics'),
 (7, 'Manga'),
 (8, 'Toys & Collectibles'),
