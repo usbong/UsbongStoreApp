@@ -36,7 +36,7 @@ import android.provider.BaseColumns;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 16;
+    public static final int DATABASE_VERSION = 18;
 //    public static final String DB_NAME = "usbong_store.db";
     
 //    private static String DB_DIR = "/data/data/usbong.android.store_app/databases/";

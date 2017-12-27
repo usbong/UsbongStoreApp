@@ -146,40 +146,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
     {   
     	//added by Mike, 20170330
     	loadData();
-/*    	
-    	//added by Mike, 20170310
-    	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
-
-		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
-	        //; last accessed: 20150609
-	        //answer by Elenasys
-	        //added by Mike, 20150207
-	        SharedPreferences prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
-	        if (prefs!=null) {
-	        	
-		      ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
-		      ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
-		      ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
-
-		      //added by Mike, 20170303
-		      RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
-			  ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
-
-		      //added by Mike, 20170303
-		      RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
-			  ((RadioButton)formatRadioButtonGroup.getChildAt(0)).setChecked(true);
-
-		      //added by Mike, 20170303
-		      RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
-			  ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
-
-		      //added by Mike, 20170303
-		      RadioGroup totalBudgetRadioButtonGroup = ((RadioGroup)findViewById(R.id.total_budget_radiogroup));
-			  ((RadioButton)totalBudgetRadioButtonGroup.getChildAt(0)).setChecked(true);
-			  
-	        }
-//    	}
-*/
+/*
         //added by Mike, 20170328
     	String myQRCodeReaderName = getIntent().getStringExtra("myQRCodeReaderName");
     	if (myQRCodeReaderName!=null) {
@@ -218,7 +185,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				startActivity(captureISBN13Intent);
 			}
     	});    
-    	
+*/    	
 	    //added by Mike, 20170309
 //	    if (!performedCapturePhoto) {
 	    	//Reference: http://stackoverflow.com/questions/2793004/java-lista-addalllistb-fires-nullpointerexception
@@ -256,12 +223,12 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 										        
 						StringBuffer requestSummary = new StringBuffer();
 						requestSummary.append("-Request Summary-\n");					
-						requestSummary.append("Book Title: "+
-								((TextView)findViewById(R.id.book_title)).getText().toString()+"\n");
+						requestSummary.append("Product Name: "+
+								((TextView)findViewById(R.id.product_name)).getText().toString()+"\n");
 
-						requestSummary.append("First Name of Principal Author:\n"+
-								((TextView)findViewById(R.id.first_name_of_principal_author)).getText().toString()+"\n");
-
+						requestSummary.append("Product Link:\n"+
+								((TextView)findViewById(R.id.product_link)).getText().toString()+"\n");
+/*
 						requestSummary.append("Surname of Principal Author:\n"+
 								((TextView)findViewById(R.id.surname_of_principal_author)).getText().toString()+"\n");
 						
@@ -283,13 +250,13 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 						RadioButton formatRadioButton = (RadioButton) formatRadioButtonGroup.findViewById(formatRadioButtonID);
 						String formatSelectedText = formatRadioButton.getText().toString();	 
 						requestSummary.append("Format: "+formatSelectedText+"\n");    	
-
+*/
 						RadioGroup itemTypeRadioButtonGroup = (RadioGroup)findViewById(R.id.item_type_radiogroup);
 						int itemTypeRadioButtonID = itemTypeRadioButtonGroup.getCheckedRadioButtonId();				
 						RadioButton itemTypeRadioButton = (RadioButton) itemTypeRadioButtonGroup.findViewById(itemTypeRadioButtonID);
 						String itemTypeSelectedText = itemTypeRadioButton.getText().toString();	 
-						requestSummary.append("Book Type: "+itemTypeSelectedText+"\n");    	
-
+						requestSummary.append("Product Type: "+itemTypeSelectedText+"\n");    	
+/*
 						String isbn10String = ((TextView)findViewById(R.id.isbn_10)).getText().toString();
 						if (!isbn10String.equals("")) {
 							requestSummary.append("ISBN-10: "+
@@ -309,15 +276,17 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 							requestSummary.append("ISBN-13: "+
 									"N/A\n");
 						}
-
+*/
 						requestSummary.append("Quantity: "+
 								((TextView)findViewById(R.id.quantity)).getText().toString()+"\n");
 
-						RadioGroup totalBudgetRadioButtonGroup = (RadioGroup)findViewById(R.id.total_budget_radiogroup);
+						EditText totalBudgetSelectedText = (EditText)findViewById(R.id.total_budget);
+/*
 						int totalBudgetRadioButtonID = totalBudgetRadioButtonGroup.getCheckedRadioButtonId();				
 						RadioButton totalBudgetRadioButton = (RadioButton) totalBudgetRadioButtonGroup.findViewById(totalBudgetRadioButtonID);
 						String totalBudgetSelectedText = totalBudgetRadioButton.getText().toString();	 
-						requestSummary.append("Total Budget (for all copies):\n"+
+*/						
+						requestSummary.append("Total Budget (for all copies/units in Philippine Peso):\n"+
 								totalBudgetSelectedText+"\n");    	
 																						
 						requestSummary.append("Customer Name: "+
@@ -570,10 +539,10 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			itemTypeSelectedText = ((RadioButton) itemTypeRadioButtonGroup.getChildAt(0)).getText().toString();
 		}
-		editor.putString("bookType", itemTypeSelectedText);
+		editor.putString("productType", itemTypeSelectedText);
 
-		RadioGroup totalBudgetRadioButtonGroup = (RadioGroup)findViewById(R.id.total_budget_radiogroup);
-		int totalBudgetRadioButtonID = totalBudgetRadioButtonGroup.getCheckedRadioButtonId();				
+		EditText totalBudgetSelectedText = (EditText)findViewById(R.id.total_budget);
+/*		int totalBudgetRadioButtonID = totalBudgetRadioButtonGroup.getCheckedRadioButtonId();				
 		RadioButton totalBudgetRadioButton = (RadioButton) totalBudgetRadioButtonGroup.findViewById(totalBudgetRadioButtonID);
 		String totalBudgetSelectedText;
 		if (totalBudgetRadioButton!=null) {
@@ -582,11 +551,13 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			totalBudgetSelectedText = ((RadioButton) totalBudgetRadioButtonGroup.getChildAt(0)).getText().toString();
 		}
-		editor.putString("totalBudget", totalBudgetSelectedText);
-		
+*/		
+		editor.putString("totalBudget", totalBudgetSelectedText.getText().toString());
+/*		
 		String isbn_10String = ((TextView)findViewById(R.id.isbn_10)).getText().toString();
         editor.putString("isbn_10", isbn_10String);
-
+*/
+		
 /*		if (!isbn_10String.equals("")) {
 	        editor.putString("isbn_10", isbn_10String);
 		}
@@ -594,8 +565,10 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 	        editor.putString("isbn_10", "N/A");
 		}
 */
+/*		
 		String isbn_13String = ((TextView)findViewById(R.id.isbn_13)).getText().toString();
         editor.putString("isbn_13", isbn_13String);
+*/        
 /*
 		if (!isbn_13String.equals("")) {
 	        editor.putString("isbn_13", isbn_13String);
@@ -657,6 +630,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
 				((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
 */      	        
+/*	        	
       	        //added by Mike, 20170303
     	        RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
     		    ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
@@ -664,15 +638,15 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
     	        //added by Mike, 20170303
     	        RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
     		    ((RadioButton)formatRadioButtonGroup.getChildAt(0)).setChecked(true);
-
+*/
     	        //added by Mike, 20170303
     	        RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
     		    ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
 
     	        //added by Mike, 20170330
-    	        RadioGroup totalBudgetRadioButtonGroup = ((RadioGroup)findViewById(R.id.total_budget_radiogroup));
-    		    ((RadioButton)totalBudgetRadioButtonGroup.getChildAt(0)).setChecked(true);
-    		    
+    	        EditText totalBudget = ((EditText)findViewById(R.id.total_budget));
+/*    		    ((RadioButton)totalBudgetRadioButtonGroup.getChildAt(0)).setChecked(true);
+*/    		    
     		    reset();
 	    	}
 	        else {
@@ -711,8 +685,9 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 			      }			  
 			  }
 	
-		      RadioGroup totalBudgetRadioButtonGroup = ((RadioGroup)findViewById(R.id.total_budget_radiogroup));
-			  for (int i=0; i<totalBudgetRadioButtonGroup.getChildCount(); i++) {
+		      EditText totalBudget = ((EditText)findViewById(R.id.total_budget));
+/*			  
+		      for (int i=0; i<totalBudgetRadioButtonGroup.getChildCount(); i++) {
 			      if (((RadioButton)totalBudgetRadioButtonGroup.getChildAt(i)).getText().equals(prefs.getString("totalBudget", ""))) {
 					  ((RadioButton)totalBudgetRadioButtonGroup.getChildAt(i)).setChecked(true);		    	  
 			      }			  
@@ -720,7 +695,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 			  
 		      ((EditText)findViewById(R.id.isbn_10)).setText(prefs.getString("isbn_10", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.isbn_13)).setText(prefs.getString("isbn_13", "")); //"" is the default value
-
+*/
 		      ((EditText)findViewById(R.id.quantity)).setText(prefs.getString("quantity", "")); //"" is the default value
 //		      ((EditText)findViewById(R.id.number_of_copies)).setText(prefs.getString("numberOfCopies", "")); //"" is the default value
 /*		      ((EditText)findViewById(R.id.total_price_for_all_copies)).setText(prefs.getString("totalPriceForAllCopies", "")); //"" is the default value 
