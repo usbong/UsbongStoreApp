@@ -225,9 +225,22 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 						requestSummary.append("-Request Summary-\n");					
 						requestSummary.append("Product Name: "+
 								((TextView)findViewById(R.id.product_name)).getText().toString()+"\n");
-
+/*
 						requestSummary.append("Product Link:\n"+
 								((TextView)findViewById(R.id.product_link)).getText().toString()+"\n");
+*/						
+						String productLinkString = ((TextView)findViewById(R.id.product_link)).getText().toString();					
+
+						if (productLinkString.trim().equals("")) {
+							requestSummary.append("Product Link:\n"+
+									"N/A\n");    							
+						}
+						else {
+							requestSummary.append("Product Link:\n"+
+									productLinkString+"\n");    							
+						}
+
+						
 /*
 						requestSummary.append("Surname of Principal Author:\n"+
 								((TextView)findViewById(R.id.surname_of_principal_author)).getText().toString()+"\n");
@@ -287,8 +300,10 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 						String totalBudgetSelectedText = totalBudgetRadioButton.getText().toString();	 
 */						
 						requestSummary.append("Total Budget (for all copies/units in Philippine Peso):\n"+
-								totalBudgetSelectedText+"\n");    	
-																						
+								totalBudgetSelectedText.getText().toString()+"\n");    	
+						
+						requestSummary.append("--\n");    																				
+						
 						requestSummary.append("Customer Name: "+
 								((TextView)findViewById(R.id.surname)).getText().toString()+", "+
 								((TextView)findViewById(R.id.first_name)).getText().toString()+"\n");    	
@@ -323,7 +338,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 					    Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE); //changed from ACTION_SEND to ACTION_SEND_MULTIPLE by Mike, 20170313
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
 					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.REQUEST_EMAIL_ADDRESS});
-					    i.putExtra(Intent.EXTRA_SUBJECT, "Book Request: "+((TextView)findViewById(R.id.book_title)).getText().toString());
+					    i.putExtra(Intent.EXTRA_SUBJECT, "Product Request: "+((TextView)findViewById(R.id.product_name)).getText().toString());
 					    i.putExtra(Intent.EXTRA_TEXT   , requestSummary.toString());
 					    
 					    //added by Mike, 20170310
@@ -370,16 +385,16 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
     public boolean verifyFields() {
     	boolean allFieldsAreFilledUp=true;
     	
-    	TextView bookTitleTextView = ((TextView)findViewById(R.id.book_title));
-		String bookTitle = bookTitleTextView.getText().toString();	
-		if (bookTitle.trim().equals("")) {
-			bookTitleTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+    	TextView productNameTextView = ((TextView)findViewById(R.id.product_name));
+		String productName = productNameTextView.getText().toString();	
+		if (productName.trim().equals("")) {
+			productNameTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
 			allFieldsAreFilledUp=false;
 		}
 		else {
-			bookTitleTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+			productNameTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-
+/*
     	TextView firstNameOfPrincipalAuthorTextView = ((TextView)findViewById(R.id.first_name_of_principal_author));
 		String firstNameOfPrincipalAuthor = firstNameOfPrincipalAuthorTextView.getText().toString();	
 		if (firstNameOfPrincipalAuthor.trim().equals("")) {
@@ -409,7 +424,8 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			publisherTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-
+*/
+/*		
 		//added by Mike, 20170306
 		RadioGroup languageRadioButtonGroup = (RadioGroup)findViewById(R.id.language_radiogroup);
 		int languageRadioButtonID = languageRadioButtonGroup.getCheckedRadioButtonId();				
@@ -427,6 +443,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				otherLanguageTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 			}			
 		}
+*/		
 /*		
     	TextView numberOfCopiesTextView = ((TextView)findViewById(R.id.number_of_copies));
 		String numberOfCopies = numberOfCopiesTextView.getText().toString();	
@@ -437,27 +454,31 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			numberOfCopiesTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-*/			
-    	TextView firstnameTextView = ((TextView)findViewById(R.id.first_name));
-		String firstname = firstnameTextView.getText().toString();
-		if (firstname.trim().equals("")) {
-			firstnameTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
-			allFieldsAreFilledUp=false;
-		}
-		else {
-			firstnameTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
-		}
+*/		
 
-    	TextView surnameTextView = ((TextView)findViewById(R.id.surname));
-		String surname = surnameTextView.getText().toString();	
-		if (surname.trim().equals("")) {
-			surnameTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+/*		
+    	TextView productLinkTextView = ((TextView)findViewById(R.id.product_link));
+		String productLink = productLinkTextView.getText().toString();
+		if (productLink.trim().equals("")) {
+			productLinkTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
 			allFieldsAreFilledUp=false;
 		}
 		else {
-			surnameTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+			productLinkTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
+*/
 		
+		
+    	TextView totalBudgetTextView = ((TextView)findViewById(R.id.total_budget));
+		String totalBudget = totalBudgetTextView.getText().toString();	
+		if (totalBudget.trim().equals("")) {
+			totalBudgetTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			totalBudgetTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+/*		
     	TextView contactNumberTextView = ((TextView)findViewById(R.id.contact_number));
 		String contactNumber = contactNumberTextView.getText().toString();
 		if (contactNumber.trim().equals("")) {
@@ -477,7 +498,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			addressTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-		
+*/		
 		if (!allFieldsAreFilledUp) {
 	        Toast.makeText(RequestActivity.this, "Please fill up all required fields.", Toast.LENGTH_LONG).show();
 	        return false;
@@ -729,12 +750,19 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
             //added by Mike, 20170225
 	    	if (isSendingData) {
 	    		isSendingData=false;
-	
+
+/*	    		
 		        //added by Mike, 20170225
 				finish();    
 				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(RequestActivity.this, UsbongDecisionTreeEngineActivity.class);
 				toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 				startActivity(toUsbongDecisionTreeEngineActivityIntent);
+*/				
+		        //added by Mike, 20170225
+				finish();    
+				Intent toUsbongMainActivityIntent = new Intent(RequestActivity.this, UsbongMainActivity.class);
+				toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+				startActivity(toUsbongMainActivityIntent);
 	    	}
         }
     }//onActivityResult

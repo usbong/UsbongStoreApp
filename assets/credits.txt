@@ -1,6 +1,6 @@
 --Usbong Store App--
-ver: 1.0.22
-date: 20171226
+ver: 1.0.23
+date: 20171228
 
 Usbong Social Systems, Inc.
 
