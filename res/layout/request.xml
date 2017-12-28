@@ -206,6 +206,13 @@
 				        android:textColor="#6f5630"
 				        android:textStyle="bold"			        
 				        />	    
+				    <RadioButton
+				        android:id="@+id/meetup_at_mosc_radiobutton"	               
+				        style="@style/UsbongLoginEditText"	 
+				        android:text="Meetup at MOSC"
+				        android:textColor="#6f5630"
+				        android:textStyle="bold"			        
+				        />	
 				</RadioGroup>			
 				<EditText
 			        style="@style/UsbongTextAreaEditText"	
