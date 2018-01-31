@@ -205,12 +205,35 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 */         
     	//added by Mike, 20160126
     	confirmButton = (Button)findViewById(R.id.confirm_button);    	
+    	
+    	//added by Mike, 20180131
+    	EditText quantityEditText = (EditText)findViewById(R.id.quantity);    	
+
+		if (productDetails.contains("out of stock")) {
+			confirmButton.setText("REQUEST ITEM");
+			quantityEditText.setFocusable(false);
+			quantityEditText.setText("0");
+		}
+		else {
+			confirmButton.setText("ADD TO CART");			
+			quantityEditText.setFocusable(true);
+			quantityEditText.setText("1");
+		}
+    	
     	confirmButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {		
 				if (currScreen==BUY_SCREEN) {					
 					//TODO: add wishlist
 					if (productDetails.contains("out of stock")) {
+						//added by Mike, 20180131
+						Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
+						toRequestActivityIntent.putExtra("newRequestActivity", true);
+						toRequestActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY);
+						toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(toRequestActivityIntent);
+					
+/*						
 				    	AlertDialog.Builder outOfStockAlertDialog = new AlertDialog.Builder(BuyActivity.this).setTitle("Hey!");
 						TextView tv = new TextView(myActivityInstance);
 						tv.setText("\nThis item is presently out of stock.");
@@ -222,7 +245,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 							public void onClick(DialogInterface dialog, int which) {
 							}
 						}).show();
-
+*/
 						return;
 					}
 					

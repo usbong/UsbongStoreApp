@@ -451,7 +451,24 @@ INSERT INTO product (product_id, merchant_id, product_type_id, name, price, prev
 (408, 1, 10, 'Water Margin (shuihuzhuan)', 420, NULL, 'Mandarin (Traditional)', 'shi nai an, et al.', NULL, 'New', NULL, 'Paperback', 0, NULL, 0),
 (409, 1, 2, 'The Analects of Confucius', 180, NULL, 'English', 'Yuan Fang Publishing', NULL, 'Used - Good', NULL, 'Paperback', 0, NULL, 0),
 (410, 1, 9, 'Select Essays for Recitation', 420, NULL, 'English/Mandarin (Traditional)', 'yi xiong ge yue, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, 0),
-(411, 1, 9, '2008-2010 English Reading', 450, NULL, 'English/Mandarin (Traditional)', 'nie qun, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, 0);
+(411, 1, 9, '2008-2010 English Reading', 450, NULL, 'English/Mandarin (Traditional)', 'nie qun, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, 0),
+(412, 1, 8, 'Out of Your Mind Essential Listening from the Alan Watts Audio Archives', 3900, NULL, 'English', 'Alan Watts, et al.', NULL, 'Used - Good', NULL, NULL, 0, NULL, NULL),
+(413, 1, 2, 'El mapa para alcanzar el éxito', 280, NULL, 'Spanish', 'John Maxwell', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
+(414, 1, 2, 'Kendo The Definitive Guide', 2540, NULL, 'English', 'Hiroshi Ozawa', NULL, 'Used - Good', NULL, 'Hardcover', 0, NULL, NULL),
+(415, 1, 2, 'The Book of Five Rings', 300, NULL, 'English', 'Miyamoto Musashi, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
+(416, 4, 11, 'Hansel Milk Sandwich Cream-Filled Biscuits', 121, NULL, 'English', NULL, NULL, 'New', NULL, NULL, 99, NULL, NULL),
+(417, 1, 9, 'Keeping up with your Chinese Filipino (Mandarin, Hokkien, Filipino, English)', 320, NULL, 'Filipino/Mandarin/Hokkien/English', 'Johnny Young', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
+(418, 1, 9, 'Cortina Method Conversational German in 20 Lessons', 350, NULL, 'English/German', 'Eva Lange, Ph.D.', NULL, 'Used - Good', NULL, 'Paperback', 0, NULL, NULL),
+(419, 1, 9, 'Say It in French New Edition', 320, NULL, 'English/French', 'Jennifer Wagner', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
+(420, 1, 2, 'Doctor to the Barrios', 300, NULL, 'English', 'Juan Flavier', NULL, 'Used - Acceptable', NULL, 'Paperback', 1, NULL, NULL),
+(421, 1, 2, 'My Friends in the Barrios', 335, NULL, 'English', 'Juan Flavier', NULL, 'Used - Good', NULL, 'Paperback', 1, NULL, NULL),
+(422, 1, 2, 'Parables of the Barrio Vol 1, Nos 1-50', 220, NULL, 'English', 'Juan Flavier', NULL, 'New', NULL, 'Paperback', 1, NULL, NULL),
+(423, 1, 2, 'Back to the Barrios', 220, NULL, 'English', 'Juan Flavier', NULL, 'New', NULL, 'Paperback', 1, NULL, NULL),
+(424, 1, 2, 'The Doctor and the Soul', 320, NULL, 'English', 'Viktor Frankl, M.D.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
+(425, 1, 9, 'Berlitz Chinese for Travellers', 320, NULL, 'English', 'Editions Berlitz', NULL, 'Used - Good', NULL, 'Paperback', 0, NULL, NULL),
+(426, 1, 9, 'Everyday English Mandarin Chinese and Malay Conversations', 400, NULL, 'English', 'F.Y. Fong/Haji Muhd. Arif bin Ahmad', NULL, 'Used - Good', NULL, 'Paperback', 1, NULL, NULL),
+(427, 1, 9, 'Making out in Chinese (Revised Edition)', 420, NULL, 'English/Mandarin (Simplified)', 'Ray Daniels, et al.', NULL, 'Used - Very Good', NULL, 'Paperback', 0, NULL, NULL),
+(428, 1, 9, 'Making Out in Korean (Revised Edition)', 420, NULL, 'English/Korean', 'Peter Constantine, et al.', NULL, 'Used - Very Good', NULL, 'Paperback', 0, NULL, NULL);
 
 
 
