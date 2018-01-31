@@ -233,7 +233,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 
 						if (productLinkString.trim().equals("")) {
 							requestSummary.append("Product Link:\n"+
-									"N/A\n");    							
+									"N/A\n");    															
 						}
 						else {
 							requestSummary.append("Product Link:\n"+
@@ -638,28 +638,38 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
         if (prefs!=null) {        	
 	    	//added by Mike, 20170328
 	    	if (getIntent().getBooleanExtra("newRequestActivity", false)) {
-	        	//added by Mike, 20170310
-	        	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
-/*    		
-      	        ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
-      	        ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", ""));//"" is the default value.
-      	        ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", ""));//"" is the default value.    	            	      
+	          //added by Mike, 20170310
+	          UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
+	        	
+	          String itemVariableName = getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME);
+	          
+	          if (itemVariableName!=null) {
+		          String productName = itemVariableName.substring(0, itemVariableName.toString().indexOf("</b>")).replace("<b>","");
 
-      	        ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
+				  ((EditText)findViewById(R.id.product_name)).setText(productName);
+			      
+				  myImageView = (ImageView) findViewById(R.id.CameraImage);
+				  
+		    		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+		            Resources myRes = getResources();
+		            try {
+		                Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(getIntent().getStringExtra(UsbongConstants.ITEM_IMAGE_NAME)), null); //edited by Mike, 20170202        	
+		            
+		                if (myDrawableImage!=null) {
+		                	myImageView.setImageDrawable(myDrawableImage);        	
+		                }
+		                else {
+		            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+		        			myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));
+		        			myImageView.setImageDrawable(myDrawableImage);		        		        	        	
+		                }
+		            }
+		            catch (Exception e) {
+		            	e.printStackTrace();
+		            }            		
 
-			    //added by Mike, 20170223
-				RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
-				((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
-*/      	        
-/*	        	
-      	        //added by Mike, 20170303
-    	        RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
-    		    ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
-
-    	        //added by Mike, 20170303
-    	        RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
-    		    ((RadioButton)formatRadioButtonGroup.getChildAt(0)).setChecked(true);
-*/
+					((EditText)findViewById(R.id.product_link)).setText("N/A (Usbong Store Product Item)");	        	  
+	          }
     	        //added by Mike, 20170303
     	        RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
     		    ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
@@ -676,11 +686,13 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		      ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
 		      ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
 */	
+/*	        	
 		      ((EditText)findViewById(R.id.book_title)).setText(prefs.getString("bookTitle", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.first_name_of_principal_author)).setText(prefs.getString("firstNameOfPrincipalAuthor", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.surname_of_principal_author)).setText(prefs.getString("surNameOfPrincipalAuthor", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.publisher)).setText(prefs.getString("publisher", "")); //"" is the default value
-		      
+*/
+
 		      RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
 			  for (int i=0; i<languageRadioButtonGroup.getChildCount(); i++) {
 			      if (((RadioButton)languageRadioButtonGroup.getChildAt(i)).getText().equals(prefs.getString("language", ""))) {

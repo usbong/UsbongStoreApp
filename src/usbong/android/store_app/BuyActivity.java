@@ -226,10 +226,15 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				if (currScreen==BUY_SCREEN) {					
 					//TODO: add wishlist
 					if (productDetails.contains("out of stock")) {
-						//added by Mike, 20180131
+						//added by Mike, 20180131						
 						Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
 						toRequestActivityIntent.putExtra("newRequestActivity", true);
 						toRequestActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY);
+						
+//						toRequestActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, ((TextView)findViewById(R.id.text_image_display_textview)).getText().toString());//getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME));
+						toRequestActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME));
+						toRequestActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, getIntent().getStringExtra(UsbongConstants.ITEM_IMAGE_NAME));
+												
 						toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(toRequestActivityIntent);
 					
