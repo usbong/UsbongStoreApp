@@ -11,6 +11,9 @@
     <item android:id="@+id/request"
 		  android:title="Request"
 	/>		    	        
+	<item android:id="@+id/contact"
+		  android:title="Help &amp; Feedback"
+	/>		        
     <item android:id="@+id/account"
 		  android:title="My Account"
 	/>		    
