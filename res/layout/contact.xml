@@ -39,8 +39,9 @@
 		        android:textColorHint="#9a9898"
 		        android:padding="5dp"        
 		        android:layout_marginTop="5dp"
-		        android:textColor="#ffffff"
-		        android:text="For questions, concerns, suggestions, feature requests, and/or details about our software development service offerings, please fill out the form below.\n\nOur team will reply by email within two business days."
+		        android:textColor="#6f5630"
+		        android:textStyle="bold"
+		        android:text="How may we help you?"
 		    />					    	 
 	    	<EditText
 	        style="@style/UsbongLoginEditText"
@@ -107,6 +108,7 @@
 		        android:textColorHint="#9a9898"
 		        android:padding="5dp"        
 		        android:layout_marginTop="5dp"        
+		        android:layout_marginBottom="10dp"        
 		        android:lines="4"	        
 			/>		
 		</LinearLayout>		
