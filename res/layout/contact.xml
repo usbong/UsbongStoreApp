@@ -75,6 +75,7 @@
 			        android:text="General feedback, no need to reply"
 			        android:textColor="#6f5630"
 		        	android:textStyle="bold"
+		        	android:checked="true"
 			        />
 			    <RadioButton
 			        android:id="@+id/issue_radiobutton"	               

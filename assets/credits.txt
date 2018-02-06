@@ -1,6 +1,6 @@
 --Usbong Store App--
-ver: 1.0.26
-date: 20180204
+ver: 1.0.27
+date: 20180206
 
 Usbong Social Systems, Inc.
 
@@ -25,4 +25,4 @@ Website: www.usbong.ph
 Online Store: store.usbong.ph
 Email: support@usbong.ph
 
-Copyright 2016-2017. All rights reserved.
+Copyright 2016-2018. All rights reserved.

@@ -31,10 +31,12 @@ public class UsbongConstants {
     public static final String MY_ACCOUNT_DETAILS= "MyAccountDetails";
     public static final String EMAIL_ADDRESS= "support@usbong.ph";//"order@retrocc.ph";	
 
-    //edited by Mike, 20170801
+    //edited by Mike, 20180206
     public static final String ORDER_EMAIL_ADDRESS= "order@usbong.ph"; //"usbong.ph@gmail.com";
     public static final String REQUEST_EMAIL_ADDRESS= "request@usbong.ph";
     public static final String SELL_EMAIL_ADDRESS= "sell@usbong.ph";
+    public static final String HELP_EMAIL_ADDRESS= "help@usbong.ph";
+    public static final String FEEDBACK_EMAIL_ADDRESS= "feedback@usbong.ph";
     
     //added by Mike, 20170225
 	public final static int MEETUP=0;
