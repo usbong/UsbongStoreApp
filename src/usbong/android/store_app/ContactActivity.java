@@ -719,11 +719,20 @@ public class ContactActivity extends AppCompatActivity/*Activity*/
 			case(R.id.request):
 				finish();
 				//added by Mike, 20170216
-				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), ContactActivity.class);
+				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
 				toRequestActivityIntent.putExtra("newRequestActivity", true); //added by Mike, 20170330
 				toRequestActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toRequestActivityIntent);
+				return true;
+			case(R.id.contact):
+				finish();
+				//added by Mike, 20170216
+				Intent toContactActivityIntent = new Intent().setClass(getInstance(), ContactActivity.class);
+				toContactActivityIntent.putExtra("newContactActivity", true); //added by Mike, 20180204
+				toContactActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20180204         				
+				toContactActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(toContactActivityIntent);
 				return true;
 			case(R.id.about):
 		    	new AlertDialog.Builder(ContactActivity.this).setTitle("About")
