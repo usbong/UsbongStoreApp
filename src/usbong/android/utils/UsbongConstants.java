@@ -9,6 +9,33 @@ public class UsbongConstants {
     
     public static final String USBONG_STORE_DB_SQL = "usbong_store.sql";
     
+    //added by Mike, 20180209
+    //HTTP constants
+    public static final int REGISTRATION_TIMEOUT = 10000;
+    public static final int WAIT_TIMEOUT = 30 * 1000;
+    //public static final String HOSTNAME = "192.168.56.1";
+    public static final String HOSTNAME = "store.usbong.ph";
+    
+    //update this on prod
+    public static final String USBONG_STORE_LIST_SERVER = "https://" + HOSTNAME + "/update_this_on_prod/getProductList.php";
+
+    //JSON constants
+    public static final String product_id = "product_id";
+    public static final String merchant_id = "merchant_id";
+    public static final String product_type_id = "product_type_id";
+    public static final String name = "name";
+    public static final String price = "price";
+    public static final String previous_price = "previous_price";
+    public static final String language = "language";
+    public static final String author = "author";
+    public static final String supplier = "supplier";
+    public static final String description = "description";
+    public static final String image_location = "image_location";
+    public static final String format = "format";
+    public static final String quantity_in_stock = "quantity_in_stock";
+    public static final String translator = "translator";
+    public static final String pages = "pages";
+            
     //TREE types
 	public static final String TREE_TYPE_SELL = "usbong_specialty_bookstore_sell";
 	public static final String TREE_TYPE_REQUEST = "usbong_specialty_bookstore_request";
