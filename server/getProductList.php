@@ -8,13 +8,7 @@
     } else {
             printf("Current character set: %s\n", $mysqli->character_set_name());
     }
-/*	
-	if($_SERVER['SERVER_ADDR'] == "::1") {
-		$address = "localhost";
-	} else {
-		$address = $_SERVER['SERVER_ADDR'];
-	}
-*/	
+
 	// get the records from the database
 	if ($result = $mysqli->query("SELECT * FROM product"))
 	{
@@ -56,8 +50,7 @@
 	// show an error if there is an issue with the database query
 	else
 	{
-			//echo "Error: " . $mysqli->error;
-			echo "Hello: " . $db['hostname'];
+			echo "Error: " . $mysqli->error;
 	}
 	
 	// close database connection
