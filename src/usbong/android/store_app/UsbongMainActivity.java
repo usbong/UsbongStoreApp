@@ -20,8 +20,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import usbong.android.db.UsbongDbHelper;
 import usbong.android.utils.UsbongConstants;
+import usbong.android.utils.UsbongHTTPConnect;
 import usbong.android.utils.UsbongUtils;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -1395,6 +1399,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				toContactActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toContactActivityIntent);
 				return true;
+			case(R.id.refresh):
+				new UsbongHTTPConnect(this).execute();
+				return true;
 			case(R.id.about):
 		    	new AlertDialog.Builder(UsbongMainActivity.this).setTitle("About")
 				.setMessage(UsbongUtils.readTextFileInAssetsFolder(UsbongMainActivity.this,"credits.txt")) //don't add a '/', otherwise the file would not be found
@@ -1742,6 +1749,31 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            	}
                 }
                 return v;
+        }
+	}
+
+	//added by Mike, 20180214
+	public void syncDB(String result) {		
+		try {			
+			JSONArray obj = new JSONArray(result);			
+
+        	myDbHelper = new UsbongDbHelper(this);
+            myDbHelper.initializeDataBase();
+
+            mySQLiteDatabase = myDbHelper.getReadableDatabase();
+	        myDbHelper.syncInternalDBwithServerDB(mySQLiteDatabase, obj);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+            try {
+                myDbHelper.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                myDbHelper.close();
+            }        	 
         }
 	}
 }

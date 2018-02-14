@@ -17,7 +17,7 @@ public class UsbongConstants {
     public static final String HOSTNAME = "store.usbong.ph";
     
     //update this on prod
-    public static final String USBONG_STORE_LIST_SERVER = "https://" + HOSTNAME + "/update_this_on_prod/getProductList.php";
+    public static final String USBONG_STORE_PRODUCTS_LIST_DOWNLOAD = "https://" + HOSTNAME + "/app+server/getProductList.php";
 
     //JSON constants
     public static final String product_id = "product_id";

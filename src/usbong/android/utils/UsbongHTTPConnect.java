@@ -3,14 +3,14 @@ package usbong.android.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
+import usbong.android.store_app.UsbongMainActivity;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -24,8 +24,10 @@ public class UsbongHTTPConnect extends AsyncTask<Void, Void, String> {
 */	
 	private URL url;
 	private HttpURLConnection conn;
-				
-	public UsbongHTTPConnect() {
+	private UsbongMainActivity a;
+	
+	public UsbongHTTPConnect(UsbongMainActivity a) {
+		this.a = a;
 	}
 	
 	@Override
@@ -53,7 +55,7 @@ public class UsbongHTTPConnect extends AsyncTask<Void, Void, String> {
 			conn.setRequestProperty("Accept", "application/json");
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
-			
+/*			
 			JSONObject j = new JSONObject();
 			j.put(UsbongConstants.product_id, data[0]);
 			j.put(UsbongConstants.merchant_id, data[1]);
@@ -77,7 +79,7 @@ public class UsbongHTTPConnect extends AsyncTask<Void, Void, String> {
 
 		    out.write(postData);
 		    out.close();
-
+*/
 	        if(conn.getResponseCode() != HttpsURLConnection.HTTP_OK) {
 	            throw new RuntimeException("Failed : HTTP error code : "
 	                + conn.getResponseCode());
@@ -102,6 +104,10 @@ public class UsbongHTTPConnect extends AsyncTask<Void, Void, String> {
 	
 	@Override
 	protected void onPostExecute(String result){
-		Log.d(TAG, "Response:" + result);        
+		Log.d(TAG, "Response: " + result); //.replace("Current character set: utf8", "")       
+		
+		if (!result.trim().equals("")) {			
+			a.syncDB(result);//.replace("Current character set: utf8", ""));					
+		}		
 	}
 }

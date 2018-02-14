@@ -26,13 +26,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import usbong.android.utils.UsbongConstants;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database version.
@@ -75,7 +81,7 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
 //		 getWritableDatabase(); // In the constructor
         
         try {
-        	SQLiteDatabase.deleteDatabase(new File(DB_PATH));              		 
+        	SQLiteDatabase.deleteDatabase(new File(DB_PATH));              		         	
         }
         catch (NullPointerException e) {
         	//no DB to delete
@@ -213,7 +219,7 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
 		        
 		        	for (String statement : statements) {
 		        		db.execSQL(statement);
-		        	}
+		        	}		        			        			        	
 		        }catch (Exception ex) {
 		        		ex.printStackTrace();
 		        	}
@@ -307,5 +313,59 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-*/    
+*/
+    
+    //added by Mike, 20180213
+    public void syncInternalDBwithServerDB(SQLiteDatabase db, JSONArray serverProductsTable) {
+        try {		        	        	
+        		//check first if the internal DB is already synced
+            	int serverProductsTableLength = serverProductsTable.length();        	
+            	int internalDBProductsTableLength=0;
+            	
+            	Cursor c = db.rawQuery("SELECT MAX(`product_id`) FROM `product`", null);
+            	
+            	if (c.moveToFirst()){
+            	        internalDBProductsTableLength = c.getInt(0);
+            	}
+            	c.close();
+            	        	
+            	if (internalDBProductsTableLength==serverProductsTableLength) {            	        	        		
+            		return;
+            	}
+        		
+        		db.execSQL("delete from " + "product");
+        	        	
+        		ContentValues insertValues = new ContentValues();        		  
+        		JSONArray json = new JSONArray(serverProductsTable);
+        			
+        		for(int i=0;i<json.length();i++) {
+        			   JSONArray nestedJsonArray = json.optJSONArray(i);
+        			   if (nestedJsonArray != null) {
+        				   for(int j=0;j<nestedJsonArray.length();j++) {
+        	      	            JSONObject jo_inside = nestedJsonArray.getJSONObject(i);
+
+        	      	            insertValues.put("product_id", jo_inside.getString("product_id"));
+        	                	insertValues.put("merchant_id", jo_inside.getString("merchant_id"));
+        	                	insertValues.put("product_type_id", jo_inside.getString("product_type_id"));
+        	                	insertValues.put("name", jo_inside.getString("name"));
+        	                	insertValues.put("price", jo_inside.getString("price"));
+        	                	insertValues.put("previous_price", jo_inside.getString("previous_price"));
+        	                	insertValues.put("language", jo_inside.getString("language"));
+        	                	insertValues.put("author", jo_inside.getString("author"));
+        	                	insertValues.put("supplier", jo_inside.getString("supplier"));
+        	                	insertValues.put("description", jo_inside.getString("description"));
+        	                	insertValues.put("image_location", jo_inside.getString("image_location"));
+        	                	insertValues.put("format", jo_inside.getString("format"));
+        	                	insertValues.put("quantity_in_stock", jo_inside.getString("quantity_in_stock"));
+        	                	insertValues.put("translator", jo_inside.getString("translator"));
+        	                	insertValues.put("pages", jo_inside.getString("pages"));
+        	                	
+        	                	db.insert("product", null, insertValues);	        			
+        				   }
+        			   }
+        		}        	
+        }catch (Exception ex) {
+        	ex.printStackTrace();
+    	}	
+    }
 }
