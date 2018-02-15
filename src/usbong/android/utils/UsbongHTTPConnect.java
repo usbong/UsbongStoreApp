@@ -104,7 +104,7 @@ public class UsbongHTTPConnect extends AsyncTask<Void, Void, String> {
 	
 	@Override
 	protected void onPostExecute(String result){
-		Log.d(TAG, "Response: " + result); //.replace("Current character set: utf8", "")       
+		Log.d(TAG, "Response: " + result); //.replace("Current character set: utf8", "")
 		
 		if (!result.trim().equals("")) {			
 			a.syncDB(result);//.replace("Current character set: utf8", ""));					

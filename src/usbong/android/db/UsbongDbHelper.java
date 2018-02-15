@@ -336,10 +336,11 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         		db.execSQL("delete from " + "product");
         	        	
         		ContentValues insertValues = new ContentValues();        		  
-        		JSONArray json = new JSONArray(serverProductsTable);
+//        		JSONArray json = new JSONArray(serverProductsTable);
         			
-        		for(int i=0;i<json.length();i++) {
-        			   JSONArray nestedJsonArray = json.optJSONArray(i);
+        		for(int i=0;i<serverProductsTable.length();i++) {
+        			   JSONArray nestedJsonArray = serverProductsTable.optJSONArray(i);        			   
+        			   
         			   if (nestedJsonArray != null) {
         				   for(int j=0;j<nestedJsonArray.length();j++) {
         	      	            JSONObject jo_inside = nestedJsonArray.getJSONObject(i);
