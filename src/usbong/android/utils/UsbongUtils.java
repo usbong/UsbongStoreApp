@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -73,9 +74,11 @@ import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -98,6 +101,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.vending.billing.IInAppBillingService;
+import com.google.android.youtube.player.internal.s;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -123,6 +127,9 @@ public class UsbongUtils {
 	public static String BASE_FILE_PATH_TEMP = BASE_FILE_PATH+"temp/";
 	public static String USBONG_TREES_FILE_PATH = BASE_FILE_PATH + "usbong_trees/"; //will be changed later in UsbongDecisionTreeEngineActivity.java
 
+	//added by Mike, 20180216
+	public static String BASE_IMAGE_FILE_PATH = Environment.getExternalStorageDirectory()+"/usbong_store_app/images/";
+	
 	//added by Mike, 20160126
 //	public static String USBONG_ITEM_ARRAY_FILE_PATH = USBONG_TREES_FILE_PATH + UsbongConstants.ITEM_LIST; 
 		
@@ -1316,6 +1323,49 @@ public class UsbongUtils {
 		{
 			e.printStackTrace();
 		}		
+		return ret;
+	}
+	
+	//added by Mike, 20180216
+	public static boolean storeImageInSDCard(String url, Bitmap imageBitmap) {
+		boolean ret = false;
+		
+		try
+		{				
+//		    	UsbongUtils.createNewOutputFolderStructure();
+	
+			String s = url.substring(0, url.indexOf("images/")).replace("images/", "");
+			String category = s.substring(0, s.indexOf("/"));
+			String imageFileName = s.substring(s.indexOf("/")).replace("%20", "-");
+			
+			String filePath = BASE_IMAGE_FILE_PATH + category;
+			
+			File file = new File(filePath);
+			if(!file.exists())
+			{
+				System.out.println(">>>>>> File " + filePath + " doesn't exist. Creating file.");
+				file.createNewFile();
+			}
+			
+	        FileOutputStream fileOutputStream = null;
+//				String nameFile;
+
+			File outputFile= new File(filePath, imageFileName);
+			fileOutputStream = new FileOutputStream(outputFile);
+	  	  
+			BufferedOutputStream bos = new BufferedOutputStream(
+				fileOutputStream);
+														
+			bos.flush();
+			bos.close();
+
+			ret = true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}		
+
 		return ret;
 	}
 	

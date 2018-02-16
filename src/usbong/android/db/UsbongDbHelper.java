@@ -26,19 +26,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import usbong.android.utils.UsbongDownloadImageTask;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.provider.BaseColumns;
-import android.util.Log;
+import android.widget.ImageView;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database version.
@@ -339,8 +339,11 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
 //        		JSONArray json = new JSONArray(serverProductsTable);
         			
         		for(int i=0;i<serverProductsTable.length();i++) {
-        			   JSONArray nestedJsonArray = serverProductsTable.optJSONArray(i);        			   
-        			   
+        			   JSONArray nestedJsonArray = serverProductsTable.optJSONArray(i);        	
+/*        			   
+        			   JSONArray innerArray = serverProductsTable.getJSONArray(i);
+        			   double[] innerResult = new double[innerArray.length()];
+*/        			   
         			   if (nestedJsonArray != null) {
         				   for(int j=0;j<nestedJsonArray.length();j++) {
         	      	            JSONObject jo_inside = nestedJsonArray.getJSONObject(i);
@@ -362,6 +365,9 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	                	insertValues.put("pages", jo_inside.getString("pages"));
         	                	
         	                	db.insert("product", null, insertValues);	        			
+        	                	
+        	                	//add the image in the sd card
+        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/childrens/Harry%20Potter%20and%20the%20Sorcerers%20Stone.jpg");
         				   }
         			   }
         		}        	
