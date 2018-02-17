@@ -337,16 +337,17 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	        	
         		ContentValues insertValues = new ContentValues();        		  
 //        		JSONArray json = new JSONArray(serverProductsTable);
-        			
+/*        			
         		for(int i=0;i<serverProductsTable.length();i++) {
-        			   JSONArray nestedJsonArray = serverProductsTable.optJSONArray(i);        	
+*/        		
+        			   JSONArray nestedJsonArray = serverProductsTable; //.optJSONArray(i);        	
 /*        			   
         			   JSONArray innerArray = serverProductsTable.getJSONArray(i);
         			   double[] innerResult = new double[innerArray.length()];
 */        			   
         			   if (nestedJsonArray != null) {
         				   for(int j=0;j<nestedJsonArray.length();j++) {
-        	      	            JSONObject jo_inside = nestedJsonArray.getJSONObject(i);
+        	      	            JSONObject jo_inside = nestedJsonArray.getJSONObject(j);
 
         	      	            insertValues.put("product_id", jo_inside.getString("product_id"));
         	                	insertValues.put("merchant_id", jo_inside.getString("merchant_id"));
@@ -370,7 +371,9 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/childrens/Harry%20Potter%20and%20the%20Sorcerers%20Stone.jpg");
         				   }
         			   }
+/*        			   
         		}        	
+*/        		
         }catch (Exception ex) {
         	ex.printStackTrace();
     	}	
