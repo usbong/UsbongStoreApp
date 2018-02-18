@@ -1334,17 +1334,18 @@ public class UsbongUtils {
 		{				
 //		    	UsbongUtils.createNewOutputFolderStructure();
 	
-			String s = url.substring(0, url.indexOf("images/")).replace("images/", "");
+			String s = url.substring(url.indexOf("images/")).replace("images/", "");
 			String category = s.substring(0, s.indexOf("/"));
-			String imageFileName = s.substring(s.indexOf("/")).replace("%20", "-");
+			String imageFileName = s.substring(s.indexOf("/")).replace("/", "").replace("%20", "-");
 			
 			String filePath = BASE_IMAGE_FILE_PATH + category;
 			
-			File file = new File(filePath);
+			File file = new File(filePath+"/");
 			if(!file.exists())
 			{
 				System.out.println(">>>>>> File " + filePath + " doesn't exist. Creating file.");
-				file.createNewFile();
+//				file.createNewFile();
+	            file.mkdirs();
 			}
 			
 	        FileOutputStream fileOutputStream = null;

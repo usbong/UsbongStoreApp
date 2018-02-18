@@ -23,17 +23,22 @@ public class UsbongDownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         this.bmImage = bmImage;
     }
 */
+    @Override
     protected Bitmap doInBackground(String... urls) {
     	 urldisplay = urls[0];
-         Bitmap mIcon11 = null;
+         Bitmap myBitmap = null;
          try {
              InputStream in = new java.net.URL(urldisplay).openStream();
-             mIcon11 = BitmapFactory.decodeStream(in);
+             myBitmap = BitmapFactory.decodeStream(in);
+             
+             //added by Mike, 20180218
+             UsbongUtils.storeImageInSDCard(urldisplay, myBitmap);    	
+             
          } catch (Exception e) {
              Log.e("Error", e.getMessage());
              e.printStackTrace();
          }
-         return mIcon11;
+         return myBitmap;
     	
 /*    	
         String urldisplay = urls[0];
@@ -56,8 +61,9 @@ public class UsbongDownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 */        
     }
 
+    @Override
     protected void onPostExecute(Bitmap result) {
 //        bmImage.setImageBitmap(result);
-        UsbongUtils.storeImageInSDCard(urldisplay, result);    	
+//        UsbongUtils.storeImageInSDCard(urldisplay, result);    	
     }
 }
