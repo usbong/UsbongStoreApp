@@ -38,6 +38,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.provider.BaseColumns;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
@@ -322,13 +323,15 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
             	int serverProductsTableLength = serverProductsTable.length();        	
             	int internalDBProductsTableLength=0;
             	
+            	//added by Mike
+            	
             	Cursor c = db.rawQuery("SELECT MAX(`product_id`) FROM `product`", null);
             	
             	if (c.moveToFirst()){
             	        internalDBProductsTableLength = c.getInt(0);
             	}
             	c.close();
-            	        	
+   		     
             	if (internalDBProductsTableLength==serverProductsTableLength) {            	        	        		
             		return;
             	}
@@ -352,6 +355,7 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	      	            insertValues.put("product_id", jo_inside.getString("product_id"));
         	                	insertValues.put("merchant_id", jo_inside.getString("merchant_id"));
         	                	insertValues.put("product_type_id", jo_inside.getString("product_type_id"));
+//        	                	insertValues.put("product_type_name", jo_inside.getString("product_type_name"));
         	                	insertValues.put("name", jo_inside.getString("name"));
         	                	insertValues.put("price", jo_inside.getString("price"));
         	                	insertValues.put("previous_price", jo_inside.getString("previous_price"));
@@ -368,7 +372,8 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	                	db.insert("product", null, insertValues);	        			
         	                	
         	                	//add the image in the sd card
-        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/childrens/Harry%20Potter%20and%20the%20Sorcerers%20Stone.jpg");
+//        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/childrens/Harry%20Potter%20and%20the%20Sorcerers%20Stone.jpg");
+        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + jo_inside.getString("product_type_name").toLowerCase() + "/" + jo_inside.getString("name").replace(" ", "%20").replace("'", "").replace(":", "") + ".jpg");
         				   }
         			   }
 /*        			   

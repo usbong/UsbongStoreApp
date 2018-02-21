@@ -1337,7 +1337,7 @@ public class UsbongUtils {
 	
 			String s = url.substring(url.indexOf("images/")).replace("images/", "");
 			String category = s.substring(0, s.indexOf("/"));
-			String imageFileName = s.substring(s.indexOf("/")).replace("/", "").replace("%20", "-");
+			String imageFileName = s.substring(s.indexOf("/")).replace("/", "").replace("%20", " ");
 			
 			String filePath = BASE_IMAGE_FILE_PATH + category + "/";
 			
@@ -1355,29 +1355,29 @@ public class UsbongUtils {
 
 			File outputFile= new File(filePath, imageFileName);
 			
-			if (outputFile.exists ()) {
-				outputFile.delete (); 
+			if (!outputFile.exists()) {
+//				outputFile.delete (); 
+			
+				try {
+				   fileOutputStream = new FileOutputStream(outputFile);
+			       imageBitmap.compress(Bitmap.CompressFormat.JPEG, 90, fileOutputStream);
+	
+	//		       outputFile.flush();
+	//		       outputFile.close();
+	
+				} catch (Exception e) {
+				       e.printStackTrace();
+				}
+				
+	//			fileOutputStream = new FileOutputStream(outputFile);
+				
+				BufferedOutputStream bos = new BufferedOutputStream(
+					fileOutputStream);
+															
+				bos.flush();
+				bos.close();
 			}
 			
-			try {
-			   fileOutputStream = new FileOutputStream(outputFile);
-		       imageBitmap.compress(Bitmap.CompressFormat.JPEG, 90, fileOutputStream);
-
-//		       outputFile.flush();
-//		       outputFile.close();
-
-			} catch (Exception e) {
-			       e.printStackTrace();
-			}
-			
-//			fileOutputStream = new FileOutputStream(outputFile);
-			
-			BufferedOutputStream bos = new BufferedOutputStream(
-				fileOutputStream);
-														
-			bos.flush();
-			bos.close();
-
 			ret = true;
 		}
 		catch(Exception e)
