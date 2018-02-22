@@ -22,6 +22,7 @@
 package usbong.android.db;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,16 +31,16 @@ import java.io.OutputStream;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import usbong.android.store_app.UsbongMainActivity;
 import usbong.android.utils.UsbongDownloadImageTask;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
+import android.graphics.drawable.Drawable;
 import android.provider.BaseColumns;
-import android.util.Log;
-import android.widget.ImageView;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database version.
@@ -371,9 +372,32 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	                	
         	                	db.insert("product", null, insertValues);	        			
         	                	
+        	                	//added by Mike, 20180222
+        	                	//verify whether the product item image is already stored in the assets' folder of the .apk
+        	                	String product_item_image_name = jo_inside.getString("name").replace("'", "").replace(":", "") + ".jpg";
+        	                	
+        	                	Resources myRes = ((UsbongMainActivity)myContext).getResources();
+        	                            	                	
+        	                    try {
+        	                         /*Drawable myDrawableImage = */
+        	                    	//this will throw a FileNotFoundException if the file does not exist
+        	                    	Drawable.createFromStream(myRes.getAssets().open(jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name), null);
+/*
+         	                         if (myDrawableImage == null) {
+        	        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name.replace(" ", "%20"));
+        	                         }
+*/        	                         
+        	                    }
+        	                    catch (FileNotFoundException e) {
+	        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name.replace(" ", "%20"));
+        	                    }
+/*        	                    catch (Exception e) {
+        	                      e.printStackTrace();
+        	                    }
+*/        	                	
         	                	//add the image in the sd card
 //        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/childrens/Harry%20Potter%20and%20the%20Sorcerers%20Stone.jpg");
-        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + jo_inside.getString("product_type_name").toLowerCase() + "/" + jo_inside.getString("name").replace(" ", "%20").replace("'", "").replace(":", "") + ".jpg");
+//        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name);
         				   }
         			   }
 /*        			   
