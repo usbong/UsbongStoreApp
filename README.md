@@ -1,6 +1,9 @@
 # Usbong Store App
 The "Usbong Store App" enables even nobodies to become merchants and offer their products via only one store app.<br><br>
 
+# Official Usbong Store App
+http://app.usbong.ph
+
 # Official Company Website
 http://www.usbong.ph
 
