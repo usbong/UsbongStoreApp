@@ -22,11 +22,11 @@
 package usbong.android.db;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,7 +39,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.drawable.Drawable;
 import android.provider.BaseColumns;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
@@ -348,7 +347,8 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
 /*        			   
         			   JSONArray innerArray = serverProductsTable.getJSONArray(i);
         			   double[] innerResult = new double[innerArray.length()];
-*/        			   
+*/        			           			          			   
+        			   
         			   if (nestedJsonArray != null) {
         				   for(int j=0;j<nestedJsonArray.length();j++) {
         	      	            JSONObject jo_inside = nestedJsonArray.getJSONObject(j);
@@ -375,26 +375,50 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	                	//added by Mike, 20180222
         	                	//verify whether the product item image is already stored in the assets' folder of the .apk
         	                	String product_item_image_name = jo_inside.getString("name").replace("'", "").replace(":", "") + ".jpg";
+        	                	String url_friendly_product_type_name = jo_inside.getString("product_type_name").toLowerCase().replace("'", "").replace(" & ", "_and_");
         	                	
         	                	Resources myRes = ((UsbongMainActivity)myContext).getResources();
         	                            	                	
         	                    try {
         	                         /*Drawable myDrawableImage = */
         	                    	//this will throw a FileNotFoundException if the file does not exist
-        	                    	Drawable.createFromStream(myRes.getAssets().open(jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name), null);
+//        	                    	Drawable.createFromStream(myRes.getAssets().open(jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name), null);
+        	                    	String[] myList = myRes.getAssets().list(url_friendly_product_type_name);// + "/");
+//    	                    		String path = url_friendly_product_type_name + "/" + product_item_image_name;
+
+        	                    	boolean isInList=false;
+/*    	               
+    	                    		if (!Arrays.asList(myList).contains(product_item_image_name)) {
+    	        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + url_friendly_product_type_name + "/" + product_item_image_name.replace(" ", "%20"));  	                    			
+    	                    		}
+*/    	                    		
+    	                    		
+        	                    	for(int i=0; i<myList.length; i++) {
+//            	                    	Log.d(">>>>", myList[i]);
+        	                    		if (myList[i].equals(product_item_image_name)) {
+            	                    		isInList=true;
+        	        	                	break;
+            	                    	}        	                    		
+        	                    	}
+        	                    	
+        	                    	if (!isInList) {
+            	                    	//Drawable.createFromStream(myRes.getAssets().open(path), null);            	                    		
+    	        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + url_friendly_product_type_name + "/" + product_item_image_name.replace(" ", "%20"));
+        	                    	}
+        	                    	
 /*
          	                         if (myDrawableImage == null) {
         	        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name.replace(" ", "%20"));
         	                         }
 */        	                         
         	                    }
-        	                    catch (FileNotFoundException e) {
+/*        	                    catch (FileNotFoundException e) {
 	        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name.replace(" ", "%20"));
         	                    }
-/*        	                    catch (Exception e) {
+*/        	                    catch (Exception e) {
         	                      e.printStackTrace();
         	                    }
-*/        	                	
+        	                	
         	                	//add the image in the sd card
 //        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/childrens/Harry%20Potter%20and%20the%20Sorcerers%20Stone.jpg");
 //        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name);
