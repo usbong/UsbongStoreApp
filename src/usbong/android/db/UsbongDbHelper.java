@@ -26,7 +26,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,10 +44,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 public class UsbongDbHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 19;
+    public static final int DATABASE_VERSION = 20;
 //    public static final String DB_NAME = "usbong_store.db";
     
 //    private static String DB_DIR = "/data/data/usbong.android.store_app/databases/";
@@ -323,8 +328,6 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
             	int serverProductsTableLength = serverProductsTable.length();        	
             	int internalDBProductsTableLength=0;
             	
-            	//added by Mike
-            	
             	Cursor c = db.rawQuery("SELECT MAX(`product_id`) FROM `product`", null);
             	
             	if (c.moveToFirst()){
@@ -335,7 +338,40 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
             	if (internalDBProductsTableLength==serverProductsTableLength) {            	        	        		
             		return;
             	}
-        		
+
+            	//get all the product types from SQLite DB
+            	Cursor cProductType = db.rawQuery("SELECT `product_type_name` FROM `product_type`", null);
+            	ArrayList<String> listOfProductTypes = new ArrayList<String>();
+            	
+            	if (cProductType != null) {
+ 			        if (cProductType.moveToFirst()) { // if Cursor is not empty
+ 			        	while (!cProductType.isAfterLast()) {			        		
+ 			        		listOfProductTypes.add(cProductType.getString(cProductType.getColumnIndex("product_type_name")));
+ 			        		cProductType.moveToNext();
+ 				        }
+ 			        }
+ 			        else {
+ 			           // Cursor is empty
+ 			        	Log.d(">>>>>", "cursor is empty");
+ 			        }
+ 			    }
+ 			    else {
+ 			        // Cursor is null
+ 			        	Log.d(">>>>>", "cursor is null");
+ 			    }
+            	cProductType.close();
+            	
+            	Resources myRes = ((UsbongMainActivity)myContext).getResources();
+//            	String[][] listOfProductsPerProductType = new String[listOfProductTypes.size()][];
+            	
+            	HashMap<String, String[]> listOfProductsPerProductTypeHashMap = new HashMap<String, String[]>();
+            	
+            	for(int i=0; i<listOfProductTypes.size(); i++) {
+            		String productType = listOfProductTypes.get(i).toLowerCase().replace("'","").replace(" & ", "_and_");
+            		listOfProductsPerProductTypeHashMap.put(productType,
+            												myRes.getAssets().list(productType));
+            	}
+             	
         		db.execSQL("delete from " + "product");
         	        	
         		ContentValues insertValues = new ContentValues();        		  
@@ -375,24 +411,34 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	                	//added by Mike, 20180222
         	                	//verify whether the product item image is already stored in the assets' folder of the .apk
         	                	String product_item_image_name = jo_inside.getString("name").replace("'", "").replace(":", "") + ".jpg";
-        	                	String url_friendly_product_type_name = jo_inside.getString("product_type_name").toLowerCase().replace("'", "").replace(" & ", "_and_");
+        	                	//added by Mike, 20180308
+        	                	product_item_image_name = Normalizer.normalize(product_item_image_name, Normalizer.Form.NFD);
+        	                	product_item_image_name = product_item_image_name.replaceAll("[^\\p{ASCII}]", "");
         	                	
-        	                	Resources myRes = ((UsbongMainActivity)myContext).getResources();
-        	                            	                	
+        	                	String url_friendly_product_type_name = jo_inside.getString("product_type_name").toLowerCase().replace("'", "").replace(" & ", "_and_");
+        	                	        	                            	                	
         	                    try {
         	                         /*Drawable myDrawableImage = */
         	                    	//this will throw a FileNotFoundException if the file does not exist
 //        	                    	Drawable.createFromStream(myRes.getAssets().open(jo_inside.getString("product_type_name").toLowerCase() + "/" + product_item_image_name), null);
-        	                    	String[] myList = myRes.getAssets().list(url_friendly_product_type_name);// + "/");
+
+//        	                    	String[] myList = myRes.getAssets().list(url_friendly_product_type_name);// + "/");
+
 //    	                    		String path = url_friendly_product_type_name + "/" + product_item_image_name;
 
-        	                    	boolean isInList=false;
-/*    	               
-    	                    		if (!Arrays.asList(myList).contains(product_item_image_name)) {
-    	        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + url_friendly_product_type_name + "/" + product_item_image_name.replace(" ", "%20"));  	                    			
+/*        	                    	boolean isInList=false;
+*/    	               
+        	                    	//TODO: must get the correct product type number to put in listOfProductsPerProductType        	                            	                    	
+    	                    		if (listOfProductsPerProductTypeHashMap.get(url_friendly_product_type_name)!=null) {
+    	                    			
+    	                    		    List<String> myList = Arrays.asList(listOfProductsPerProductTypeHashMap.get(url_friendly_product_type_name));
+    	                    		    if (!myList.contains(product_item_image_name)) {
+    	                    		    	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + url_friendly_product_type_name + "/" + product_item_image_name.replace(" ", "%20"));  	                    			
+    	                    		    }
     	                    		}
-*/    	                    		
     	                    		
+
+/*        	                    	
         	                    	for(int i=0; i<myList.length; i++) {
 //            	                    	Log.d(">>>>", myList[i]);
         	                    		if (myList[i].equals(product_item_image_name)) {
@@ -405,6 +451,7 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
             	                    	//Drawable.createFromStream(myRes.getAssets().open(path), null);            	                    		
     	        	                	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + url_friendly_product_type_name + "/" + product_item_image_name.replace(" ", "%20"));
         	                    	}
+*/
         	                    	
 /*
          	                         if (myDrawableImage == null) {
