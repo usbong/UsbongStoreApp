@@ -8,11 +8,16 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.json.JSONArray;
-
+import usbong.android.store_app.R;
 import usbong.android.store_app.UsbongMainActivity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class UsbongHTTPConnect extends AsyncTask<Void, Void, String> {
 
@@ -93,8 +98,30 @@ public class UsbongHTTPConnect extends AsyncTask<Void, Void, String> {
 	        }
 	        conn.disconnect();        
 		}catch(IOException e) {
-			Log.w(TAG, "HTTP3:" + e );
+/*			Log.w(TAG, "HTTP3:" + e );
 			response = e.getMessage();
+*/			
+			//added by Mike, 20180310			
+			a.runOnUiThread(new Runnable() {
+				LayoutInflater inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			    View toastLayout = inflater.inflate(R.layout.my_custom_toast, null);
+
+				public void run() {
+/*
+					Toast.makeText(a, "No connection.",
+							   Toast.LENGTH_LONG).show();
+				    }
+*/
+					// Notify the user
+				    TextView textView = (TextView) toastLayout.findViewById(R.id.text);
+				    textView.setText("No connection.");             
+				    Toast toast = new Toast(a);
+				    toast.setDuration(1000);
+				    toast.setGravity(Gravity.CENTER, 0, 0);
+				    toast.setView(toastLayout);
+				    toast.show();  
+				}
+			});
 		}catch(Exception e) {
 			Log.w(TAG, "HTTP4:" + e );
 			response = e.getMessage();
