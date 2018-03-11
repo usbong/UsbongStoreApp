@@ -366,12 +366,14 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
             	
             	HashMap<String, String[]> listOfProductsPerProductTypeHashMap = new HashMap<String, String[]>();
             	
+            	//TODO: add: also the products in the sd card if available
             	for(int i=0; i<listOfProductTypes.size(); i++) {
             		String productType = listOfProductTypes.get(i).toLowerCase().replace("'","").replace(" & ", "_and_");
             		listOfProductsPerProductTypeHashMap.put(productType,
             												myRes.getAssets().list(productType));
             	}
              	
+            	//delete the entire DB to make sure that the primary keys are the same with the online DB
         		db.execSQL("delete from " + "product");
         	        	
         		ContentValues insertValues = new ContentValues();        		  
@@ -406,7 +408,7 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
         	                	insertValues.put("translator", jo_inside.getString("translator"));
         	                	insertValues.put("pages", jo_inside.getString("pages"));
         	                	
-        	                	db.insert("product", null, insertValues);	        			
+//        	                	db.insert("product", null, insertValues);	        			
         	                	
         	                	//added by Mike, 20180222
         	                	//verify whether the product item image is already stored in the assets' folder of the .apk
@@ -428,11 +430,12 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
 
 /*        	                    	boolean isInList=false;
 */    	               
-        	                    	//TODO: must get the correct product type number to put in listOfProductsPerProductType        	                            	                    	
-    	                    		if (listOfProductsPerProductTypeHashMap.get(url_friendly_product_type_name)!=null) {
-    	                    			
+    	                    		if (listOfProductsPerProductTypeHashMap.get(url_friendly_product_type_name)!=null) {    	                    			
     	                    		    List<String> myList = Arrays.asList(listOfProductsPerProductTypeHashMap.get(url_friendly_product_type_name));
     	                    		    if (!myList.contains(product_item_image_name)) {
+    	                    		    	//added by Mike, 20180310
+        	        	                	db.insert("product", null, insertValues);	        			
+    	                    		    	    	                    		    	
     	                    		    	new UsbongDownloadImageTask().execute("https://store.usbong.ph/assets/images/" + url_friendly_product_type_name + "/" + product_item_image_name.replace(" ", "%20"));  	                    			
     	                    		    }
     	                    		}

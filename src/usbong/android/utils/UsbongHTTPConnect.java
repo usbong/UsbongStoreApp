@@ -101,6 +101,8 @@ public class UsbongHTTPConnect extends AsyncTask<Void, Void, String> {
 /*			Log.w(TAG, "HTTP3:" + e );
 			response = e.getMessage();
 */			
+			response = e.getMessage();
+
 			//added by Mike, 20180310			
 			a.runOnUiThread(new Runnable() {
 				LayoutInflater inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

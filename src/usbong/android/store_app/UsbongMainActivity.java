@@ -16,12 +16,14 @@ package usbong.android.store_app;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import usbong.android.db.UsbongDbHelper;
 import usbong.android.utils.UsbongConstants;
@@ -1681,8 +1683,24 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 			    				break;
                     	}
-	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
-	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
+
+                    	//edited by Mike, 20180311
+                    	InputStream myInputStream;
+                    	
+            		    List<String> myList = Arrays.asList(myRes.getAssets().list(folderName));
+            		    if (myList.contains(imageFileName.replace(folderName +"/",""))) {
+/*
+                    	if (Arrays.asList(getResources().getAssets().list("folderName")).contains(imageFileName.replace("/"+folderName,""))) {
+*/                    	
+                        	myInputStream = myRes.getAssets().open(imageFileName);
+                    	}
+                    	else {
+                    		myInputStream = UsbongUtils.getFileFromSDCardAsInputStream(UsbongUtils.BASE_IMAGE_FILE_PATH + imageFileName);
+                    	}
+                    	
+	                    final Drawable myDrawableImage = Drawable.createFromStream(myInputStream, null); 
+
+	                    final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	
                         final Button merchantNameButton = (Button)v.findViewById(R.id.merchant_button);
                         int index = o.indexOf("MerchantName: ")+"MerchantName: ".length();
