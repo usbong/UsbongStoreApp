@@ -378,7 +378,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						RadioButton paymentMethodRadioButton = (RadioButton) paymentMethodRadioButtonGroup.findViewById(paymentMethodRadioButtonID);
 						String paymentMethodSelectedText = paymentMethodRadioButton.getText().toString();	 
 
-						if (paymentMethodSelectedText.contains("Meetup at MOSC")) {
+						if (paymentMethodSelectedText.contains("Meetup at MOSC (Less ₱70)")) {
 							buySummary.append("Meetup at MOSC promo: -₱70\n");							
 							orderSubtotalCost-=70;
 						}						
@@ -417,7 +417,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						buySummary.append("Address: "+
 								((TextView)findViewById(R.id.address)).getText().toString()+"\n");    	
 */						
-						if (paymentMethodSelectedText.contains("Meetup at MOSC")) {
+						if (paymentMethodSelectedText.contains("Meetup at MOSC (Less ₱70)")) {
 							buySummary.append("Address: Marikina Orthopedic Specialty Clinic\n");    	
 						}						
 						else {
@@ -949,7 +949,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				modeOfPayment.addView(paypal);
 
 				RadioButton meetupAtMOSC = new AppCompatRadioButton(this);
-				meetupAtMOSC.setText("Meetup at MOSC");
+				meetupAtMOSC.setText("Meetup at MOSC (Less ₱70)");
 				modeOfPayment.addView(meetupAtMOSC);
 
 				

@@ -15,7 +15,10 @@
 package usbong.android.store_app;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
@@ -153,8 +156,28 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
     		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
             Resources myRes = getResources();
             try {
+            	//edited by Mike, 20180311
+            	InputStream myInputStream;
+
+            	String imageFileName = getIntent().getStringExtra(UsbongConstants.ITEM_IMAGE_NAME);
+            	String folderName = imageFileName.substring(0, imageFileName.indexOf("/"));
+            	
+    		    List<String> myList = Arrays.asList(myRes.getAssets().list(folderName));
+    		    if (myList.contains(imageFileName.replace(folderName +"/",""))) {
+/*
+            	if (Arrays.asList(getResources().getAssets().list("folderName")).contains(imageFileName.replace("/"+folderName,""))) {
+*/                    	
+                	myInputStream = myRes.getAssets().open(imageFileName);
+            	}
+            	else {
+            		myInputStream = UsbongUtils.getFileFromSDCardAsInputStream(UsbongUtils.BASE_IMAGE_FILE_PATH + imageFileName);
+            	}
+            	
+/*            	
                 Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(getIntent().getStringExtra(UsbongConstants.ITEM_IMAGE_NAME)), null); //edited by Mike, 20170202        	
-            
+*/
+                Drawable myDrawableImage = Drawable.createFromStream(myInputStream, null); //edited by Mike, 20180311        	
+    		        		    
                 if (myDrawableImage!=null) {
             		myTextImageDisplayImageView.setImageDrawable(myDrawableImage);        	
                 }
@@ -861,7 +884,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				modeOfPayment.addView(paypal);
 				
 				RadioButton meetupAtMOSC = new AppCompatRadioButton(this);
-				meetupAtMOSC.setText("Meetup at MOSC");
+				meetupAtMOSC.setText("Meetup at MOSC (Less ₱70)");
 				modeOfPayment.addView(meetupAtMOSC);
 
 			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example

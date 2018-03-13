@@ -107,7 +107,7 @@
 			    <RadioButton
 			        android:id="@+id/meetup_at_mosc_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
-			        android:text="Meetup at MOSC"
+			        android:text="Meetup at MOSC (Less ₱70)"
 			        android:textColor="#6f5630"
 			        android:textStyle="bold"			        
 			        />	    	    
