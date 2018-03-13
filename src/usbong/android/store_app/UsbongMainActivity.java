@@ -1051,7 +1051,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		treesListView = (ListView)findViewById(R.id.tree_list_view);
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
-
+/*
     	String pleaseMakeSureThatXMLTreeExistsString = (String) getResources().getText(R.string.pleaseMakeSureThatXMLTreeExistsString);
     	String alertString = (String) getResources().getText(R.string.alertStringValueEnglish);
 
@@ -1062,15 +1062,16 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					//UsbongDecisionTreeEngineActivity is already the Main Menu
-/*
-					finish();    
-					Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
-					toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-					startActivity(toUsbongMainActivityIntent);
-*/					
+//
+//					finish();    
+//					Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
+//					toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+//					startActivity(toUsbongMainActivityIntent);
+//					
 				}
 			}).show();	        		        	
 		  }				  
+*/		  
 	}
     
 	public void initTreeLoaderDynamically(int currProductTypeId) {

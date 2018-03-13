@@ -374,7 +374,7 @@ public class UsbongDbHelper extends SQLiteOpenHelper {
             	}
              	
             	//delete the entire DB to make sure that the primary keys are the same with the online DB
-        		db.execSQL("delete from " + "product");
+//        		db.execSQL("delete from " + "product");
         	        	
         		ContentValues insertValues = new ContentValues();        		  
 //        		JSONArray json = new JSONArray(serverProductsTable);
