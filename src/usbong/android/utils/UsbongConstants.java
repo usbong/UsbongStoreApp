@@ -98,6 +98,7 @@ public class UsbongConstants {
 	public final static int PRODUCT_TYPE_CHILDRENS=10;
 	public final static int PRODUCT_TYPE_FOOD=11;
 	public final static int PRODUCT_TYPE_MISCELLANEOUS=12;
+	public final static int PRODUCT_TYPE_MEDICAL=13;
 	
 	//added by Mike, 20170725
 	public final static String PRODUCT_TYPE_BOOKS_STRING ="books";
@@ -111,6 +112,7 @@ public class UsbongConstants {
 	public final static String PRODUCT_TYPE_CHILDRENS_STRING ="childrens";
 	public final static String PRODUCT_TYPE_FOOD_STRING = "food";
 	public final static String PRODUCT_TYPE_MISCELLANEOUS_STRING ="miscellaneous";
+	public final static String PRODUCT_TYPE_MEDICAL_STRING ="medical";
 	
 	//added by Mike, 20170525
 	public final static int USBONG_MAIN_ACTIVITY=0;

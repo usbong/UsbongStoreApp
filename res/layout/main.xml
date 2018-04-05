@@ -55,12 +55,12 @@
 				    android:text="    Textbooks    "
 				    />	
 				<Button 
-				    android:id="@+id/promos_button"		    
+				    android:id="@+id/medical_button"		    
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:textColor="#554223"
 				    android:background="@android:color/transparent"		    
-				    android:text="    Promos    "
+				    android:text="    Medical    "
 				    />
 				<Button 
 				    android:id="@+id/food_button"		    
@@ -110,6 +110,15 @@
 				    android:background="@android:color/transparent"		    
 				    android:text="    Miscellaneous    "
 				    />								
+				<Button 
+				    android:id="@+id/promos_button"		    
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textColor="#554223"
+				    android:background="@android:color/transparent"		    
+				    android:text="    Promos    "
+				    />
+				
 			</LinearLayout>
 		</HorizontalScrollView>	
 		<ListView

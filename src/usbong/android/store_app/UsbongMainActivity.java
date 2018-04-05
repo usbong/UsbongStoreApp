@@ -841,11 +841,11 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }
         });    
 
-        Button promosButton = (Button)findViewById(R.id.promos_button);
-        promosButton.setOnClickListener(new OnClickListener() {
+        Button medicalButton = (Button)findViewById(R.id.medical_button);
+        medicalButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.PRODUCT_TYPE_PROMOS);
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_MEDICAL);
             }
         });    
 
@@ -897,6 +897,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
             }
         });    
 
+        Button promosButton = (Button)findViewById(R.id.promos_button);
+        promosButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.PRODUCT_TYPE_PROMOS);
+            }
+        });    
+
 		//edited by Mike, 20170530
 		if (!hasPerformedSearch) {
 			performSearch(null);			
@@ -910,130 +918,140 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);
+                medicalButton.setTypeface(Typeface.DEFAULT);
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_CHILDRENS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT_BOLD);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);
+                medicalButton.setTypeface(Typeface.DEFAULT);
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_TEXTBOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT_BOLD);
-                promosButton.setTypeface(Typeface.DEFAULT);
+                medicalButton.setTypeface(Typeface.DEFAULT);
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_PROMOS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                medicalButton.setTypeface(Typeface.DEFAULT_BOLD);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
                 break;
         	case UsbongConstants.PRODUCT_TYPE_FOOD:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);            
+                medicalButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT_BOLD);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);            
+                medicalButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_COMICS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);            
+                medicalButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT_BOLD);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_MANGA:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);            
+                medicalButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT_BOLD);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_TOYS_AND_COLLECTIBLES:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);            
+                medicalButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT_BOLD);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.PRODUCT_TYPE_MISCELLANEOUS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 childrensButton.setTypeface(Typeface.DEFAULT);                
                 textbooksButton.setTypeface(Typeface.DEFAULT);
-                promosButton.setTypeface(Typeface.DEFAULT);            
+                medicalButton.setTypeface(Typeface.DEFAULT);            
                 foodButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
                 comicsButton.setTypeface(Typeface.DEFAULT);
                 mangaButton.setTypeface(Typeface.DEFAULT);
                 toysAndCollectiblesButton.setTypeface(Typeface.DEFAULT);               
                 miscellaneousButton.setTypeface(Typeface.DEFAULT_BOLD);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         }
@@ -1634,6 +1652,9 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                     	switch(currProductTypeId) {
 			    			case UsbongConstants.PRODUCT_TYPE_BEVERAGES:
 			    				folderName = UsbongConstants.PRODUCT_TYPE_BEVERAGES_STRING;
+			    				break;
+			    			case UsbongConstants.PRODUCT_TYPE_MEDICAL:
+			    				folderName = UsbongConstants.PRODUCT_TYPE_MEDICAL_STRING;
 			    				break;
 			    			case UsbongConstants.PRODUCT_TYPE_PROMOS:
 			    				folderName = UsbongConstants.PRODUCT_TYPE_PROMOS_STRING;
