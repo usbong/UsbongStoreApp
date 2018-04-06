@@ -1466,7 +1466,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				modeOfPayment.addView(cashUponMeetup);
 	*/									
 				RadioButton bankDeposit = new AppCompatRadioButton(this);
-				bankDeposit.setText("Bank Deposit");
+				bankDeposit.setText("Bank Deposit (BDO/BPI)");
 				modeOfPayment.addView(bankDeposit);
 	/*
 				RadioButton peraPadala = new AppCompatRadioButton(this);

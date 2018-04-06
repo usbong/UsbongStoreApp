@@ -93,7 +93,7 @@
 			    <RadioButton
 			        android:id="@+id/bank_deposit_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
-			        android:text="Bank Deposit"
+			        android:text="Bank Deposit (BDO/BPI)"
 			        android:textColor="#6f5630"
 		        	android:textStyle="bold"
 			        />

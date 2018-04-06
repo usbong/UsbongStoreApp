@@ -34,6 +34,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
+import android.text.Html;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.Menu;
@@ -872,7 +873,13 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				modeOfPayment.addView(cashUponMeetup);
 */									
 				RadioButton bankDeposit = new AppCompatRadioButton(this);
-				bankDeposit.setText("Bank Deposit");
+//				bankDeposit.setText("Bank Deposit");
+				bankDeposit.setText("Bank Deposit" + " (BDO/BPI)");
+/*								Html.fromHtml("<a href='https://www.bdo.com.ph/send-money' target='_blank'> " +
+												"BDO</a>" + "/" +
+											  "<a href='https://www.bpiexpressonline.com/p/0/6/online-banking' target='_blank'> " +
+											  	"BPI</a>"));	
+*/
 				modeOfPayment.addView(bankDeposit);
 /*
 				RadioButton peraPadala = new AppCompatRadioButton(this);

@@ -306,6 +306,15 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		      //added by Mike, 20170223
 			  RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
 			  ((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
+/*			  
+			  //added by Mike, 20180406
+			  RadioButton  modeOfPaymentBankDepositRadioButton = ((RadioButton)findViewById(R.id.bank_deposit_radiobutton));
+			  modeOfPaymentBankDepositRadioButton.setText( 
+								Html.fromHtml("Bank Deposit (<a href='https://www.bdo.com.ph/send-money' target='_blank'> " +
+												"BDO</a>" + "/" +
+											  "<a href='https://www.bpiexpressonline.com/p/0/6/online-banking' target='_blank'> " +
+											  	"BPI</a>)"));
+*/											  		
 	        }
 
 	    //added by Mike, 20160126
@@ -937,7 +946,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				modeOfPayment.addView(cashUponMeetup);
 */									
 				RadioButton bankDeposit = new AppCompatRadioButton(this);
-				bankDeposit.setText("Bank Deposit");
+				bankDeposit.setText("Bank Deposit" + " (BDO/BPI)");
 				modeOfPayment.addView(bankDeposit);
 /*
 				RadioButton peraPadala = new AppCompatRadioButton(this);
