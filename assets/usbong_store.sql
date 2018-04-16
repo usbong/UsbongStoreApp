@@ -457,7 +457,7 @@ INSERT INTO `product` (`product_id`, `merchant_id`, `product_type_id`, `name`, `
 (408, 1, 9, 'Select Essays for Recitation', 420, NULL, 'English/Mandarin (Traditional)', 'yi xiong ge yue, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
 (409, 1, 9, '2008-2010 English Reading', 450, NULL, 'English/Mandarin (Traditional)', 'nie qun, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
 (410, 1, 8, 'Out of Your Mind Essential Listening from the Alan Watts Audio Archives', 3900, NULL, 'English', 'Alan Watts, et al.', NULL, 'Used - Good', NULL, NULL, 0, NULL, NULL),
-(411, 1, 2, 'El mapa para alcanzar el éxito', 280, NULL, 'Spanish', 'John Maxwell', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
+(411, 1, 2, 'El mapa para alcanzar el exito', 280, NULL, 'Spanish', 'John Maxwell', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
 (412, 1, 2, 'Kendo The Definitive Guide', 2540, NULL, 'English', 'Hiroshi Ozawa', NULL, 'Used - Good', NULL, 'Hardcover', 0, NULL, NULL),
 (413, 1, 2, 'The Book of Five Rings', 300, NULL, 'English', 'Miyamoto Musashi, et al.', NULL, 'Used - Acceptable', NULL, 'Paperback', 0, NULL, NULL),
 (414, 4, 11, 'Hansel Milk Sandwich Cream-Filled Biscuits', 121, NULL, 'English', NULL, NULL, 'New', NULL, NULL, 99, NULL, NULL),
