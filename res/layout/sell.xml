@@ -324,7 +324,7 @@
 			    <RadioButton
 			        android:id="@+id/bank_deposit_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
-			        android:text="Bank Deposit"
+			        android:text="@string/bank_deposit"
 			        android:textColor="#6f5630"
 		        	android:textStyle="bold"
 			        />
