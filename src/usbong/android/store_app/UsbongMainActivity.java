@@ -171,7 +171,14 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                 myDbHelper.initializeDataBase();
         		
     			String merchantName = getIntent().getExtras().getString("loadMerchantStore");
-    			loadMerchantStore(merchantName);			
+    			
+    			//added by Mike, 20180416
+    			if (merchantName!=null) {
+        			loadMerchantStore(merchantName);			    				
+    			}
+    			else {
+        			loadMerchantStore(UsbongConstants.MERCHANT_NAME);			    				
+    			}
     		} 
         	else {
         		myProgressDialog = ProgressDialog.show(instance, "Loading...",

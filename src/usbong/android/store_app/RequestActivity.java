@@ -478,8 +478,29 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			totalBudgetTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-/*		
-    	TextView contactNumberTextView = ((TextView)findViewById(R.id.contact_number));
+		
+		//edited by Mike, 20180416
+    	TextView firstNameTextView = ((TextView)findViewById(R.id.first_name));
+		String firstName = firstNameTextView.getText().toString();
+		if (firstName.trim().equals("")) {
+			firstNameTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			firstNameTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+
+    	TextView surnameTextView = ((TextView)findViewById(R.id.surname));
+		String surname = surnameTextView.getText().toString();
+		if (surname.trim().equals("")) {
+			surnameTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			surnameTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+
+		TextView contactNumberTextView = ((TextView)findViewById(R.id.contact_number));
 		String contactNumber = contactNumberTextView.getText().toString();
 		if (contactNumber.trim().equals("")) {
 			contactNumberTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
@@ -498,7 +519,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			addressTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-*/		
+
 		if (!allFieldsAreFilledUp) {
 	        Toast.makeText(RequestActivity.this, "Please fill up all required fields.", Toast.LENGTH_LONG).show();
 	        return false;
