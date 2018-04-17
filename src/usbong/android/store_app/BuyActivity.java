@@ -184,16 +184,21 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
                 }
                 else {
                 	//edited by Mike, 20180416
+                	//do not show no_image .jpg anymore
 /*                	
             		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
         			myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));
         			myTextImageDisplayImageView.setImageDrawable(myDrawableImage);		        		        	        	
 */        			
-                }
+                }                
             }
             catch (Exception e) {
             	e.printStackTrace();
-            }            		
+            }    
+            
+            //added by Mike, 20180417
+    		TextView productOverviewTextView = (TextView)findViewById(R.id.product_overview_textview);
+    		productOverviewTextView.setText("Product Overview");
     	}
     	else { //if account screen
 		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example

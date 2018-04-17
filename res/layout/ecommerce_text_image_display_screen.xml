@@ -54,6 +54,13 @@
 		    <ImageView android:id="@+id/image_display_imageview"
 			    style="@style/UsbongTextImageDisplayImageView"	    	
 			/>
+			<TextView android:id="@+id/product_overview_textview"
+			    style="@style/UsbongDefaultTextView"	    	
+			    android:text="@string/default_textview" 
+			    android:textSize="24dp"
+			    android:textStyle="bold"
+			    android:gravity="left"
+			/>	    	    
 		</LinearLayout>	
 	</ScrollView>	
 	<LinearLayout 
