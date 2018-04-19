@@ -199,6 +199,10 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
             //added by Mike, 20180417
     		TextView productOverviewTextView = (TextView)findViewById(R.id.product_overview_textview);
     		productOverviewTextView.setText("Product Overview");
+
+            //added by Mike, 20180419
+    		TextView productOverviewContentTextView = (TextView)findViewById(R.id.product_overview_content_textview);
+    		productOverviewContentTextView.setText(getIntent().getStringExtra(UsbongConstants.ITEM_PRODUCT_OVERVIEW));    		
     	}
     	else { //if account screen
 		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example

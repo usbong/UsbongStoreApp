@@ -44,7 +44,10 @@ public class UsbongConstants {
 	public static final String ITEMS_LIST = "items_list";
 	public static final String ITEM_VARIABLE_NAME = "item_details";
 	public static final String ITEM_IMAGE_NAME = "item_image";
-			
+
+	//added by Mike, 20180419
+	public final static String ITEM_PRODUCT_OVERVIEW="item_product_overview";
+	
 	//added by Mike, 20170330
 	public static final String ITEMS_LIST_DEFAULT = "items_list_books";
 	public static final String ITEMS_LIST_BOOKS = "items_list_books";

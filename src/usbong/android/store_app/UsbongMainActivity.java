@@ -653,11 +653,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 					    					authorString = authorString +"\n";
 					    				}
 					    				
+					    				//edited by Mike, 20180419
 						        		productDetails =  "<b>"+c.getString(c.getColumnIndex("name"))+"</b>\n"+
 					   							 authorString+
 					   							 "<font color='#644d17'><b>"+price+prevPrice+"</b>\n[Free Delivery]</font>"+
 					   							 "MerchantName: "+merchantName+
-					   							 "currProductTypeId: "+currProductTypeId;
+					   							 "currProductTypeId: "+currProductTypeId+
+					   							 "productOverview: " + c.getString(c.getColumnIndex("product_overview"));//added by Mike, 20180419
 /*					    				break;
 				        		}
 */				        		
@@ -1649,8 +1651,13 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
                     	
                     	//added by Mike, 20170810
 	    				String tempS2 = o.toString();
-	    				currProductTypeId = Integer.parseInt(tempS2.substring(tempS2.indexOf("currProductTypeId: ")+"currProductTypeId: ".length()).toString());
-                    	
+	    				String currProductTypeIdWithLabel = tempS2.substring(tempS2.indexOf("currProductTypeId: "), tempS2.indexOf("productOverview: "));
+	    				currProductTypeId = Integer.parseInt(currProductTypeIdWithLabel.substring("currProductTypeId: ".length()));
+	    						
+	    				//added by Mike, 20180419
+	    				String tempS3 = o.toString();
+	    				final String currProductOverview = tempS3.substring(tempS3.indexOf("productOverview: ")+"productOverview: ".length()).toString();
+	    				
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
 	                    final String imageFileName;	                    
@@ -1759,7 +1766,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
-	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantNameButton.getText().toString()); //added by Mike, 20170528        				
+	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantNameButton.getText().toString()); //added by Mike, 20170528        					            				
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_PRODUCT_OVERVIEW, currProductOverview); //added by Mike, 20180419
 	            				startActivityForResult(toBuyActivityIntent,1);
 	            			}
 	                	});
@@ -1786,6 +1794,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantNameButton.getText().toString()); //added by Mike, 20170529   				
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_PRODUCT_OVERVIEW, currProductOverview); //added by Mike, 20180419
 	            				toBuyActivityIntent.putExtra("activityCaller", UsbongConstants.USBONG_MAIN_ACTIVITY); //added by Mike, 20170525	            				
 	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
