@@ -487,12 +487,21 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 			    				else {
 			    					authorString = authorString +"\n";
 			    				}
-			    				
+/*			    				
 				        		productDetails =  "<b>"+c2.getString(c2.getColumnIndex("name"))+"</b>\n"+
 			   							 authorString+
 			   							 "<font color='#644d17'><b>"+price+prevPrice+"</b>\n[Free Delivery]</font>"+
 			   							 "MerchantName: "+merchantName+
 			   							 "currProductTypeId: "+currProductTypeId;
+*/				        		
+			    				//edited by Mike, 20180419
+				        		productDetails =  "<b>"+c2.getString(c2.getColumnIndex("name"))+"</b>\n"+
+			   							 authorString+
+			   							 "<font color='#644d17'><b>"+price+prevPrice+"</b>\n[Free Delivery]</font>"+
+			   							 "MerchantName: "+merchantName+
+			   							 "currProductTypeId: "+currProductTypeId+
+			   							 "productOverview: " + c2.getString(c2.getColumnIndex("product_overview"));//added by Mike, 20180419
+
 					        	listOfTreesArrayList.add(productDetails);
 					        	
 					        	//edited by Mike, 20170610
