@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import usbong.android.store_app.R;
+import usbong.android.pos_app.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;

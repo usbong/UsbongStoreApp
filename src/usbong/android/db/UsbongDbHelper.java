@@ -35,7 +35,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import usbong.android.store_app.UsbongMainActivity;
+import usbong.android.pos_app.UsbongMainActivity;
 import usbong.android.utils.UsbongDownloadImageTask;
 import android.content.ContentValues;
 import android.content.Context;

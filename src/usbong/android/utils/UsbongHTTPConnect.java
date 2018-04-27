@@ -8,8 +8,8 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import usbong.android.store_app.R;
-import usbong.android.store_app.UsbongMainActivity;
+import usbong.android.pos_app.R;
+import usbong.android.pos_app.UsbongMainActivity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
