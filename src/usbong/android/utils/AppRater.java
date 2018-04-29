@@ -18,7 +18,7 @@
 
 package usbong.android.utils;
 
-import usbong.android.pos_app.R;
+import usbong.android.store_app.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;

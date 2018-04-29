@@ -15,10 +15,14 @@
 package usbong.android.store_app;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
+import usbong.android.store_app.BuyActivity;
 import usbong.android.store_app.CartActivity;
 import usbong.android.store_app.UsbongDecisionTreeEngineActivity;
 import usbong.android.store_app.R;
@@ -1120,16 +1124,24 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	    				String tempS = o.toString().replace("\n", "<br>");
 	    				s = tempS.subSequence(0, tempS.indexOf("MerchantName: ")).toString();
 
-	    				imageFileName = o.toString().substring(o.indexOf("ImageFileName: ")+"ImageFileName: ".length());
+	    				imageFileName = o.toString().substring(o.indexOf("ImageFileName: ")+"ImageFileName: ".length(), o.indexOf("ProductOverview: "));
 /*	    				imageFileName = o.toString().substring(0, o.toString().indexOf("</b>"))
 	                    		.replace("<b>","")
-	                    		.replace("’","")
+	                    		.replace("遯ｶ�ｿｽ","")
 	                    		.replace("'","")
 	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 */
+	    				//added by Mike, 20180429
+                        int index = o.indexOf("MerchantName: ")+"MerchantName: ".length();
+                        int endIndex = o.indexOf("ImageFileName: ");	
+	    				
 		    			//added by Mike, 20170529
-		    			final String merchantName = o.substring(o.indexOf("MerchantName: ")+"MerchantName: ".length(), o.indexOf("ImageFileName: "));
-		    			
+		    			final String merchantName = o.substring(index, endIndex);
+
+		    			//added by Mike, 20180429
+	    				String tempS3 = o.toString();
+	    				final String currProductOverview = tempS3.substring(tempS3.indexOf("ProductOverview: ")+"ProductOverview: ".length()).toString();
+
 /*
 	                    String imageString = o.toString()
 	            				.replace("\n", "<br>")+"<br><br>";	    					    					    					    				
@@ -1143,9 +1155,60 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		                    		.replace("'","")
 		                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 */
+	    				
+/*	    				
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
+*/
+	    				
+	            		InputStream myInputStream;
+		            	String folderName = imageFileName.substring(0, imageFileName.indexOf("/"));
 		            	
+		    		    List<String> myList = Arrays.asList(myRes.getAssets().list(folderName));
+		    		    if (myList.contains(imageFileName.replace(folderName +"/",""))) {
+		/*
+		            	if (Arrays.asList(getResources().getAssets().list("folderName")).contains(imageFileName.replace("/"+folderName,""))) {
+		*/                    	
+		                	myInputStream = myRes.getAssets().open(imageFileName);
+		            	}
+		            	else {
+		            		myInputStream = UsbongUtils.getFileFromSDCardAsInputStream(UsbongUtils.BASE_IMAGE_FILE_PATH + imageFileName);
+		            	}
+		    			
+		    			
+		    			//edited by Mike, 20180429
+//			    			InputStream is = myRes.getAssets().open(imageFileName);		    				
+		    			if (myInputStream!=null) {
+		                    final Drawable myDrawableImage = Drawable.createFromStream(myInputStream, null); //edited by Mike, 20170202		    				
+		            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
+		                    
+		                	if (myDrawableImage!=null) {
+		                		image.setImageDrawable(myDrawableImage);                		
+		                		image.setOnClickListener(new OnClickListener() {
+		                			@Override
+		                			public void onClick(View v) {
+		/*
+		                				//added by Mike, 20170203
+		                            	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
+		                				setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160203
+		                        		image.setImageDrawable(myDrawableImage);	
+		                				initParser(UsbongConstants.TREE_TYPE_BUY); //added by Mike, 20160202          				                	
+		*/
+		                				
+		                				//added by Mike, 20170216
+			            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
+			            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
+			            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+			            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantName); //added by Mike, 20170529        				
+			            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_PRODUCT_OVERVIEW, currProductOverview); //added by Mike, 20180429
+			            				startActivityForResult(toBuyActivityIntent,1);
+		                			}
+		                		});	                		
+		                	}
+
+		    			}
+	            		
+	            		
 	                	dataCurrentTextView.setText(Html.fromHtml(s));
 //	                	dataCurrentTextView.setText(o.toString());
 	                	dataCurrentTextView.setOnClickListener(new OnClickListener() {
@@ -1163,11 +1226,12 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
-	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantName); //added by Mike, 20170529        				
+	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantName); //added by Mike, 20170528        					            				
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_PRODUCT_OVERVIEW, currProductOverview); //added by Mike, 20180419
 	            				startActivityForResult(toBuyActivityIntent,1);
 	            			}
 	                	});
-                		image.setImageDrawable(myDrawableImage);                		
+	                	
 /*
                 		//added by Mike, 20170203
                 		//make the image icon in the list smaller
@@ -1175,24 +1239,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
                 		image.setMaxHeight(100);
                 		image.setMaxWidth(100);                		
 */                		
-                		image.setOnClickListener(new OnClickListener() {
-                			@Override
-                			public void onClick(View v) {
-/*
-                				//added by Mike, 20170203
-                            	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
-                				setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160203
-                        		image.setImageDrawable(myDrawableImage);	
-                				initParser(UsbongConstants.TREE_TYPE_BUY); //added by Mike, 20160202          				                	
-*/
-                				//added by Mike, 20170216
-	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
-	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
-	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
-	            				toBuyActivityIntent.putExtra(UsbongConstants.MERCHANT_NAME, merchantName); //added by Mike, 20170529        				
-	            				startActivityForResult(toBuyActivityIntent,1);
-                			}
-                		});
+                		
 /*                		
                 		//added by Mike, 20170505
 	            		TextView quantity = (TextView) v.findViewById(R.id.quantity);

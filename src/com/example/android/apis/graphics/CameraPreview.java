@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import usbong.android.features.node.QRCodeReaderActivity;
-import usbong.android.pos_app.SellActivity;
+import usbong.android.store_app.SellActivity;
 import usbong.android.utils.UsbongUtils;
 import android.app.Activity;
 import android.app.AlertDialog;

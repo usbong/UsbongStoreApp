@@ -1,6 +1,6 @@
---Usbong POS App--
-ver: 1.0.0
-date: 20180425
+--Usbong Store App--
+ver: 1.0.36
+date: 20180429
 
 Usbong Social Systems, Inc.
 
@@ -8,8 +8,10 @@ Usbong's mission is to defeat poverty by uplifting human lives through our thrus
 
 --Core Developers--
 Michael B. Syson
+Chris Amanse
 
 --Graphics Designer--
+Juan Pablo S. Crisostomo
 Michael B. Syson
 
 --Acknowledgment--
@@ -17,11 +19,10 @@ Google
 Android Screen Monitor
 Microsoft Office
 Gimp
-Marikina Orthopedic Specialty Clinic
 
 Contact:
 Website: www.usbong.ph
 Online Store: store.usbong.ph
 Email: support@usbong.ph
 
-Copyright 2018. All rights reserved.
+Copyright 2016-2018. All rights reserved.
