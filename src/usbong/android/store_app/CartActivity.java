@@ -448,8 +448,9 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	
 						String additionalInstructionsString = ((TextView)findViewById(R.id.additional_instructions)).getText().toString();					
 						if (additionalInstructionsString.trim().equals("")) {
+							//edited by Mike, 20180825
 							buySummary.append("Additional Instructions: "+
-									"N/A\n");    							
+									"None\n"); //N/A   							
 						}
 						else {
 							buySummary.append("Additional Instructions: "+
@@ -458,8 +459,9 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						
 						String additionalInquiriesString = ((TextView)findViewById(R.id.additional_inquiries)).getText().toString();					
 						if (additionalInquiriesString.trim().equals("")) {
+							//edited by Mike, 20180825
 							buySummary.append("Additional Inquiries: "+
-									"N/A\n");    							
+									"None\n"); //N/A    							
 						}
 						else {
 							buySummary.append("Additional Inquiries: "+
